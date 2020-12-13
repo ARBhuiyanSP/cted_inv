@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 13, 2020 at 10:28 AM
+-- Generation Time: Dec 13, 2020 at 11:56 AM
 -- Server version: 10.1.26-MariaDB
 -- PHP Version: 7.1.8
 
@@ -344,9 +344,11 @@ CREATE TABLE `inv_job_card_details` (
 
 CREATE TABLE `inv_material` (
   `id` int(11) NOT NULL,
-  `material_id_code` varchar(10) DEFAULT NULL,
+  `material_id_code` varchar(100) DEFAULT NULL,
   `material_id` varchar(15) CHARACTER SET utf8 DEFAULT NULL,
   `material_sub_id` varchar(25) CHARACTER SET utf8 DEFAULT NULL,
+  `material_level3_id` int(11) DEFAULT NULL,
+  `material_level4_id` int(11) DEFAULT NULL,
   `material_description` varchar(75) CHARACTER SET utf8 DEFAULT NULL,
   `brand_name` varchar(100) NOT NULL,
   `type` varchar(100) NOT NULL,
@@ -370,9 +372,9 @@ CREATE TABLE `inv_material` (
 -- Dumping data for table `inv_material`
 --
 
-INSERT INTO `inv_material` (`id`, `material_id_code`, `material_id`, `material_sub_id`, `material_description`, `brand_name`, `type`, `material_min_stock`, `avg_con_sump`, `lead_time`, `re_order_level`, `qty_unit`, `op_balance_qty`, `op_balance_val`, `chk_print`, `cur_qty`, `cur_price`, `cur_value`, `last_issue`, `last_receive`, `part_no`) VALUES
-(264, '01-01-001', '36', '100', 'ABC AIR FILTER', 'NA', 'MACHANICAL', 20, NULL, NULL, 0, '17', 0, 0, NULL, NULL, NULL, NULL, NULL, NULL, ''),
-(265, '01-01-002', '36', '100', 'XYZ AIR FILTER', 'NA', 'MACHANICAL', 20, NULL, NULL, 0, '17', 0, 0, NULL, NULL, NULL, NULL, NULL, NULL, '');
+INSERT INTO `inv_material` (`id`, `material_id_code`, `material_id`, `material_sub_id`, `material_level3_id`, `material_level4_id`, `material_description`, `brand_name`, `type`, `material_min_stock`, `avg_con_sump`, `lead_time`, `re_order_level`, `qty_unit`, `op_balance_qty`, `op_balance_val`, `chk_print`, `cur_qty`, `cur_price`, `cur_value`, `last_issue`, `last_receive`, `part_no`) VALUES
+(266, '01-01-01-0', '42', '109', 3, 1, 'ABC', 'Brand', 'CIVIL', 250, NULL, NULL, 0, '19', 0, 0, NULL, NULL, NULL, NULL, NULL, NULL, ''),
+(267, '01-01-01-01-002', '42', '109', 3, 1, 'ABC2', 'Brand2', 'CIVIL', 250, NULL, NULL, 0, '19', 0, 0, NULL, NULL, NULL, NULL, NULL, NULL, '');
 
 -- --------------------------------------------------------
 
@@ -1982,7 +1984,7 @@ ALTER TABLE `inv_job_card_details`
 -- AUTO_INCREMENT for table `inv_material`
 --
 ALTER TABLE `inv_material`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=266;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=268;
 --
 -- AUTO_INCREMENT for table `inv_materialbalance`
 --
