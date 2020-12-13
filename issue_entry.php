@@ -153,12 +153,11 @@
                                 <thead>
                                 <th width="25%">Material Name<span class="reqfield"> ***required</span></th>
                                 <th width="10%">Material ID</th>
+                                <th width="10%">Part No</th>
                                 <th width="10%">Unit</th>
                                 <th width="10%">Brand</th>
                                 <th width="10%">In Stock</th>
                                 <th width="10%">Qty<span class="reqfield"> ***required</span></th>
-                                <th width="15%">Package</th>
-                                <th width="15%">Building</th>
                                 <th width="5%"></th>
                                 </thead>
                                 <tbody>
@@ -179,6 +178,7 @@
                                             </select>
                                         </td>
                                         <td><input type="text" name="material_id[]" id="material_id0" class="form-control" required readonly></td>
+                                        <td><input type="text" name="part_no[]" id="part_no0" class="form-control" required readonly></td>
                                         <td>
                                             <select class="form-control" id="unit0" name="unit[]" required readonly>
                                                 <option value="">Select Unit</option>
@@ -211,68 +211,10 @@
                                         </td>
                                         <td><input type="text" name="material_total_stock[]" id="material_total_stock0" class="form-control" readonly ></td>
                                         <td><input type="text" name="quantity[]" id="quantity0" onchange="sum(0)" onkeyup="check_stock_quantity_validation(0)" class="form-control common_issue_quantity" required></td>
-                                        <td>
-                                            <select class="form-control" id="package_id0" name="package_id[]" required>
-                                                <option value="">Select</option>
-                                                <?php
-                                                $projectsData = getTableDataByTableName('packages');
-
-                                                if (isset($projectsData) && !empty($projectsData)) {
-                                                    foreach ($projectsData as $data) {
-                                                        ?>
-                                                        <option value="<?php echo $data['id']; ?>"><?php echo $data['name']; ?></option>
-                                                        <?php
-                                                    }
-                                                }
-                                                ?>
-                                            </select>
-                                        </td>
-                                        <td>
-                                            <select class="form-control" id="building_id0" name="building_id[]" required>
-                                                <option value="">Select</option>
-                                                <?php
-                                                $projectsData = getTableDataByTableName('buildings');
-
-                                                if (isset($projectsData) && !empty($projectsData)) {
-                                                    foreach ($projectsData as $data) {
-                                                        ?>
-                                                        <option value="<?php echo $data['building_id']; ?>"><?php echo $data['building_id']; ?></option>
-                                                        <?php
-                                                    }
-                                                }
-                                                ?>
-                                            </select>
-                                        </td>
                                         <td><button type="button" name="add" id="add" class="btn" style="background-color:#007BFF;color:#ffffff;">+</button></td>
                                     </tr>
                                 </tbody>
                             </table>
-                        </div>
-                    </div>
-                    <div class="row" style="">
-                        <div class="col-xs-6">
-                            <div class="form-group">
-                                <label>Received By</label><span class="reqfield"> ***required</span>
-                                <select class="form-control select2" id="received_by" name="received_by" required>
-                                    <?php
-                                    $projectsData = getTableDataByTableName('inv_employee');
-                                    ;
-                                    if (isset($projectsData) && !empty($projectsData)) {
-                                        foreach ($projectsData as $data) {
-                                            ?>
-                                            <option value="<?php echo $data['name']; ?>"><?php echo $data['name']; ?></option>
-                                            <?php
-                                        }
-                                    }
-                                    ?>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="col-xs-6">
-                            <div class="form-group">
-                                <label>Receiver Phone</label><span class="reqfield"> ***required</span>
-                                <input type="text" autocomplete="off" name="receiver_phone" id="receiver_phone" class="form-control" required>
-                            </div>
                         </div>
                     </div>
                     <div class="row" style="">
@@ -294,11 +236,6 @@
                                         }
                                     };
                                 </script>
-                            </div>
-                        </div>
-                        <div class="col-xs-6">
-                            <div style="border:1px solid gray;height:150px;width:150px;">
-                                <img id="output" height="150px" width="150px"/>
                             </div>
                         </div>
                     </div>
@@ -339,7 +276,7 @@
                                             ?><option value="<?php echo $data['id']; ?>"><?php echo $data['material_name']; ?></option><?php
                                         }
                                     }
-                                    ?></select></td><td><input type="text" name="material_id[]" id="material_id' + i + '" class="form-control" required readonly></td><td><select class="form-control select2" id="unit' + i + '" name="unit[]' + i + '" required onchange="getAppendItemCodeByParam(' + i + ",'inv_material'" + ",'material_id_code'" + ",'material_id''" + ",'qty_unit'" + ')"><option value="">Select</option><?php
+                                    ?></select></td><td><input type="text" name="material_id[]" id="material_id' + i + '" class="form-control" required readonly></td><td><input type="text" name="part_no[]" id="part_no' + i + '" class="form-control" required readonly></td><td><select class="form-control select2" id="unit' + i + '" name="unit[]' + i + '" required onchange="getAppendItemCodeByParam(' + i + ",'inv_material'" + ",'material_id_code'" + ",'material_id''" + ",'qty_unit'" + ')"><option value="">Select</option><?php
                                     $projectsData = getTableDataByTableName('inv_item_unit', '', 'unit_name');
                                     if (isset($projectsData) && !empty($projectsData)) {
                                         foreach ($projectsData as $data) {
@@ -353,44 +290,16 @@
                                             ?><option value="<?php echo $data['brand_name']; ?>"><?php echo $data['brand_name']; ?></option><?php
                                         }
                                     }
-                                    ?></select></td><td><input type="text" name="material_total_stock[]" id="material_total_stock' + i + '" class="form-control" readonly></td><td><input type="text" name="quantity[]" id="quantity' + i + '" onchange="sum(0)"  onkeyup="check_stock_quantity_validation(' + i + ')" class="form-control common_issue_quantity" required></td><td><select class="form-control" id="package_id' + i + '" name="package_id[]" required><option value="">Select</option><?php
-                                    $projectsData = getTableDataByTableName('packages');
-                                    if (isset($projectsData) && !empty($projectsData)) {
-                                        foreach ($projectsData as $data) {
-                                            ?><option value="<?php echo $data['id']; ?>"><?php echo $data['name']; ?></option><?php
-                                        }
-                                    }
-                                    ?></select></td><td><select class="form-control" id="building_id' + i + '" name="building_id[]" required><option value="">Select</option><?php
-                                    $projectsData = getTableDataByTableName('buildings');
-                                    if (isset($projectsData) && !empty($projectsData)) {
-                                        foreach ($projectsData as $data) {
-                                            ?><option value="<?php echo $data['building_id']; ?>"><?php echo $data['building_id']; ?></option><?php
-                                        }
-                                    }
-                                    ?></select></td><td><button type="button" name="remove" id="' + i + '" class="btn btn_remove" style="background-color:#f26522;color:#ffffff;">X</button></td></tr>');
-            $('#quantity' + i + ', #unit_price' + i).change(function () {
-                sum(i)
-            });
+                                    ?></select></td><td><input type="text" name="material_total_stock[]" id="material_total_stock' + i + '" class="form-control" readonly></td><td><input type="text" name="quantity[]" id="quantity' + i + '" onchange="sum(0)"  onkeyup="check_stock_quantity_validation(' + i + ')" class="form-control common_issue_quantity" required></td><td><button type="button" name="remove" id="' + i + '" class="btn btn_remove" style="background-color:#f26522;color:#ffffff;">X</button></td></tr>');
+            
         });
 
         $(document).on('click', '.btn_remove', function () {
             var button_id = $(this).attr("id");
             $('#row' + button_id + '').remove();
-            sum_total();
         });
 
-        $('#submit').click(function () {
-            $.ajax({
-                url: "name.php",
-                method: "POST",
-                data: $('#add_name').serialize(),
-                success: function (data)
-                {
-                    alert(data);
-                    $('#add_name')[0].reset();
-                }
-            });
-        });
+        
 
     });
 </script>
