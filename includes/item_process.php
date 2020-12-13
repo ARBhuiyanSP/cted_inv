@@ -218,7 +218,6 @@ if(isset($_GET['process_type']) && $_GET['process_type'] == 'level3itemsave'){
     $status     =   'success';
     $message    =   'Current operation was successfully completed';
     $feedback   =   '';
-
     $category_id                    =   mysqli_real_escape_string($conn, $_POST['category_id']);
     $category_sub_id                =   mysqli_real_escape_string($conn, $_POST['category_sub_id']);
     $material_level3_code           =   mysqli_real_escape_string($conn, $_POST['material_level3_code']);
