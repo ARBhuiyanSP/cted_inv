@@ -1,2 +1,2 @@
-var baseUrl =   "http://localhost/cted_inv";
+var baseUrl =   "http://localhost/cted_inv/";
 
