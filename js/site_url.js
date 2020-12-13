@@ -1,2 +1,2 @@
-var baseUrl =   "http://103.54.36.11/cted_inv/";
+var baseUrl =   "http://45.249.102.75/cted_inv/";
 
