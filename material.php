@@ -196,7 +196,7 @@
                                             <th>Action</th>
                                         </tr>
                                     </thead>
-                                    <tbody id="sub_category_body">
+                                    <tbody id="level4_category_body">
                                         <?php
                                         $childInfo = getTableDataByTableName('inv_material_level4', '', 'material_level4_description');
                                         if (isset($childInfo) && !empty($childInfo)) {
@@ -217,11 +217,11 @@
                                                     </td>
                                                     <td>
                                                         <?php 
-                                                        $dataresult =   getDataRowByTableAndId('inv_material_level3', $sub['material_level3_id']);
+                                                        $dataresult =   getDataRowByTableAndId('inv_material_level3', $sub['level3_id']);
                                                         echo (isset($dataresult) && !empty($dataresult) ? $dataresult->material_level3_description : '');
                                                         ?>
                                                     </td>
-                                                    <td><?php echo $sub['material_level4_id']; ?></td>
+                                                    <td><?php echo $sub['material_level4_code']; ?></td>
                                                     <td><?php echo $sub['material_level4_description']; ?></td>
                                                     <td>
                                                         <button type="button" class="btn btn-sm" onclick="openSubMaterialEditForm('<?php echo $sub['id']; ?>');">

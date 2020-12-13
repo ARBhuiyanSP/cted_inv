@@ -211,18 +211,47 @@ function processMaterialLevel3Items(form_id){
     });
 }
 
+function processMaterialLevel4Items(form_id){
+    $.ajax({
+        url: baseUrl + "includes/item_process.php?process_type=level4itemsave",
+        type: 'POST',
+        dataType: 'json',
+        data: $("#" + form_id).serialize(),
+        success: function(response) {
+            if (response.status == 'success') {
+                $('#main_item_id').val('');
+                $('#sub_item_id').val('');
+                $('#level3_id').val('');
+                $('#leve4_code').val('');
+                $('#leve4_name').val('');
+                if (form_id == 'level4_added_form_value') {
+                    $('#level4_added_form').modal('hide');
+                } else if (form_id == 'item_updated_form_value') {
+                    $('#item_edit_form').modal('hide');
+                }
+                $('#level4_category_body').html(response.data);
+                $("#item_information").accordion({ active: 3 });
+                swal("Success", response.message, "success");
+            } else {
+                swal("Failed", response.message, "error");
+            }
+        }
+    });
+}
+
+
 function processItems(form_id) {
 
     var validationResult;
     if (form_id == 'item_added_form_value') {
         $("#item_added_form_value").validate();
-        $("#main_item_id").rules("add", {
+        $("#main_cat_item_id").rules("add", {
             required: true,
             messages: {
                 required: "Please specify Category"
             }
         });
-        $("#main_sub_item_id").rules("add", {
+        $("#main_sub_cat_item_id").rules("add", {
             required: true,
             messages: {
                 required: "Please specify Sub Category"
@@ -277,8 +306,10 @@ function processItems(form_id) {
             data: $("#" + form_id).serialize(),
             success: function(response) {
                 if (response.status == 'success') {
-                    $('#main_item_id').val('');
-                    $('#main_sub_item_id').val('');
+                    $('#main_cat_item_id').val('');
+                    $('#main_sub_cat_item_id').val('');
+                    $('#material_level3_id').val('');
+                    $('#material_level4_id').val('');
                     $('#item_code').val('');
                     $('#item_name').val('');
                     $('#item_description').val('');
@@ -288,7 +319,7 @@ function processItems(form_id) {
                         $('#item_edit_form').modal('hide');
                     }
                     $('#item_category_body').html(response.data);
-                    $("#item_information").accordion({ active: 2 });
+                    $("#item_information").accordion({ active: 4 });
                     swal("Success", response.message, "success");
                 } else {
                     swal("Failed", response.message, "error");
@@ -420,13 +451,36 @@ function getLevel3CodeByLevel2(level_2_id, selector = false) {
     }
 }
 
-function getMatCodeBySubId(sub_id, selector = false) {
-    if (sub_id) {
+function getLevel4CodeByLevel3(level_3_id, selector = false) {
+    if (level_3_id) {
         $.ajax({
             url: baseUrl + "includes/item_process.php?process_type=get_category_code",
             type: 'POST',
             dataType: 'json',
-            data: 'cat_type=mat&data_type=ajax&parent_cat=' + $('#main_item_id').val() + '&sub_id=' + sub_id,
+            data: 'cat_type=level4&data_type=ajax&level_3_id=' + level_3_id,
+            success: function(response) {
+                if (selector) {
+                    $('#' + selector).val(response.code);
+                } else {
+                    $('#leve4_code').val(response.code);
+                }
+            }
+        });
+    } else {
+        $('#leve4_code').val('');
+    }
+}
+
+function getMatCodeBySubId(material_level4_id, selector = false) {
+    if (material_level4_id) {
+        var main_item_id            =   $('#main_cat_item_id').val();
+        var main_sub_item_id        =   $('#main_sub_cat_item_id').val();
+        var material_level3_id      =   $('#material_level3_id').val();
+        $.ajax({
+            url: baseUrl + "includes/item_process.php?process_type=get_category_code",
+            type: 'POST',
+            dataType: 'json',
+            data: 'cat_type=mat&data_type=ajax&parent_cat=' + main_item_id+ '&main_sub_item_id=' + main_sub_item_id+ '&material_level3_id=' + material_level3_id + '&material_level4_id=' + material_level4_id,
             success: function(response) {
                 if (selector) {
                     $('#' + selector).val(response.code);

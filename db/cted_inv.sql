@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.9.0.1
+-- version 4.7.0
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 13, 2020 at 02:36 AM
--- Server version: 10.4.6-MariaDB
--- PHP Version: 7.2.22
+-- Generation Time: Dec 13, 2020 at 11:56 AM
+-- Server version: 10.1.26-MariaDB
+-- PHP Version: 7.1.8
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -33,7 +33,7 @@ CREATE TABLE `buildings` (
   `building_id` varchar(100) NOT NULL,
   `building_type` varchar(100) NOT NULL,
   `package_id` varchar(100) NOT NULL,
-  `created_at` datetime NOT NULL DEFAULT current_timestamp(),
+  `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` datetime DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -90,7 +90,7 @@ CREATE TABLE `history` (
   `icon` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `class` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `text` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `assets` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `assets` text COLLATE utf8mb4_unicode_ci,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -257,7 +257,7 @@ CREATE TABLE `inv_issue` (
   `project_id` varchar(25) CHARACTER SET utf8 NOT NULL,
   `warehouse_id` varchar(100) NOT NULL,
   `issued_by` varchar(100) NOT NULL,
-  `approval_status` tinyint(1) NOT NULL DEFAULT 0,
+  `approval_status` tinyint(1) NOT NULL DEFAULT '0',
   `approved_by` varchar(100) NOT NULL,
   `approved_at` datetime DEFAULT NULL,
   `approval_remarks` longtext NOT NULL,
@@ -284,7 +284,7 @@ CREATE TABLE `inv_issuedetail` (
   `warehouse_id` varchar(100) NOT NULL,
   `package_id` varchar(100) NOT NULL,
   `building_id` varchar(100) NOT NULL,
-  `approval_status` tinyint(1) NOT NULL DEFAULT 0
+  `approval_status` tinyint(1) NOT NULL DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
@@ -344,9 +344,11 @@ CREATE TABLE `inv_job_card_details` (
 
 CREATE TABLE `inv_material` (
   `id` int(11) NOT NULL,
-  `material_id_code` varchar(10) DEFAULT NULL,
+  `material_id_code` varchar(100) DEFAULT NULL,
   `material_id` varchar(15) CHARACTER SET utf8 DEFAULT NULL,
   `material_sub_id` varchar(25) CHARACTER SET utf8 DEFAULT NULL,
+  `material_level3_id` int(11) DEFAULT NULL,
+  `material_level4_id` int(11) DEFAULT NULL,
   `material_description` varchar(75) CHARACTER SET utf8 DEFAULT NULL,
   `brand_name` varchar(100) NOT NULL,
   `type` varchar(100) NOT NULL,
@@ -370,9 +372,9 @@ CREATE TABLE `inv_material` (
 -- Dumping data for table `inv_material`
 --
 
-INSERT INTO `inv_material` (`id`, `material_id_code`, `material_id`, `material_sub_id`, `material_description`, `brand_name`, `type`, `material_min_stock`, `avg_con_sump`, `lead_time`, `re_order_level`, `qty_unit`, `op_balance_qty`, `op_balance_val`, `chk_print`, `cur_qty`, `cur_price`, `cur_value`, `last_issue`, `last_receive`, `part_no`) VALUES
-(264, '01-01-001', '36', '100', 'ABC AIR FILTER', 'NA', 'MACHANICAL', 20, NULL, NULL, 0, '17', 0, 0, NULL, NULL, NULL, NULL, NULL, NULL, ''),
-(265, '01-01-002', '36', '100', 'XYZ AIR FILTER', 'NA', 'MACHANICAL', 20, NULL, NULL, 0, '17', 0, 0, NULL, NULL, NULL, NULL, NULL, NULL, '');
+INSERT INTO `inv_material` (`id`, `material_id_code`, `material_id`, `material_sub_id`, `material_level3_id`, `material_level4_id`, `material_description`, `brand_name`, `type`, `material_min_stock`, `avg_con_sump`, `lead_time`, `re_order_level`, `qty_unit`, `op_balance_qty`, `op_balance_val`, `chk_print`, `cur_qty`, `cur_price`, `cur_value`, `last_issue`, `last_receive`, `part_no`) VALUES
+(266, '01-01-01-0', '42', '109', 3, 1, 'ABC', 'Brand', 'CIVIL', 250, NULL, NULL, 0, '19', 0, 0, NULL, NULL, NULL, NULL, NULL, NULL, ''),
+(267, '01-01-01-01-002', '42', '109', 3, 1, 'ABC2', 'Brand2', 'CIVIL', 250, NULL, NULL, 0, '19', 0, 0, NULL, NULL, NULL, NULL, NULL, NULL, '');
 
 -- --------------------------------------------------------
 
@@ -400,7 +402,7 @@ CREATE TABLE `inv_materialbalance` (
   `warehouse_id` varchar(100) NOT NULL,
   `package_id` varchar(100) NOT NULL,
   `building_id` varchar(100) NOT NULL,
-  `approval_status` tinyint(1) NOT NULL DEFAULT 0
+  `approval_status` tinyint(1) NOT NULL DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
@@ -415,6 +417,14 @@ CREATE TABLE `inv_materialcategory` (
   `category_id` varchar(15) CHARACTER SET utf8 NOT NULL,
   `material_sub_description` varchar(75) CHARACTER SET utf8 NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `inv_materialcategory`
+--
+
+INSERT INTO `inv_materialcategory` (`id`, `material_sub_id`, `category_id`, `material_sub_description`) VALUES
+(109, '01-01-00-00-000', '42', 'ABA1'),
+(110, '01-02-00-00-000', '42', 'ABA2');
 
 -- --------------------------------------------------------
 
@@ -431,6 +441,14 @@ CREATE TABLE `inv_materialcategorysub` (
   `consumption_ac` varchar(20) CHARACTER SET utf8 DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+--
+-- Dumping data for table `inv_materialcategorysub`
+--
+
+INSERT INTO `inv_materialcategorysub` (`id`, `category_id`, `category_description`, `stock_acct_id`, `chk_sbalance`, `consumption_ac`) VALUES
+(42, '01-00-00-00-000', 'ABC', NULL, NULL, NULL),
+(43, '02-00-00-00-000', 'ABC2', NULL, NULL, NULL);
+
 -- --------------------------------------------------------
 
 --
@@ -439,11 +457,20 @@ CREATE TABLE `inv_materialcategorysub` (
 
 CREATE TABLE `inv_material_level3` (
   `id` int(11) NOT NULL,
-  `material_level3_id` varchar(15) NOT NULL,
+  `material_level3_code` varchar(15) NOT NULL,
   `category_id` varchar(15) NOT NULL,
   `category_sub_id` varchar(15) NOT NULL,
   `material_level3_description` varchar(50) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `inv_material_level3`
+--
+
+INSERT INTO `inv_material_level3` (`id`, `material_level3_code`, `category_id`, `category_sub_id`, `material_level3_description`) VALUES
+(3, '01-01-01-00-000', '42', '109', 'lv3 1st item'),
+(4, '01-01-02-00-00-', '42', '109', 'lv3 2nd item'),
+(5, '01-01-03-00-000', '42', '109', 'lv3 3rd item');
 
 -- --------------------------------------------------------
 
@@ -453,12 +480,20 @@ CREATE TABLE `inv_material_level3` (
 
 CREATE TABLE `inv_material_level4` (
   `id` int(11) NOT NULL,
-  `material_level4_id` varchar(15) NOT NULL,
+  `material_level4_code` varchar(15) NOT NULL,
   `category_id` varchar(15) NOT NULL,
   `category_sub_id` varchar(15) NOT NULL,
   `level3_id` varchar(15) NOT NULL,
   `material_level4_description` varchar(50) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `inv_material_level4`
+--
+
+INSERT INTO `inv_material_level4` (`id`, `material_level4_code`, `category_id`, `category_sub_id`, `level3_id`, `material_level4_description`) VALUES
+(1, '01-01-01-01-000', '42', '109', '3', 'lv4 item1'),
+(2, '01-01-01-02-000', '43', '109', '3', 'lv4 item2');
 
 -- --------------------------------------------------------
 
@@ -566,7 +601,7 @@ CREATE TABLE `inv_receive` (
   `requisitionno` varchar(500) DEFAULT NULL,
   `requisition_date` datetime DEFAULT NULL,
   `received_by` varchar(100) NOT NULL,
-  `approval_status` tinyint(1) NOT NULL DEFAULT 0,
+  `approval_status` tinyint(1) NOT NULL DEFAULT '0',
   `approved_by` varchar(100) NOT NULL,
   `approved_at` datetime DEFAULT NULL,
   `approval_remarks` longtext NOT NULL,
@@ -593,7 +628,7 @@ CREATE TABLE `inv_receivedetail` (
   `part_no` varchar(200) DEFAULT NULL,
   `project_id` varchar(100) NOT NULL,
   `warehouse_id` varchar(1000) NOT NULL,
-  `approval_status` tinyint(1) NOT NULL DEFAULT 0
+  `approval_status` tinyint(1) NOT NULL DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
@@ -715,7 +750,7 @@ CREATE TABLE `inv_supplierbalance` (
   `sb_cr_amount` float NOT NULL,
   `sb_remark` varchar(175) CHARACTER SET utf8 NOT NULL,
   `sb_partac_id` varchar(25) CHARACTER SET utf8 NOT NULL,
-  `approval_status` tinyint(1) NOT NULL DEFAULT 0
+  `approval_status` tinyint(1) NOT NULL DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
@@ -828,7 +863,7 @@ CREATE TABLE `inv_warehosueinfo` (
   `address` varchar(1000) NOT NULL,
   `created_by` int(11) DEFAULT NULL,
   `updated_by` int(11) NOT NULL,
-  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` timestamp NULL DEFAULT NULL,
   `deleted_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
@@ -900,7 +935,7 @@ CREATE TABLE `menus` (
   `id` int(10) UNSIGNED NOT NULL,
   `type` enum('backend','frontend') COLLATE utf8mb4_unicode_ci NOT NULL,
   `name` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `items` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `items` text COLLATE utf8mb4_unicode_ci,
   `created_by` int(10) UNSIGNED NOT NULL,
   `updated_by` int(10) UNSIGNED DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
@@ -947,8 +982,8 @@ CREATE TABLE `notifications` (
   `id` int(10) UNSIGNED NOT NULL,
   `message` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `user_id` int(10) UNSIGNED NOT NULL,
-  `type` tinyint(1) NOT NULL DEFAULT 1 COMMENT '1 - Dashboard , 2 - Email , 3 - Both',
-  `is_read` tinyint(1) NOT NULL DEFAULT 0,
+  `type` tinyint(1) NOT NULL DEFAULT '1' COMMENT '1 - Dashboard , 2 - Email , 3 - Both',
+  `is_read` tinyint(1) NOT NULL DEFAULT '0',
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -966,7 +1001,7 @@ CREATE TABLE `packages` (
   `warehouse_id` varchar(100) NOT NULL,
   `name` varchar(100) NOT NULL,
   `short_name` varchar(100) NOT NULL,
-  `created_at` datetime NOT NULL DEFAULT current_timestamp(),
+  `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` datetime DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -980,12 +1015,12 @@ CREATE TABLE `pages` (
   `id` int(10) UNSIGNED NOT NULL,
   `title` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `page_slug` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `description` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `description` text COLLATE utf8mb4_unicode_ci,
   `cannonical_link` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `seo_title` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `seo_keyword` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `seo_description` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `status` tinyint(1) NOT NULL DEFAULT 1,
+  `seo_description` text COLLATE utf8mb4_unicode_ci,
+  `status` tinyint(1) NOT NULL DEFAULT '1',
   `created_by` int(10) UNSIGNED NOT NULL,
   `updated_by` int(10) UNSIGNED DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
@@ -1029,8 +1064,8 @@ CREATE TABLE `permissions` (
   `id` int(10) UNSIGNED NOT NULL,
   `name` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `display_name` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `sort` smallint(5) UNSIGNED NOT NULL DEFAULT 0,
-  `status` tinyint(1) NOT NULL DEFAULT 1,
+  `sort` smallint(5) UNSIGNED NOT NULL DEFAULT '0',
+  `status` tinyint(1) NOT NULL DEFAULT '1',
   `created_by` int(11) DEFAULT NULL,
   `updated_by` int(10) UNSIGNED DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
@@ -1136,7 +1171,7 @@ CREATE TABLE `product_movement` (
   `project_form` int(11) DEFAULT NULL,
   `project_to` int(11) DEFAULT NULL,
   `total_quantity` int(11) NOT NULL,
-  `remarks` text DEFAULT NULL,
+  `remarks` text,
   `movement_type` int(11) NOT NULL,
   `created_by` int(11) DEFAULT NULL,
   `updated_by` int(11) DEFAULT NULL,
@@ -1174,10 +1209,10 @@ CREATE TABLE `projects` (
   `code` varchar(200) DEFAULT NULL,
   `name` varchar(500) NOT NULL,
   `incharge` varchar(100) NOT NULL,
-  `address` text DEFAULT NULL,
+  `address` text,
   `created_by` int(11) DEFAULT NULL,
   `updated_by` int(11) DEFAULT NULL,
-  `created_at` timestamp NULL DEFAULT current_timestamp(),
+  `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` timestamp NULL DEFAULT NULL,
   `deleted_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
@@ -1193,7 +1228,7 @@ CREATE TABLE `project_type` (
   `name` varchar(600) DEFAULT NULL,
   `created_by` int(11) NOT NULL,
   `updated_by` int(11) NOT NULL,
-  `created_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `updated_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
   `deleted_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
@@ -1257,9 +1292,9 @@ CREATE TABLE `qry_typewisestock` (
 CREATE TABLE `roles` (
   `id` int(10) UNSIGNED NOT NULL,
   `name` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `all` tinyint(1) NOT NULL DEFAULT 0,
-  `sort` smallint(5) UNSIGNED NOT NULL DEFAULT 0,
-  `status` tinyint(1) NOT NULL DEFAULT 1,
+  `all` tinyint(1) NOT NULL DEFAULT '0',
+  `sort` smallint(5) UNSIGNED NOT NULL DEFAULT '0',
+  `status` tinyint(1) NOT NULL DEFAULT '1',
   `created_by` int(11) DEFAULT NULL,
   `updated_by` int(10) UNSIGNED DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
@@ -1289,7 +1324,7 @@ CREATE TABLE `sessions` (
   `id` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `user_id` int(10) UNSIGNED DEFAULT NULL,
   `ip_address` varchar(45) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `user_agent` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `user_agent` text COLLATE utf8mb4_unicode_ci,
   `payload` text COLLATE utf8mb4_unicode_ci NOT NULL,
   `last_activity` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -1306,10 +1341,10 @@ CREATE TABLE `settings` (
   `logo` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `favicon` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `seo_title` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `seo_keyword` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `seo_description` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `seo_keyword` text COLLATE utf8mb4_unicode_ci,
+  `seo_description` text COLLATE utf8mb4_unicode_ci,
   `company_contact` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `company_address` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `company_address` text COLLATE utf8mb4_unicode_ci,
   `from_name` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `from_email` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `facebook` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
@@ -1318,9 +1353,9 @@ CREATE TABLE `settings` (
   `google` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `copyright_text` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `footer_text` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `terms` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `disclaimer` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `google_analytics` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `terms` text COLLATE utf8mb4_unicode_ci,
+  `disclaimer` text COLLATE utf8mb4_unicode_ci,
+  `google_analytics` text COLLATE utf8mb4_unicode_ci,
   `home_video1` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `home_video2` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `home_video3` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
@@ -1329,7 +1364,7 @@ CREATE TABLE `settings` (
   `explanation2` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `explanation3` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `explanation4` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `values` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `values` text COLLATE utf8mb4_unicode_ci,
   `data_type` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `post_type` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
@@ -1508,7 +1543,7 @@ CREATE TABLE `temp_product_receive_data` (
   `part_no` varchar(500) NOT NULL,
   `supplier_id` varchar(250) DEFAULT NULL,
   `quantity` int(11) NOT NULL,
-  `unit_price` float NOT NULL DEFAULT 0,
+  `unit_price` float NOT NULL DEFAULT '0',
   `project_id` int(11) NOT NULL,
   `project_to_id` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
@@ -1529,10 +1564,10 @@ CREATE TABLE `users` (
   `warehouse_id` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
   `email` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `password` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `status` tinyint(1) NOT NULL DEFAULT 1,
+  `status` tinyint(1) NOT NULL DEFAULT '1',
   `confirmation_code` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `confirmed` tinyint(1) NOT NULL DEFAULT 0,
-  `is_term_accept` tinyint(1) NOT NULL DEFAULT 0 COMMENT ' 0 = not accepted,1 = accepted',
+  `confirmed` tinyint(1) NOT NULL DEFAULT '0',
+  `is_term_accept` tinyint(1) NOT NULL DEFAULT '0' COMMENT ' 0 = not accepted,1 = accepted',
   `remember_token` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `created_by` int(11) DEFAULT NULL,
   `updated_by` int(10) UNSIGNED DEFAULT NULL,
@@ -1559,7 +1594,7 @@ INSERT INTO `users` (`id`, `id2`, `first_name`, `last_name`, `user_type`, `proje
 --
 DROP TABLE IF EXISTS `qry_inv_issue`;
 
-CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `qry_inv_issue`  AS  select `inventory_module`.`inv_issue`.`issue_id` AS `issue_id`,`inventory_module`.`inv_issue`.`issue_date` AS `issue_date`,`inventory_module`.`inv_issuedetail`.`material_id` AS `material_id`,`inventory_module`.`inv_issuedetail`.`issue_qty` AS `issue_qty`,`inventory_module`.`inv_issue`.`warehouse_id` AS `warehouse_id`,`inventory_module`.`inv_issue`.`project_id` AS `project_id`,`inventory_module`.`inv_issuedetail`.`package_id` AS `package_id`,`inventory_module`.`inv_issuedetail`.`building_id` AS `building_id` from (`inventory_module`.`inv_issue` join `inventory_module`.`inv_issuedetail` on(`inventory_module`.`inv_issue`.`issue_id` = `inventory_module`.`inv_issuedetail`.`issue_id`)) ;
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `qry_inv_issue`  AS  select `inventory_module`.`inv_issue`.`issue_id` AS `issue_id`,`inventory_module`.`inv_issue`.`issue_date` AS `issue_date`,`inventory_module`.`inv_issuedetail`.`material_id` AS `material_id`,`inventory_module`.`inv_issuedetail`.`issue_qty` AS `issue_qty`,`inventory_module`.`inv_issue`.`warehouse_id` AS `warehouse_id`,`inventory_module`.`inv_issue`.`project_id` AS `project_id`,`inventory_module`.`inv_issuedetail`.`package_id` AS `package_id`,`inventory_module`.`inv_issuedetail`.`building_id` AS `building_id` from (`inventory_module`.`inv_issue` join `inventory_module`.`inv_issuedetail` on((convert(`inventory_module`.`inv_issue`.`issue_id` using utf8) = `inventory_module`.`inv_issuedetail`.`issue_id`))) ;
 
 -- --------------------------------------------------------
 
@@ -1568,7 +1603,7 @@ CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW 
 --
 DROP TABLE IF EXISTS `qry_typewiseconsumption`;
 
-CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `qry_typewiseconsumption`  AS  select `qry_inv_issue`.`material_id` AS `material_id`,`qry_inv_issue`.`issue_qty` AS `issue_qty`,`inventory_module`.`inv_material`.`type` AS `type`,`qry_inv_issue`.`issue_date` AS `issue_date`,`qry_inv_issue`.`warehouse_id` AS `warehouse_id` from (`inventory_module`.`inv_material` join `inventory_module`.`qry_inv_issue` on(`inventory_module`.`inv_material`.`material_id_code` = `qry_inv_issue`.`material_id`)) ;
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `qry_typewiseconsumption`  AS  select `qry_inv_issue`.`material_id` AS `material_id`,`qry_inv_issue`.`issue_qty` AS `issue_qty`,`inventory_module`.`inv_material`.`type` AS `type`,`qry_inv_issue`.`issue_date` AS `issue_date`,`qry_inv_issue`.`warehouse_id` AS `warehouse_id` from (`inventory_module`.`inv_material` join `inventory_module`.`qry_inv_issue` on((convert(`inventory_module`.`inv_material`.`material_id_code` using utf8) = `qry_inv_issue`.`material_id`))) ;
 
 -- --------------------------------------------------------
 
@@ -1577,7 +1612,7 @@ CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW 
 --
 DROP TABLE IF EXISTS `qry_typewisestock`;
 
-CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `qry_typewisestock`  AS  select `inventory_module`.`inv_materialbalance`.`mb_ref_id` AS `mb_ref_id`,`inventory_module`.`inv_materialbalance`.`mb_materialid` AS `mb_materialid`,`inventory_module`.`inv_materialbalance`.`mb_date` AS `mb_date`,`inventory_module`.`inv_materialbalance`.`mbin_qty` AS `mbin_qty`,`inventory_module`.`inv_materialbalance`.`mbout_qty` AS `mbout_qty`,`inventory_module`.`inv_materialbalance`.`mbtype` AS `mbtype`,`inventory_module`.`inv_materialbalance`.`project_id` AS `project_id`,`inventory_module`.`inv_materialbalance`.`warehouse_id` AS `warehouse_id`,`inventory_module`.`inv_materialbalance`.`package_id` AS `package_id`,`inventory_module`.`inv_material`.`type` AS `type` from (`inventory_module`.`inv_material` join `inventory_module`.`inv_materialbalance` on(`inventory_module`.`inv_material`.`material_id_code` = `inventory_module`.`inv_materialbalance`.`mb_materialid`)) ;
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `qry_typewisestock`  AS  select `inventory_module`.`inv_materialbalance`.`mb_ref_id` AS `mb_ref_id`,`inventory_module`.`inv_materialbalance`.`mb_materialid` AS `mb_materialid`,`inventory_module`.`inv_materialbalance`.`mb_date` AS `mb_date`,`inventory_module`.`inv_materialbalance`.`mbin_qty` AS `mbin_qty`,`inventory_module`.`inv_materialbalance`.`mbout_qty` AS `mbout_qty`,`inventory_module`.`inv_materialbalance`.`mbtype` AS `mbtype`,`inventory_module`.`inv_materialbalance`.`project_id` AS `project_id`,`inventory_module`.`inv_materialbalance`.`warehouse_id` AS `warehouse_id`,`inventory_module`.`inv_materialbalance`.`package_id` AS `package_id`,`inventory_module`.`inv_material`.`type` AS `type` from (`inventory_module`.`inv_material` join `inventory_module`.`inv_materialbalance` on((convert(`inventory_module`.`inv_material`.`material_id_code` using utf8) = `inventory_module`.`inv_materialbalance`.`mb_materialid`))) ;
 
 --
 -- Indexes for dumped tables
@@ -1880,289 +1915,241 @@ ALTER TABLE `users`
 --
 ALTER TABLE `buildings`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2008;
-
 --
 -- AUTO_INCREMENT for table `complain_type`
 --
 ALTER TABLE `complain_type`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
-
 --
 -- AUTO_INCREMENT for table `inv_challan`
 --
 ALTER TABLE `inv_challan`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=58;
-
 --
 -- AUTO_INCREMENT for table `inv_complain`
 --
 ALTER TABLE `inv_complain`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
-
 --
 -- AUTO_INCREMENT for table `inv_complaindetails`
 --
 ALTER TABLE `inv_complaindetails`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29;
-
 --
 -- AUTO_INCREMENT for table `inv_designation`
 --
 ALTER TABLE `inv_designation`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
-
 --
 -- AUTO_INCREMENT for table `inv_employee`
 --
 ALTER TABLE `inv_employee`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=45;
-
 --
 -- AUTO_INCREMENT for table `inv_invoice`
 --
 ALTER TABLE `inv_invoice`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29;
-
 --
 -- AUTO_INCREMENT for table `inv_invoice_details`
 --
 ALTER TABLE `inv_invoice_details`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=41;
-
 --
 -- AUTO_INCREMENT for table `inv_issue`
 --
 ALTER TABLE `inv_issue`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1738;
-
 --
 -- AUTO_INCREMENT for table `inv_issuedetail`
 --
 ALTER TABLE `inv_issuedetail`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6895;
-
 --
 -- AUTO_INCREMENT for table `inv_item_unit`
 --
 ALTER TABLE `inv_item_unit`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
-
 --
 -- AUTO_INCREMENT for table `inv_job_card`
 --
 ALTER TABLE `inv_job_card`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
-
 --
 -- AUTO_INCREMENT for table `inv_job_card_details`
 --
 ALTER TABLE `inv_job_card_details`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
-
 --
 -- AUTO_INCREMENT for table `inv_material`
 --
 ALTER TABLE `inv_material`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=266;
-
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=268;
 --
 -- AUTO_INCREMENT for table `inv_materialbalance`
 --
 ALTER TABLE `inv_materialbalance`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14728;
-
 --
 -- AUTO_INCREMENT for table `inv_materialcategory`
 --
 ALTER TABLE `inv_materialcategory`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=107;
-
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=111;
 --
 -- AUTO_INCREMENT for table `inv_materialcategorysub`
 --
 ALTER TABLE `inv_materialcategorysub`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=40;
-
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=44;
 --
 -- AUTO_INCREMENT for table `inv_material_level3`
 --
 ALTER TABLE `inv_material_level3`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
-
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 --
 -- AUTO_INCREMENT for table `inv_material_level4`
 --
 ALTER TABLE `inv_material_level4`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
-
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 --
 -- AUTO_INCREMENT for table `inv_particulars`
 --
 ALTER TABLE `inv_particulars`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
-
 --
 -- AUTO_INCREMENT for table `inv_particulars_type`
 --
 ALTER TABLE `inv_particulars_type`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
-
 --
 -- AUTO_INCREMENT for table `inv_purchase`
 --
 ALTER TABLE `inv_purchase`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
-
 --
 -- AUTO_INCREMENT for table `inv_purchasedetail`
 --
 ALTER TABLE `inv_purchasedetail`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
-
 --
 -- AUTO_INCREMENT for table `inv_receive`
 --
 ALTER TABLE `inv_receive`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=826;
-
 --
 -- AUTO_INCREMENT for table `inv_receivedetail`
 --
 ALTER TABLE `inv_receivedetail`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1164;
-
 --
 -- AUTO_INCREMENT for table `inv_return`
 --
 ALTER TABLE `inv_return`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=56;
-
 --
 -- AUTO_INCREMENT for table `inv_returndetail`
 --
 ALTER TABLE `inv_returndetail`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=75;
-
 --
 -- AUTO_INCREMENT for table `inv_serviceinvoice`
 --
 ALTER TABLE `inv_serviceinvoice`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=27;
-
 --
 -- AUTO_INCREMENT for table `inv_supplier`
 --
 ALTER TABLE `inv_supplier`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
-
 --
 -- AUTO_INCREMENT for table `inv_supplierbalance`
 --
 ALTER TABLE `inv_supplierbalance`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=604;
-
 --
 -- AUTO_INCREMENT for table `inv_technicianinfo`
 --
 ALTER TABLE `inv_technicianinfo`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
-
 --
 -- AUTO_INCREMENT for table `inv_tranferdetail`
 --
 ALTER TABLE `inv_tranferdetail`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=98;
-
 --
 -- AUTO_INCREMENT for table `inv_transfermaster`
 --
 ALTER TABLE `inv_transfermaster`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=58;
-
 --
 -- AUTO_INCREMENT for table `inv_voucher`
 --
 ALTER TABLE `inv_voucher`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
-
 --
 -- AUTO_INCREMENT for table `inv_voucherdetails`
 --
 ALTER TABLE `inv_voucherdetails`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
-
 --
 -- AUTO_INCREMENT for table `inv_voucher_cat`
 --
 ALTER TABLE `inv_voucher_cat`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
-
 --
 -- AUTO_INCREMENT for table `inv_warehosueinfo`
 --
 ALTER TABLE `inv_warehosueinfo`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
-
 --
 -- AUTO_INCREMENT for table `materialbalance`
 --
 ALTER TABLE `materialbalance`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
-
 --
 -- AUTO_INCREMENT for table `packages`
 --
 ALTER TABLE `packages`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
-
 --
 -- AUTO_INCREMENT for table `projects`
 --
 ALTER TABLE `projects`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
-
 --
 -- AUTO_INCREMENT for table `sttable`
 --
 ALTER TABLE `sttable`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=143;
-
 --
 -- AUTO_INCREMENT for table `suppliers`
 --
 ALTER TABLE `suppliers`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=173;
-
 --
 -- AUTO_INCREMENT for table `supplier_payment`
 --
 ALTER TABLE `supplier_payment`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
-
 --
 -- AUTO_INCREMENT for table `tbl_customer`
 --
 ALTER TABLE `tbl_customer`
   MODIFY `CustomerID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
-
 --
 -- AUTO_INCREMENT for table `tb_billpayment`
 --
 ALTER TABLE `tb_billpayment`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=36;
-
 --
 -- AUTO_INCREMENT for table `tb_ledger`
 --
 ALTER TABLE `tb_ledger`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
-
 --
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
-COMMIT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;

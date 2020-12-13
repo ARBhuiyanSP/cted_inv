@@ -58,7 +58,7 @@
                 <!-- processSubItems -->
                 <div class="modal-footer modal_footer_custom_background">
                     <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-default" onclick="processMaterialLevel3Items('level3_added_form_value')">Save</button>
+                    <button type="button" class="btn btn-default" onclick="processMaterialLevel3Items('leve3_added_form_value')">Save</button>
                 </div>
             </div>
         </div>

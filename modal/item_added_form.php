@@ -12,7 +12,7 @@
                         <div class="form-group">
                             <label class="control-label col-sm-5" for="parent_code">Parent Category:</label>
                             <div class="col-sm-7">
-                                <select class="form-control" id="main_item_id" name="parent_item_id" onchange="getSubCategoryByParent(this.value);">
+                                <select class="form-control" id="main_cat_item_id" name="parent_item_id" onchange="getSubCategoryByParent(this.value);">
                                     <option value="">Select</option>
                                     <?php
                                     $parentCats = getTableDataByTableName('inv_materialcategorysub', '', 'category_description');
@@ -28,7 +28,7 @@
                         <div class="form-group">
                             <label class="control-label col-sm-5" for="parent_code">Sub Category:</label>
                             <div class="col-sm-7">
-                                <select class="form-control" id="main_sub_item_id" name="sub_item_id" onchange="getMatCodeBySubId(this.value);">
+                                <select class="form-control" id="main_sub_cat_item_id" name="sub_item_id" onchange="">
                                     <option value="">Select</option>
                                     <?php
                                     $parentCats = getTableDataByTableName('inv_materialcategory','','material_sub_description');
@@ -36,6 +36,38 @@
                                         foreach ($parentCats as $pcat) {
                                             ?>
                                             <option value="<?php echo $pcat['id'] ?>"><?php echo $pcat['material_sub_description'] ?></option>
+                                        <?php }
+                                    } ?>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-sm-5" for="parent_code">Level-3:</label>
+                            <div class="col-sm-7">
+                                <select class="form-control" id="material_level3_id" name="material_level3_id" onchange="getLevel4CodeByLevel3(this.value);">
+                                    <option value="">Select</option>
+                                    <?php
+                                    $parentCats = getTableDataByTableName('inv_material_level3','','material_level3_description');
+                                    if (isset($parentCats) && !empty($parentCats)) {
+                                        foreach ($parentCats as $pcat) {
+                                            ?>
+                                            <option value="<?php echo $pcat['id'] ?>"><?php echo $pcat['material_level3_description'] ?></option>
+                                        <?php }
+                                    } ?>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-sm-5" for="parent_code">Level-4:</label>
+                            <div class="col-sm-7">
+                                <select class="form-control" id="material_level4_id" name="material_level4_id" onchange="getMatCodeBySubId(this.value);">
+                                    <option value="">Select</option>
+                                    <?php
+                                    $parentCats = getTableDataByTableName('inv_material_level4','','material_level4_description');
+                                    if (isset($parentCats) && !empty($parentCats)) {
+                                        foreach ($parentCats as $pcat) {
+                                            ?>
+                                            <option value="<?php echo $pcat['id'] ?>"><?php echo $pcat['material_level4_description'] ?></option>
                                         <?php }
                                     } ?>
                                 </select>
