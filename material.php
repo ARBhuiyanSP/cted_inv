@@ -196,7 +196,7 @@
                                             <th>Action</th>
                                         </tr>
                                     </thead>
-                                    <tbody id="sub_category_body">
+                                    <tbody id="level4_category_body">
                                         <?php
                                         $childInfo = getTableDataByTableName('inv_material_level4', '', 'material_level4_description');
                                         if (isset($childInfo) && !empty($childInfo)) {
