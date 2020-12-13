@@ -184,6 +184,103 @@ if(isset($_GET['process_type']) && $_GET['process_type'] == 'item'){
     ];
     echo json_encode($data);
 }
+
+/*
+****************************************************************************************
+############################## MATERIAL LEVEL 3 DATA ADD ###############################
+############################## start tanveer qureshee 12-13-2020 #######################
+****************************************************************************************
+*/
+
+if(isset($_GET['process_type']) && $_GET['process_type'] == 'level3itemsave'){
+    include '../connection/connect.php';
+    include '../helper/utilities.php';
+    $status     =   'success';
+    $message    =   'Current operation was successfully completed';
+    $feedback   =   '';
+
+    $category_id                    =   mysqli_real_escape_string($conn, $_POST['category_id']);
+    $category_sub_id                =   mysqli_real_escape_string($conn, $_POST['category_sub_id']);
+    $material_level3_code           =   mysqli_real_escape_string($conn, $_POST['material_level3_code']);
+    $material_level3_description    =   mysqli_real_escape_string($conn, $_POST['material_level3_description']);
+    // check duplicate:
+    $table = 'inv_material_level3';
+    $where = "category_id=".$category_id." and category_sub_id='$category_sub_id' and material_level3_code='$material_level3_code' and material_level3_description='$material_level3_description'";
+    if(isset($_POST['level3_update_id']) && !empty($_POST['level3_update_id'])){
+        $notWhere   =   "id!=".$_POST['level3_update_id'];
+        $duplicatedata = isDuplicateData($table, $where, $notWhere);
+    }else{
+        $duplicatedata = isDuplicateData($table, $where);
+    }
+    if ($duplicatedata) {
+        $status  = 'error';
+        $message = 'Current operation was faild. Duplicate data found!';
+    } else {
+        if(isset($_POST['level3_update_id']) && !empty($_POST['level3_update_id'])){
+            $edit_id     =   $_POST['level3_update_id'];
+            $sql         = "UPDATE inv_material_level3 SET category_id='$category_id',category_sub_id='$category_sub_id',material_level3_code='$material_level3_code',material_level3_description='$material_level3_description'WHERE id=$edit_id";
+            $status      = 'success';
+            $message     = 'Data have been successfully updated!';            
+        }else{
+            $sql         = "INSERT INTO inv_material_level3 (category_id,category_sub_id,material_level3_code,material_level3_description) VALUES ('".$category_id."','".$category_sub_id."', '".$material_level3_code."','".$material_level3_description."')";
+            $status      = 'success';
+            $message     = 'Data have been successfully inserted!';
+            
+        }
+        if ($conn->query($sql) === TRUE) {
+            $feedback = level3_table_json_response('inv_material_level3');
+        }
+    }
+    $data = [
+        'status'    => $status,
+        'message'   => $message,
+        'data'      => $feedback,
+    ];
+    echo json_encode($data);
+}
+
+function level3_table_json_response($tableName){
+    $feedback   =   '';
+    $tableData = getTableDataByTableName($tableName, '', 'material_level3_description');
+    if (isset($tableData) && !empty($tableData)) {
+        foreach ($tableData as $data) {
+            // category_id
+            // category_sub_id
+            // material_level3_description
+            // material_level3_code
+
+            $id                         =  $data['id'];
+            $level1Data                 =  getDataRowByTableAndId('inv_materialcategorysub', $data['category_id']);
+            
+            $level2Data                 =  getDataRowByTableAndId('inv_materialcategory', $data['category_sub_id']);
+            
+            $material_level3_code       =  $data['material_level3_code'];
+            $material_level3_description=  $data['material_level3_description'];
+            $feedback.="<tr>
+                <td>$level1Data->category_id</td>
+                <td>$level2Data->material_sub_id</td>
+                <td>$material_level3_code</td>
+                <td>$material_level3_description</td>
+                <td>
+                    <button type=\"button\" class=\"btn btn-sm\" onclick=\"openMaterialEditForm('$id');\">
+                        <i class=\"fa fa-edit\" aria-hidden=\"true\"></i>
+                    </button>
+                </td>
+            </tr>";
+        }
+    }
+    return $feedback;
+}
+
+
+
+
+
+/*
+*************************************************************** END ******************************************************************************
+*/
+
+
 function item_table_json_response($tableName) {
     $feedback   =   '';
     $tableData = getTableDataByTableName($tableName, '', 'material_description');
@@ -425,9 +522,9 @@ if(isset($_GET['process_type']) && $_GET['process_type'] == 'get_category_code')
             if ($result->num_rows > 0) {
                 $value          =   $result->num_rows + 1;
                 $code           =  sprintf('%0' . 2 . 's', $value);
-                $defaultCode    =  $code.'-00-000';
+                $defaultCode    =  $code.'-00-00-00-000';
             }else{
-                $defaultCode    =  '01-00-000';
+                $defaultCode    =  '01-00-00-00-000';
             }
             break;
         case 'sub':
@@ -444,10 +541,42 @@ if(isset($_GET['process_type']) && $_GET['process_type'] == 'get_category_code')
             if ($result->num_rows > 0) {
                 $parentPrefixcode   =  explode('-', $presult->fetch_object()->category_id);
                 $code               =  sprintf('%0' . 2 . 's', $result->num_rows + 1);
-                $defaultCode        =  $parentPrefixcode[0].'-'.$code.'-000';
+                $defaultCode        =  $parentPrefixcode[0].'-'.$code.'-00-00-000';
             }else{
                 $parentPrefixcode   =  explode('-', $presult->fetch_object()->category_id);
-                $defaultCode        =  $parentPrefixcode[0].'-01'.'-000';
+                $defaultCode        =  $parentPrefixcode[0].'-01'.'-00-00-000';
+            }
+            break;
+        case 'level3':
+
+            //level 2 data:
+            $level2sql      =   "SELECT * FROM inv_materialcategory where id=".$_POST['level_2_id'];
+            $level2result   =   $conn->query($level2sql);
+            $level2Data     =   $level2result->fetch_object();
+
+            //level 1 data:
+            $level1sql      =   "SELECT * FROM inv_materialcategorysub where id=".$level2Data->category_id;
+            $level1result   =   $conn->query($level1sql);
+
+            $table =    'inv_material_level3';
+            $where =    ' where category_sub_id='.$_POST['level_2_id'];
+            $sql.= "SELECT * FROM $table";
+            if(isset($where) && !empty($where)){
+                $sql.= $where;
+            }
+            $result = $conn->query($sql);
+            if ($result->num_rows > 0) {
+
+                $parentPrefixcode   =  explode('-', $level1result->fetch_object()->category_id);
+                $level2Prefixcode   =  explode('-', $level2Data->material_sub_id);
+                $code               =  sprintf('%0' . 2 . 's', $result->num_rows + 1);
+                $defaultCode        =  $parentPrefixcode[0].'-'.$level2Prefixcode[1].'-'.$code.'-00-00-000';
+            }else{
+
+                $parentPrefixcode   =  explode('-', $level1result->fetch_object()->category_id);
+                $level2Prefixcode   =  explode('-', $level2Data->material_sub_id);
+
+                $defaultCode        =  $parentPrefixcode[0].'-'.$level2Prefixcode[1].'-01-00-000';
             }
             break;
         case 'mat':

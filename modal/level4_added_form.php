@@ -1,6 +1,6 @@
 <!-- Modal -->
 <div class="modal fade" id="level4_added_form" role="dialog">
-    <form id="sub_item_added_form_value">
+    <form id="level4_added_form_value">
         <div class="modal-dialog">
             <!-- Modal content-->
             <div class="modal-content">

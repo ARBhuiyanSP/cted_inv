@@ -184,6 +184,33 @@ function processSubItems(form_id) {
     }
 }
 
+function processMaterialLevel3Items(form_id){
+    $.ajax({
+        url: baseUrl + "includes/item_process.php?process_type=level3itemsave",
+        type: 'POST',
+        dataType: 'json',
+        data: $("#" + form_id).serialize(),
+        success: function(response) {
+            if (response.status == 'success') {
+                $('#main_item_id').val('');
+                $('#main_sub_item_id').val('');
+                $('#leve3_code').val('');
+                $('#leve3_name').val('');
+                if (form_id == 'level3_added_form_value') {
+                    $('#level3_added_form').modal('hide');
+                } else if (form_id == 'item_updated_form_value') {
+                    $('#item_edit_form').modal('hide');
+                }
+                $('#level3_category_body').html(response.data);
+                $("#item_information").accordion({ active: 2 });
+                swal("Success", response.message, "success");
+            } else {
+                swal("Failed", response.message, "error");
+            }
+        }
+    });
+}
+
 function processItems(form_id) {
 
     var validationResult;
@@ -366,6 +393,25 @@ function getSubCodeByParenId(parent_id, selector = false) {
                     $('#' + selector).val(response.code);
                 } else {
                     $('#sub_code').val(response.code);
+                }
+            }
+        });
+    } else {
+        $('#sub_code').val('');
+    }
+}
+function getLevel3CodeByLevel2(level_2_id, selector = false) {
+    if (level_2_id) {
+        $.ajax({
+            url: baseUrl + "includes/item_process.php?process_type=get_category_code",
+            type: 'POST',
+            dataType: 'json',
+            data: 'cat_type=level3&data_type=ajax&level_2_id=' + level_2_id,
+            success: function(response) {
+                if (selector) {
+                    $('#' + selector).val(response.code);
+                } else {
+                    $('#leve3_code').val(response.code);
                 }
             }
         });
