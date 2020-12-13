@@ -1,6 +1,6 @@
 <!-- Modal -->
 <div class="modal fade" id="level3_added_form" role="dialog">
-    <form id="level3_added_form_value">
+    <form id="leve3_added_form_valuex">
         <div class="modal-dialog">
             <!-- Modal content-->
             <div class="modal-content">
@@ -58,7 +58,7 @@
                 <!-- processSubItems -->
                 <div class="modal-footer modal_footer_custom_background">
                     <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-default" onclick="processMaterialLevel3Items('leve3_added_form_value')">Save</button>
+                    <button type="button" class="btn btn-default" onclick="processMaterialLevel3Items('leve3_added_form_valuex')">Save</button>
                 </div>
             </div>
         </div>

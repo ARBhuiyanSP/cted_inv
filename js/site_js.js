@@ -196,7 +196,7 @@ function processMaterialLevel3Items(form_id){
                 $('#main_sub_item_id').val('');
                 $('#leve3_code').val('');
                 $('#leve3_name').val('');
-                if (form_id == 'level3_added_form_value') {
+                if (form_id == 'leve3_added_form_valuex') {
                     $('#level3_added_form').modal('hide');
                 } else if (form_id == 'item_updated_form_value') {
                     $('#item_edit_form').modal('hide');
