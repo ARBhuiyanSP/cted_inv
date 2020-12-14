@@ -12,7 +12,7 @@
                         <div class="form-group">
                             <label class="control-label col-sm-5" for="parent_code">Level-1:</label>
                             <div class="col-sm-7">
-                                <select class="form-control" id="main_item_id" name="category_id" onchange="getSubCategoryByParent(this.value);">
+                                <select class="form-control" id="level_1_id" name="category_id" onchange="get2By1(this.value);">
                                     <option value="">Select</option>
                                     <?php
                                     $parentCats = getTableDataByTableName('inv_materialcategorysub', '', 'category_description');
@@ -28,7 +28,7 @@
                         <div class="form-group">
                             <label class="control-label col-sm-5" for="parent_code">Level-2:</label>
                             <div class="col-sm-7">
-                                <select class="form-control" id="sub_item_id" name="category_sub_id" onchange="getLevel3BySub(this.value);">
+                                <select class="form-control" id="level_2_id" name="category_sub_id" onchange="getLevel3BySub(this.value);">
                                     <option value="">Select</option>
                                     <?php
                                     $parentCats = getTableDataByTableName('inv_materialcategory','','material_sub_description');

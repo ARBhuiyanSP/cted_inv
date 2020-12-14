@@ -166,7 +166,6 @@ if(isset($_GET['process_type']) && $_GET['process_type'] == 'item'){
     $item_code          =   mysqli_real_escape_string($conn, $_POST['item_code']);
     $name               =   mysqli_real_escape_string($conn, $_POST['name']);
     $brand_name			=   mysqli_real_escape_string($conn, $_POST['brand_name']);
-    $type				=   mysqli_real_escape_string($conn, $_POST['type']);
     $qty_unit           =   mysqli_real_escape_string($conn, $_POST['qty_unit']);
     $material_min_stock =   mysqli_real_escape_string($conn, $_POST['material_min_stock']);
     // check duplicate:
@@ -184,11 +183,11 @@ if(isset($_GET['process_type']) && $_GET['process_type'] == 'item'){
     } else {
         if(isset($_POST['material_update_id']) && !empty($_POST['material_update_id'])){
             $edit_id     =   $_POST['material_update_id'];
-            $sql         = "UPDATE inv_material SET material_id_code='$item_code',material_id='$parent_id',material_sub_id='$sub_item_id',material_level3_id='$material_level3_id',material_level4_id='$material_level4_id',material_description='$name',brand_name='$brand_name',type='$type',material_min_stock='$material_min_stock',qty_unit='$qty_unit' WHERE id=$edit_id";
+            $sql         = "UPDATE inv_material SET material_id_code='$item_code',material_id='$parent_id',material_sub_id='$sub_item_id',material_level3_id='$material_level3_id',material_level4_id='$material_level4_id',material_description='$name',brand_name='$brand_name',material_min_stock='$material_min_stock',qty_unit='$qty_unit' WHERE id=$edit_id";
             $status      = 'success';
             $message     = 'Data have been successfully updated!';            
         }else{
-            $sql         = "INSERT INTO inv_material (material_id,material_sub_id,material_level3_id,material_level4_id,material_id_code,material_description,brand_name,type,material_min_stock,qty_unit) VALUES ('".$parent_id."','".$sub_item_id."','".$material_level3_id."','".$material_level4_id."', '".$item_code."','".$name."','".$brand_name."','".$type."', '".$material_min_stock."','".$qty_unit."')";
+            $sql         = "INSERT INTO inv_material (material_id,material_sub_id,material_level3_id,material_level4_id,material_id_code,material_description,brand_name,material_min_stock,qty_unit) VALUES ('".$parent_id."','".$sub_item_id."','".$material_level3_id."','".$material_level4_id."', '".$item_code."','".$name."','".$brand_name."', '".$material_min_stock."','".$qty_unit."')";
             $status      = 'success';
             $message     = 'Data have been successfully inserted!';
             
@@ -451,7 +450,84 @@ if(isset($_GET['process_type']) && $_GET['process_type'] == 'get_sub_by_parent')
         }
     }
 }
+/*-----------level 4-----------*/
+if(isset($_GET['process_type']) && $_GET['process_type'] == 'get_3_by_2'){
+    include '../connection/connect.php';
+    include '../helper/utilities.php';
+    $level_1_id      =    $_POST['level_1_id'];
+    $tableName      =    'inv_materialcategory where category_id='.$level_1_id;
+    $tableData      = getTableDataByTableName($tableName, '', 'material_sub_description');
+    if (isset($tableData) && !empty($tableData)) {
+        echo "<option value=''>Please Select</option>";
+        foreach ($tableData as $data) { ?>
+            <option value="<?php echo $data['id']; ?>"><?php echo $data['material_sub_description'].'('.$data['material_sub_id'].')'; ?></option>
+            <?php
+        }
+    }
+}
 
+
+if(isset($_GET['process_type']) && $_GET['process_type'] == 'get_4_by_3'){
+    include '../connection/connect.php';
+    include '../helper/utilities.php';
+    $level_2_id      =    $_POST['level_2_id'];
+    $tableName      =    'inv_material_level3 where category_sub_id='.$level_2_id;
+    $tableData      = getTableDataByTableName($tableName, '', 'material_level3_description');
+    if (isset($tableData) && !empty($tableData)) {
+        echo "<option value=''>Please Select</option>";
+        foreach ($tableData as $data) { ?>
+            <option value="<?php echo $data['id']; ?>"><?php echo $data['material_level3_description'].'('.$data['material_level3_code'].')'; ?></option>
+            <?php
+        }
+    }
+}
+/*-----------level 4-----------*/
+/*-----------level 5-----------*/
+if(isset($_GET['process_type']) && $_GET['process_type'] == 'get5__3_by_2'){
+    include '../connection/connect.php';
+    include '../helper/utilities.php';
+    $level_1_id_l5      =    $_POST['level_1_id_l5'];
+    $tableName      =    'inv_materialcategory where category_id='.$level_1_id_l5;
+    $tableData      = getTableDataByTableName($tableName, '', 'material_sub_description');
+    if (isset($tableData) && !empty($tableData)) {
+        echo "<option value=''>Please Select</option>";
+        foreach ($tableData as $data) { ?>
+            <option value="<?php echo $data['id']; ?>"><?php echo $data['material_sub_description'].'('.$data['material_sub_id'].')'; ?></option>
+            <?php
+        }
+    }
+}
+
+if(isset($_GET['process_type']) && $_GET['process_type'] == 'get5__4_by_3'){
+    include '../connection/connect.php';
+    include '../helper/utilities.php';
+    $level_2_id_l5      =    $_POST['level_2_id_l5'];
+    $tableName      =    'inv_material_level3 where category_sub_id='.$level_2_id_l5;
+    $tableData      = getTableDataByTableName($tableName, '', 'material_level3_description');
+    if (isset($tableData) && !empty($tableData)) {
+        echo "<option value=''>Please Select</option>";
+        foreach ($tableData as $data) { ?>
+            <option value="<?php echo $data['id']; ?>"><?php echo $data['material_level3_description'].'('.$data['material_level3_code'].')'; ?></option>
+            <?php
+        }
+    }
+}
+
+if(isset($_GET['process_type']) && $_GET['process_type'] == 'get5__5_by_4'){
+    include '../connection/connect.php';
+    include '../helper/utilities.php';
+    $material_level3_id      =    $_POST['material_level3_id'];
+    $tableName      =    'inv_material_level4 where level3_id='.$material_level3_id;
+    $tableData      = getTableDataByTableName($tableName, '', 'material_level4_description');
+    if (isset($tableData) && !empty($tableData)) {
+        echo "<option value=''>Please Select</option>";
+        foreach ($tableData as $data) { ?>
+            <option value="<?php echo $data['id']; ?>"><?php echo $data['material_level4_description'].'('.$data['material_level4_code'].')'; ?></option>
+            <?php
+        }
+    }
+}
+/*-----------level 5-----------*/
 
 
 /*
