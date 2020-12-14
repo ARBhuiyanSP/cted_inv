@@ -85,26 +85,16 @@
                                 <input type="text" class="form-control" id="item_name" placeholder="name" name="name" required>
                             </div>
                         </div>
-                        <!-- <div class="form-group">
-                            <label class="control-label col-sm-5" for="name">Brand Name:</label>
+                        <div class="form-group">
+                            <label class="control-label col-sm-5" for="name">Part No:</label>
                             <div class="col-sm-7">
-                                <input type="text" class="form-control" id="brand_name" placeholder="brand name" name="brand_name">
+                                <input type="text" class="form-control" id="part_no" placeholder="part_no" name="part_no">
                             </div>
-                        </div> -->
-						<div class="form-group">
-                            <label class="control-label col-sm-5" for="parent_code">Type:</label>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-sm-5" for="name">Specification:</label>
                             <div class="col-sm-7">
-                                <select class="form-control" id="type" name="brand_name">
-                                    <option value="">Select</option>
-                                    <?php
-                                    $parentCats = getTableDataByTableName('inv_materialcategorysub', '', 'category_description');
-                                    if (isset($parentCats) && !empty($parentCats)) {
-                                        foreach ($parentCats as $pcat) {
-                                            ?>
-                                            <option value="<?php echo $pcat['id'] ?>"><?php echo $pcat['category_description'] ?></option>
-                                        <?php }
-                                    } ?>
-                                </select>
+                                <input type="text" class="form-control" id="spec" placeholder="Specification" name="spec">
                             </div>
                         </div>
                         <div class="form-group">

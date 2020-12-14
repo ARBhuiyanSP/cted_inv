@@ -165,7 +165,8 @@ if(isset($_GET['process_type']) && $_GET['process_type'] == 'item'){
     $material_level4_id =   mysqli_real_escape_string($conn, $_POST['material_level4_id']);
     $item_code          =   mysqli_real_escape_string($conn, $_POST['item_code']);
     $name               =   mysqli_real_escape_string($conn, $_POST['name']);
-    $brand_name			=   mysqli_real_escape_string($conn, $_POST['brand_name']);
+    $part_no			=   mysqli_real_escape_string($conn, $_POST['part_no']);
+    $spec				=   mysqli_real_escape_string($conn, $_POST['spec']);
     $qty_unit           =   mysqli_real_escape_string($conn, $_POST['qty_unit']);
     $material_min_stock =   mysqli_real_escape_string($conn, $_POST['material_min_stock']);
     // check duplicate:
@@ -183,11 +184,11 @@ if(isset($_GET['process_type']) && $_GET['process_type'] == 'item'){
     } else {
         if(isset($_POST['material_update_id']) && !empty($_POST['material_update_id'])){
             $edit_id     =   $_POST['material_update_id'];
-            $sql         = "UPDATE inv_material SET material_id_code='$item_code',material_id='$parent_id',material_sub_id='$sub_item_id',material_level3_id='$material_level3_id',material_level4_id='$material_level4_id',material_description='$name',brand_name='$brand_name',material_min_stock='$material_min_stock',qty_unit='$qty_unit' WHERE id=$edit_id";
+            $sql         = "UPDATE inv_material SET material_id_code='$item_code',material_id='$parent_id',material_sub_id='$sub_item_id',material_level3_id='$material_level3_id',material_level4_id='$material_level4_id',material_description='$name',spec='$spec',material_min_stock='$material_min_stock',qty_unit='$qty_unit',part_no='$part_no' WHERE id=$edit_id";
             $status      = 'success';
             $message     = 'Data have been successfully updated!';            
         }else{
-            $sql         = "INSERT INTO inv_material (material_id,material_sub_id,material_level3_id,material_level4_id,material_id_code,material_description,brand_name,material_min_stock,qty_unit) VALUES ('".$parent_id."','".$sub_item_id."','".$material_level3_id."','".$material_level4_id."', '".$item_code."','".$name."','".$brand_name."', '".$material_min_stock."','".$qty_unit."')";
+            $sql         = "INSERT INTO inv_material (material_id,material_sub_id,material_level3_id,material_level4_id,material_id_code,material_description,spec,material_min_stock,qty_unit,part_no) VALUES ('".$parent_id."','".$sub_item_id."','".$material_level3_id."','".$material_level4_id."', '".$item_code."','".$name."', '".$spec."', '".$material_min_stock."','".$qty_unit."','".$part_no."')";
             $status      = 'success';
             $message     = 'Data have been successfully inserted!';
             
