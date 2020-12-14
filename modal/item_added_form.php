@@ -96,11 +96,14 @@
                             <div class="col-sm-7">
                                 <select class="form-control" id="type" name="brand_name">
                                     <option value="">Select</option>
-                                    <option value="CIVIL">CIVIL</option>
-									<option value="ELECTRICAL">ELECTRICAL</option>
-									<option value="MACHANICAL">MACHANICAL</option>
-									<option value="SANITARY">SANITARY</option>
-									<option value="HARDWARE">HARDWARE</option>
+                                    <?php
+                                    $parentCats = getTableDataByTableName('inv_materialcategorysub', '', 'category_description');
+                                    if (isset($parentCats) && !empty($parentCats)) {
+                                        foreach ($parentCats as $pcat) {
+                                            ?>
+                                            <option value="<?php echo $pcat['id'] ?>"><?php echo $pcat['category_description'] ?></option>
+                                        <?php }
+                                    } ?>
                                 </select>
                             </div>
                         </div>
