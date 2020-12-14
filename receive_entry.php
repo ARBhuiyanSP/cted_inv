@@ -152,9 +152,10 @@
                                 <th>Material Name<span class="reqfield"> ***required</span></th>
                                 <th>Material ID</th>
                                 <th width="10%">Unit</th>
-                                <th>Category</th>
-                                <th>Part No</th>
+                                <th>Brand Name</th>
                                 <th>Qty<span class="reqfield"> ***required</span></th>
+                                <th>Unit Price<span class="reqfield"> ***required</span></th>
+                                <th>Total Amount</th>
                                 <th></th>
                                 </thead>
                                 <tbody>
@@ -177,7 +178,7 @@
                                         <td><input type="text" name="material_id[]" id="material_id0" class="form-control" required readonly></td>
                                         <td>
                                             <select class="form-control" id="unit0" name="unit[]" required readonly>
-                                                <option value="">Select</option>
+                                                <option value="">Select Unit</option>
                                                 <?php
                                                 $projectsData = getTableDataByTableName('inv_item_unit', '', 'unit_name');
                                                 if (isset($projectsData) && !empty($projectsData)) {
@@ -192,7 +193,7 @@
                                         </td>
                                         <td>
                                             <select class="form-control" id="brand0" name="brand[]" readonly>
-                                                <option value="">Select</option>
+                                                <option value="">Select Brand</option>
                                                 <?php
                                                 $brandData = getmaterialbrand();
                                                 if (isset($brandData) && !empty($brandData)) {
@@ -205,12 +206,21 @@
                                                 ?>
                                             </select>
                                         </td>
-                                        <td><input type="text" name="part_no[]" id="part_no0" class="form-control" ></td>
-                                        <td><input type="text" name="quantity[]" id="quantity0"  class="form-control" required></td>
+                                        <td><input type="text" name="quantity[]" id="quantity0" onchange="sum(0)" class="form-control" required></td>
+                                        <td><input type="text" name="unit_price[]" id="unit_price0" onchange="sum(0)" class="form-control" required></td>
+                                        <td><input type="text" name="totalamount[]" id="sum0" class="form-control"></td>
                                         <td><button type="button" name="add" id="add" class="btn" style="background-color:#2e3192;color:#ffffff;">+</button></td>
                                     </tr>
                                 </tbody>
                             </table>
+							<table class="table table-bordered">
+								<tr>
+									<td width="" style="">VAT Challan No<span class="reqfield"> ***required</span></td>
+									<td><input type="text" class="form-control" maxlength="30" name="vat_challan_no" required /></td>
+									<td width="" style="text-align:right;">Total Amount</td>
+									<td><input type="text" class="form-control" maxlength="30" name="sub_total_amount" id="allsum" readonly /></td>
+								</tr>
+							</table>
                         </div>
                     </div>
 					<div class="row" style="">
@@ -234,6 +244,11 @@
 								  
 								</script>
 								
+                            </div>
+                        </div>
+						<div class="col-xs-6">
+                            <div style="border:1px solid gray;height:150px;width:150px;">
+								<img id="output" height="150px" width="150px"/>
                             </div>
                         </div>
                     </div>
@@ -282,16 +297,43 @@
                                                     foreach ($projectsData as $data) {
                                                         ?><option value="<?php echo $data['brand_name']; ?>"><?php echo $data['brand_name']; ?></option><?php }
                                                 }
-                                                ?></select></td><td><input type="text" name="quantity[]" id="quantity' + i + '" class="form-control" required></td><td><input type="text" name="part_no[]" id="part_no' + i + '" class="form-control" required></td><td><button type="button" name="remove" id="' + i + '" class="btn btn_remove" style="background-color:#f26522;color:#ffffff;">X</button></td></tr>');
+                                                ?></select></td><td><input type="text" name="quantity[]" id="quantity' + i + '" onchange="sum(0)" class="form-control" required></td><td><input type="text" name="unit_price[]" id="unit_price' + i + '" onchange="sum(0)" class="form-control" required></td><td><input type="text" name="totalamount[]" id="sum' + i + '" class="form-control"></td><td><button type="button" name="remove" id="' + i + '" class="btn btn_remove" style="background-color:#f26522;color:#ffffff;">X</button></td></tr>');
+            $('#quantity' + i + ', #unit_price' + i).change(function () {
+                sum(i)
+            });
         });
 
         $(document).on('click', '.btn_remove', function () {
             var button_id = $(this).attr("id");
             $('#row' + button_id + '').remove();
+            sum_total();
         });
     });
 
-  
+    $(document).ready(function () {
+        //this calculates values automatically 
+        sum(0);
+    });
+
+    function sum(i) {
+        var quantity1 = document.getElementById('quantity' + i).value;
+        var unit_price1 = document.getElementById('unit_price' + i).value;
+        var result = parseFloat(quantity1) * parseFloat(unit_price1);
+        if (!isNaN(result)) {
+            document.getElementById('sum' + i).value = result;
+        }
+        sum_total();
+    }
+    function sum_total() {
+        var newTot = 0;
+        for (var a = 0; a <= i; a++) {
+            aVal = $('#sum' + a);
+            if (aVal && aVal.length) {
+                newTot += aVal[0].value ? parseFloat(aVal[0].value) : 0;
+            }
+        }
+        document.getElementById('allsum').value = newTot.toFixed(2);
+    }
 </script>
 <script>
     $(function () {
