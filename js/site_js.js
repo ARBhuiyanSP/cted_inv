@@ -370,6 +370,110 @@ function getSubCategoryByParent(parent_id, selector = false) {
         $('#main_sub_item_id').html('');
     }
 }
+/*-----------level 4-----------*/
+function get2By1(level_1_id, selector = false) {
+    if (level_1_id) {
+        $.ajax({
+            url: baseUrl + "includes/item_process.php?process_type=get_3_by_2",
+            type: 'POST',
+            dataType: 'html',
+            data: 'level_1_id=' + level_1_id,
+            success: function(response) {
+                if (selector) {
+                    $('#' + selector).html(response);
+                } else {
+                    $('#level_2_id').html(response);
+                }
+            }
+        });
+    } else {
+        $('#level_2_id').html('');
+    }
+}
+
+
+function getLevel3BySub(level_2_id, selector = false) {
+    if (level_2_id) {
+        $.ajax({
+            url: baseUrl + "includes/item_process.php?process_type=get_4_by_3",
+            type: 'POST',
+            dataType: 'html',
+            data: 'level_2_id=' + level_2_id,
+            success: function(response) {
+                if (selector) {
+                    $('#' + selector).html(response);
+                } else {
+                    $('#level3_id').html(response);
+                }
+            }
+        });
+    } else {
+        $('#level3_id').html('');
+    }
+}
+/*-----------level 4-----------*/
+/*-----------level 5-----------*/
+function get5_2By1(level_1_id_l5, selector = false) {
+    if (level_1_id_l5) {
+        $.ajax({
+            url: baseUrl + "includes/item_process.php?process_type=get5__3_by_2",
+            type: 'POST',
+            dataType: 'html',
+            data: 'level_1_id_l5=' + level_1_id_l5,
+            success: function(response) {
+                if (selector) {
+                    $('#' + selector).html(response);
+                } else {
+                    $('#level_2_id_l5').html(response);
+                }
+            }
+        });
+    } else {
+        $('#level_2_id_l5').html('');
+    }
+}
+
+
+function get5_3By2(level_2_id_l5, selector = false) {
+    if (level_2_id_l5) {
+        $.ajax({
+            url: baseUrl + "includes/item_process.php?process_type=get5__4_by_3",
+            type: 'POST',
+            dataType: 'html',
+            data: 'level_2_id_l5=' + level_2_id_l5,
+            success: function(response) {
+                if (selector) {
+                    $('#' + selector).html(response);
+                } else {
+                    $('#material_level3_id').html(response);
+                }
+            }
+        });
+    } else {
+        $('#material_level3_id').html('');
+    }
+}
+
+function get5_4By3(material_level3_id, selector = false) {
+    if (material_level3_id) {
+        $.ajax({
+            url: baseUrl + "includes/item_process.php?process_type=get5__5_by_4",
+            type: 'POST',
+            dataType: 'html',
+            data: 'material_level3_id=' + material_level3_id,
+            success: function(response) {
+                if (selector) {
+                    $('#' + selector).html(response);
+                } else {
+                    $('#material_level4_id').html(response);
+                }
+            }
+        });
+    } else {
+        $('#material_level4_id').html('');
+    }
+}
+/*-----------level 5-----------*/
 
 
 
@@ -473,8 +577,8 @@ function getLevel4CodeByLevel3(level_3_id, selector = false) {
 
 function getMatCodeBySubId(material_level4_id, selector = false) {
     if (material_level4_id) {
-        var main_item_id            =   $('#main_cat_item_id').val();
-        var main_sub_item_id        =   $('#main_sub_cat_item_id').val();
+        var main_item_id            =   $('#level_1_id_l5').val();
+        var main_sub_item_id        =   $('#level_2_id_l5').val();
         var material_level3_id      =   $('#material_level3_id').val();
         $.ajax({
             url: baseUrl + "includes/item_process.php?process_type=get_category_code",

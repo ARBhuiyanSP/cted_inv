@@ -12,7 +12,7 @@
                         <div class="form-group">
                             <label class="control-label col-sm-5" for="parent_code">Parent Category:</label>
                             <div class="col-sm-7">
-                                <select class="form-control" id="main_cat_item_id" name="parent_item_id" onchange="getSubCategoryByParent(this.value);">
+                                <select class="form-control" id="level_1_id_l5" name="parent_item_id" onchange="get5_2By1(this.value);">
                                     <option value="">Select</option>
                                     <?php
                                     $parentCats = getTableDataByTableName('inv_materialcategorysub', '', 'category_description');
@@ -28,7 +28,7 @@
                         <div class="form-group">
                             <label class="control-label col-sm-5" for="parent_code">Sub Category:</label>
                             <div class="col-sm-7">
-                                <select class="form-control" id="main_sub_cat_item_id" name="sub_item_id" onchange="">
+                                <select class="form-control" id="level_2_id_l5" name="sub_item_id" onchange="get5_3By2(this.value);">
                                     <option value="">Select</option>
                                     <?php
                                     $parentCats = getTableDataByTableName('inv_materialcategory','','material_sub_description');
@@ -44,7 +44,7 @@
                         <div class="form-group">
                             <label class="control-label col-sm-5" for="parent_code">Level-3:</label>
                             <div class="col-sm-7">
-                                <select class="form-control" id="material_level3_id" name="material_level3_id" onchange="getLevel4CodeByLevel3(this.value);">
+                                <select class="form-control" id="material_level3_id" name="material_level3_id" onchange="get5_4By3(this.value);">
                                     <option value="">Select</option>
                                     <?php
                                     $parentCats = getTableDataByTableName('inv_material_level3','','material_level3_description');
@@ -85,16 +85,16 @@
                                 <input type="text" class="form-control" id="item_name" placeholder="name" name="name" required>
                             </div>
                         </div>
-                        <div class="form-group">
+                        <!-- <div class="form-group">
                             <label class="control-label col-sm-5" for="name">Brand Name:</label>
                             <div class="col-sm-7">
                                 <input type="text" class="form-control" id="brand_name" placeholder="brand name" name="brand_name">
                             </div>
-                        </div>
+                        </div> -->
 						<div class="form-group">
                             <label class="control-label col-sm-5" for="parent_code">Type:</label>
                             <div class="col-sm-7">
-                                <select class="form-control" id="type" name="type">
+                                <select class="form-control" id="type" name="brand_name">
                                     <option value="">Select</option>
                                     <option value="CIVIL">CIVIL</option>
 									<option value="ELECTRICAL">ELECTRICAL</option>

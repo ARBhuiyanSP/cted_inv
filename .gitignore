@@ -1,2 +1,5 @@
+/connection/connect.php
 js/site_url.js
-js
+/nbproject
+/nbproject/private/
+/vendor
