@@ -107,42 +107,6 @@
                         </div>
 
 
-                        <!------------test-------------
-                        <div class="form-group">
-    <label class="control-label col-sm-5" for="parent_code">Package:</label>
-    <div class="col-sm-7">
-        <select class="form-control" id="main_item_id" name="parent_item_id" onchange="getBuildingByPackage(this.value);">
-            <option value="">Select</option>
-                        <?php
-                        $parentCats = getTableDataByTableName('packages', '', 'name');
-                        if (isset($parentCats) && !empty($parentCats)) {
-                            foreach ($parentCats as $pcat) {
-                                ?>
-                            <option value="<?php echo $pcat['id'] ?>"><?php echo $pcat['name'] ?></option>
-                            <?php }
-                        }
-                        ?>
-        </select>
-    </div>
-</div>
-<div class="form-group">
-    <label class="control-label col-sm-5" for="parent_code">Building:</label>
-    <div class="col-sm-7">
-        <select class="form-control" id="building_id" name="sub_item_id">
-            <option value="">Select</option>
-                        <?php
-                        $parentCats = getTableDataByTableName('buildings', '', 'building_id');
-                        if (isset($parentCats) && !empty($parentCats)) {
-                            foreach ($parentCats as $pcat) {
-                                ?>
-                            <option value="<?php echo $pcat['id'] ?>"><?php echo $pcat['building_id'] ?></option>
-    <?php }
-}
-?>
-        </select>
-    </div>
-</div>
-                        ------------test------------->
 
 
 
