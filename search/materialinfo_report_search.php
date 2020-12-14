@@ -45,9 +45,7 @@
 				<table id="" class="table table-bordered table-striped ">
 					<thead>
 						<tr>
-							<th>Level-1</th>
-							<th>Level-2</th>
-							<th>Material Name</th>
+							<th colspan="3">Material Name</th>
 							<th>Part No</th>
 							<th>Unit</th>
 							
