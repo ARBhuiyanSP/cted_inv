@@ -35,8 +35,8 @@
 				<div class="col-sm-12">	
 					<center>
 						<p>
-							<img src="images/Saif_Engineering_Logo_165X72.png" height="100px;"/><br>
-							<span>All Material Information Report</span><br>
+							<img src="images/logo-wide.png" height="50px;"/><br>
+							<span>CTED Equipment Information Report</span><br>
 							
 						</p>
 					</center>
@@ -45,9 +45,8 @@
 				<table id="" class="table table-bordered table-striped ">
 					<thead>
 						<tr>
-							<th>Parent category</th>
-							<th>Sub category</th>
-							<th>Material Code</th>
+							<th>Level-1</th>
+							<th>Level-2</th>
 							<th>Material Name</th>
 							<th>Unit</th>
 							
@@ -67,7 +66,7 @@
 								echo (isset($dataresult) && !empty($dataresult) ? $dataresult->category_description : '');
 								?>
 							</td>
-							<td colspan="4"></td>
+							<td colspan="3"></td>
 						</tr>
 								<?php 
 									$material_id = $row['material_id'];
@@ -84,7 +83,7 @@
 										echo (isset($dataresult) && !empty($dataresult) ? $dataresult->material_sub_description : '');
 										?>
 									</td>
-									<td colspan="3"></td>
+									<td colspan="2"></td>
 								</tr>
 										<?php 
 											$material_sub_id = $rowall['material_sub_id'];
@@ -96,7 +95,6 @@
 										<tr>
 											<td></td>
 											<td></td>
-											<td><?php echo $rowmat['material_id_code']; ?></td>
 											<td><?php echo $rowmat['material_description']; ?></td>
 											<td><?php echo getDataRowByTableAndId('inv_item_unit', $rowmat['qty_unit'])->unit_name; ?></td>
 										
