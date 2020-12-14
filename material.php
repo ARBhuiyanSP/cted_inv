@@ -26,7 +26,7 @@
                     <div class='row'>
                         <div class='col-md-10'>
                             <div class="table-responsive data-table-wrapper">
-                                <table id="blogs-table" class="table table-condensed table-hover table-bordered site_custome_table">
+                                <table id="example1" class="table table-condensed table-hover table-bordered site_custome_table">
                                     <thead>
                                         <tr>
                                             <th>Code</th>
@@ -72,7 +72,7 @@
                     <div class='row'>
                         <div class='col-md-10'>
                             <div class="table-responsive data-table-wrapper">
-                                <table id="blogs-table" class="table table-condensed table-hover table-bordered site_custome_table">
+                                <table id="example2" class="table table-condensed table-hover table-bordered site_custome_table">
                                     <thead>
                                         <tr>
                                             <th>Level-1</th>
@@ -125,7 +125,7 @@
                     <div class='row'>
                         <div class='col-md-10'>
                             <div class="table-responsive data-table-wrapper">
-                                <table id="blogs-table" class="table table-condensed table-hover table-bordered site_custome_table">
+                                <table id="example3" class="table table-condensed table-hover table-bordered site_custome_table">
                                     <thead>
                                         <tr>
                                             <th>Level-1</th>
@@ -185,7 +185,7 @@
                     <div class='row'>
                         <div class='col-md-10'>
                             <div class="table-responsive data-table-wrapper">
-                                <table id="blogs-table" class="table table-condensed table-hover table-bordered site_custome_table">
+                                <table id="example4" class="table table-condensed table-hover table-bordered site_custome_table">
                                     <thead>
                                         <tr>
                                             <th>Level-1</th>
@@ -322,6 +322,19 @@
 <script>
 $(document).ready(function() {
     $('#example').DataTable();
+} );
+
+$(document).ready(function() {
+    $('#example1').DataTable();
+} );
+$(document).ready(function() {
+    $('#example2').DataTable();
+} );
+$(document).ready(function() {
+    $('#example3').DataTable();
+} );
+$(document).ready(function() {
+    $('#example4').DataTable();
 } );
 </script>
 <script type="text/javascript" src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
