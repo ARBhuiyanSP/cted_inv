@@ -73,11 +73,10 @@ if(isset($_GET['submit'])){
 				<table id="" class="table table-bordered table-striped ">
 					<thead>
 						<tr>
-							<th>Parent category</th>
-							<th>Sub category</th>
-							<th>Material Name</th>
+							<th colspan="3">Material Name</th>
+							<th>Part No</th>
 							<th>Unit</th>
-							<th>In Stock</th>
+							<th width="10%">In Stock</th>
 							<th>Unit Price</th>
 							<th>Total Price</th>
 						</tr>
@@ -96,7 +95,7 @@ if(isset($_GET['submit'])){
 								echo (isset($dataresult) && !empty($dataresult) ? $dataresult->category_description : '');
 								?>
 							</td>
-							<td colspan="6"></td>
+							<td colspan="7"></td>
 						</tr>
 								<?php 
 									$material_id = $row['material_id'];
@@ -113,7 +112,7 @@ if(isset($_GET['submit'])){
 										echo (isset($dataresult) && !empty($dataresult) ? $dataresult->material_sub_description : '');
 										?>
 									</td>
-									<td colspan="5"></td>
+									<td colspan="6"></td>
 								</tr>
 										<?php 
 											$material_sub_id = $rowall['material_sub_id'];
@@ -126,6 +125,7 @@ if(isset($_GET['submit'])){
 											<td></td>
 											<td></td>
 											<td><?php echo $rowmat['material_description']; ?></td>
+											<td><?php echo $rowmat['part_no']; ?></td>
 											<td><?php echo getDataRowByTableAndId('inv_item_unit', $rowmat['qty_unit'])->unit_name; ?></td>
 											<td style="text-align:right;">
 												<?php 

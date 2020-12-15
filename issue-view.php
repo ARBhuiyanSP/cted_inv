@@ -82,6 +82,7 @@ $issue_id=$_GET['no']; ?>
 									<th>SL #</th>
 									<th>Material ID</th>
 									<th>Material Name</th>
+									<th>Part No</th>
 									<th>Material Unit</th>
 									<th>Quantity</th>
 								</tr>
@@ -102,6 +103,7 @@ $issue_id=$_GET['no']; ?>
 											echo (isset($dataresult) && !empty($dataresult) ? $dataresult->material_description : '');
 										?>
 									</td>
+									<td><?php echo $row['part_no']; ?></td>
 									<td>
 										<?php 
 										$dataresult =   getDataRowByTableAndId('inv_item_unit', $row['unit']);
@@ -112,7 +114,7 @@ $issue_id=$_GET['no']; ?>
 								</tr>
 								<?php } ?>
 								<tr>
-									<td colspan="4" class="grand_total">Grand Total:</td>
+									<td colspan="5" class="grand_total">Grand Total:</td>
 									<td>
 										<?php 
 										$sql2 = "SELECT sum(issue_qty) FROM  `inv_issuedetail` where `issue_id`='$issue_id'";
