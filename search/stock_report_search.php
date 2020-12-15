@@ -63,7 +63,7 @@ if(isset($_GET['submit'])){
 				<div class="col-sm-12">	
 					<center>
 						<p>
-							<img src="images/Saif_Engineering_Logo_165X72.png" height="100px;"/><br>
+							<img src="images/Saif_Engineering_Logo_165X72.png" height="50px;"/><br>
 							<span>Material Stock Report</span><br>
 							Till  <span class="dtext"><?php echo date("jS F Y", strtotime($to_date));?> </span><br>
 						</p>
@@ -151,8 +151,15 @@ if(isset($_GET['submit'])){
 													$rowoutqty = mysqli_fetch_object($resultoutqty) ;
 													
 													$instock = $rowinqty->totalin -$rowoutqty->totalout;
-													echo number_format((float)$instock, 2, '.', '');
-												?>
+													
+												
+												
+													$minStock = $rowmat['material_min_stock'];
+													if($minStock >= $instock){
+											?>
+												<span><img src="images/alert.gif" height="15px"/></span>
+											<?php }echo number_format((float)$instock, 2, '.', ''); ?>
+												
 											</td>
 											<td style="text-align:right;">
 												<?php

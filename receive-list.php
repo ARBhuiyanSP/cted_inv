@@ -66,7 +66,7 @@
 									<td><?php echo $item['receive_total']; ?></td>
 									<td>
 										<span><a class="action-icons c-approve" href="receive-view.php?no=<?php echo $item['mrr_no']; ?>" title="View"><i class="fas fa-eye text-success mborder"></i></a></span>
-										<span><a class="action-icons c-delete" href="receive_edit.php?edit_id=<?php echo $item['id']; ?>" title="edit"><i class="fa fa-edit text-info mborder"></i></a></span>
+										<!-- <span><a class="action-icons c-delete" href="receive_edit.php?edit_id=<?php //echo $item['id']; ?>" title="edit"><i class="fa fa-edit text-info mborder"></i></a></span> --->
 										<?php if($_SESSION['logged']['user_type'] == 'superAdmin') {?>
 										<span><a class="action-icons c-delete" href="receive_approve.php?mrr=<?php echo $item['mrr_no']; ?>" title="approve"><i class="fa fa-check text-info mborder"></i></a></span>
 										<?php } ?>

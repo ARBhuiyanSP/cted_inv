@@ -48,8 +48,8 @@ $mrr_no=$_GET['no']; ?>
 						<div class="row">
 							<div class="col-sm-6">	
 								<p>
-								<img src="images/Saif_Engineering_Logo_165X72.png" height="100px;"/>
-								<h5>E-engineering Ltd</h5></p></div>
+								<img src="images/Saif_Engineering_Logo_165X72.png" height="50px;"/>
+								<h5>CTED, Chattogram Port</h5></p></div>
 							<div class="col-sm-6">
 								<table class="table table-bordered">
 									<tr>
