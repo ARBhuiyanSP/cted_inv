@@ -81,7 +81,7 @@
         }
     </script>
 	<script>
-	$(".select2").select2();
+	$(".material_select_2").select2();
 	</script>
 </body>
 </html>
