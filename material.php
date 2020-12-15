@@ -255,11 +255,13 @@
                                 <table id="example" class="table table-condensed table-hover table-bordered site_custome_table">
                                     <thead>
                                         <tr>
-                                            <th>Parent</th>
-                                            <th>Sub Material</th>
-                                            <th>Code</th>
+                                            <th>Category</th>
+                                            <th>Sub Category</th>
+                                            <th>Material Code</th>
                                             <th>Material</th>
-                                            <th>Material Min Stock</th>
+                                            <th>Part no</th>
+                                            <th>Specification</th>
+                                            <th>Min Stock</th>
                                             <th>Unit</th>
                                             <th>Action</th>
                                         </tr>
@@ -285,6 +287,8 @@
                                                     </td>
                                                     <td><?php echo $item['material_id_code']; ?></td>
                                                     <td><?php echo $item['material_description']; ?></td>
+                                                    <td><?php echo $item['part_no']; ?></td>
+                                                    <td><?php echo $item['spec']; ?></td>
                                                     <td><?php echo $item['material_min_stock']; ?></td>
                                                     <td><?php echo getDataRowByTableAndId('inv_item_unit', $item['qty_unit'])->unit_name; ?></td>
                                                     <td>

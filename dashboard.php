@@ -35,9 +35,9 @@ $(document).ready(function() {
 				$resultsup = mysqli_query($conn, $sqlsup);
 				$totalSupplier = mysqli_num_rows($resultsup);
 				?>
-                <div class="mr-5"><?php echo $totalSupplier; ?> Total Supplier</div>
+                <div class="mr-5"><?php echo $totalSupplier; ?> Total RTG</div>
               </div>
-              <a class="card-footer text-white clearfix small z-1" href="supplier_entry.php">
+              <a class="card-footer text-white clearfix small z-1" href="#">
                 <span class="float-left">View Details</span>
                 <span class="float-right">
                   <i class="fas fa-angle-right"></i>
@@ -56,9 +56,9 @@ $(document).ready(function() {
 				$resultwar = mysqli_query($conn, $sqlwar);
 				$totalWarehouse = mysqli_num_rows($resultwar);
 				?>
-                <div class="mr-5"><?php echo $totalWarehouse; ?> Total Warehouse</div>
+                <div class="mr-5"><?php echo $totalWarehouse; ?> Total RST</div>
               </div>
-              <a class="card-footer text-white clearfix small z-1" href="warehouse_entry.php">
+              <a class="card-footer text-white clearfix small z-1" href="#">
                 <span class="float-left">View Details</span>
                 <span class="float-right">
                   <i class="fas fa-angle-right"></i>
@@ -77,9 +77,9 @@ $(document).ready(function() {
 				$resultpck = mysqli_query($conn, $sqlpck);
 				$totalPackage = mysqli_num_rows($resultpck);
 				?>
-                <div class="mr-5"><?php echo $totalPackage; ?> Total Package</div>
+                <div class="mr-5"><?php echo $totalPackage; ?> Total QGC</div>
               </div>
-              <a class="card-footer text-white clearfix small z-1" href="package_entry.php">
+              <a class="card-footer text-white clearfix small z-1" href="#">
                 <span class="float-left">View Details</span>
                 <span class="float-right">
                   <i class="fas fa-angle-right"></i>
@@ -98,9 +98,9 @@ $(document).ready(function() {
 				$resultbld = mysqli_query($conn, $sqlbld);
 				$totalBuilding = mysqli_num_rows($resultbld);
 				?>
-                <div class="mr-5"><?php echo $totalBuilding; ?> Total Bulding</div>
+                <div class="mr-5"><?php echo $totalBuilding; ?> Total Trailer</div>
               </div>
-              <a class="card-footer text-white clearfix small z-1" href="building_entry.php">
+              <a class="card-footer text-white clearfix small z-1" href="#">
                 <span class="float-left">View Details</span>
                 <span class="float-right">
                   <i class="fas fa-angle-right"></i>
