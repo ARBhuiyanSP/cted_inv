@@ -45,11 +45,7 @@
 				<table id="" class="table table-bordered table-striped ">
 					<thead>
 						<tr>
-							<th>Level-1</th>
-							<th>Level-2</th>
-							<th>Level-3</th>
-							<th>Level-4</th>
-							<th>Material Name</th>
+							<th colspan="3">Material Name</th>
 							<th>Part No</th>
 							<th>Unit</th>
 							
@@ -69,7 +65,7 @@
 								echo (isset($dataresult) && !empty($dataresult) ? $dataresult->category_description : '');
 								?>
 							</td>
-							<td colspan="6"></td>
+							<td colspan="4"></td>
 						</tr>
 						
 						
@@ -89,48 +85,13 @@
 										echo (isset($dataresult) && !empty($dataresult) ? $dataresult->material_sub_description : '');
 										?>
 									</td>
-									<td colspan="5"></td>
-								</tr>
-								<!---------- level 3 head---------->
-								<?php 
-									$material_id = $row['material_id'];
-									$sqllevel3	=	"SELECT * FROM inv_material WHERE `material_id` = '$material_id' GROUP BY `material_level3_id`;";
-									$resultlevel3 = mysqli_query($conn, $sqllevel3);
-									while($rowlevel3=mysqli_fetch_array($resultlevel3))
-									{ ?>
-								
-								<tr>
-									<td></td>
-									<td></td>
-									<td>
-										<?php
-										$dataresult =   getDataRowByTableAndId('inv_material_level3', $rowlevel3['material_level3_id']);
-										echo (isset($dataresult) && !empty($dataresult) ? $dataresult->material_level3_description : '');
-										?>
-									</td>
-									<td colspan="4"></td>
-								</tr>
-								<!---------- level 3 head---------->
-								<!---------- level 4 head---------->
-								<?php 
-									$material_id = $row['material_id'];
-									$sqllevel4	=	"SELECT * FROM inv_material WHERE `material_id` = '$material_id' GROUP BY `material_level4_id`;";
-									$resultlevel4 = mysqli_query($conn, $sqllevel4);
-									while($rowlevel4=mysqli_fetch_array($resultlevel4))
-									{ ?>
-								
-								<tr>
-									<td></td>
-									<td></td>
-									<td></td>
-									<td>
-										<?php
-										$dataresult =   getDataRowByTableAndId('inv_material_level4', $rowlevel4['material_level4_id']);
-										echo (isset($dataresult) && !empty($dataresult) ? $dataresult->material_level4_description : '');
-										?>
-									</td>
 									<td colspan="3"></td>
 								</tr>
+								<!---------- level 3 head---------->
+								
+								<!---------- level 3 head---------->
+								<!---------- level 4 head---------->
+								
 								<!---------- level 4 head---------->
 								
 								
@@ -148,8 +109,6 @@
 										<tr>
 											<td></td>
 											<td></td>
-											<td></td>
-											<td></td>
 											<td><?php echo $rowmat['material_description']; ?></td>
 											<td><?php echo $rowmat['part_no']; ?></td>
 											<td><?php echo getDataRowByTableAndId('inv_item_unit', $rowmat['qty_unit'])->unit_name; ?></td>
@@ -163,7 +122,7 @@
 										
 								<?php } 
 									} 
-						} }}
+						} 
 								?>
 					</tbody>
 				</table>
