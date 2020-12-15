@@ -255,8 +255,8 @@
                                 <table id="example" class="table table-condensed table-hover table-bordered site_custome_table">
                                     <thead>
                                         <tr>
-                                            <th>Category</th>
-                                            <th>Sub Category</th>
+                                            <th>Equipment</th>
+                                            <th>Equipt.Brand</th>
                                             <th>Material Code</th>
                                             <th>Material</th>
                                             <th>Part no</th>
