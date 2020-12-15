@@ -21,6 +21,7 @@ include 'includes/suppliers_process.php';
 include 'includes/format_process.php';
 include 'includes/return_process.php';
 include 'includes/payment_process.php';
+include 'includes/equipment_process.php';
 ?>
 <!DOCTYPE html>
 <html lang="en">

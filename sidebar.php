@@ -71,18 +71,13 @@
                 <i class="fa fa-bullseye" aria-hidden="true" style="color: #007BFF;"></i>
                 <span class="sub_menu_text_design"> Projects</span>
             </a>
-            <a class="dropdown-item" href="package_entry.php">
-                <i class="fa fa-bullseye" aria-hidden="true" style="color: #007BFF;"></i>
-                <span class="sub_menu_text_design"> Packages</span>
-            </a>
-			
-            <a class="dropdown-item" href="building_entry.php">
-                <i class="fa fa-bullseye" aria-hidden="true" style="color: #007BFF;"></i>
-                <span class="sub_menu_text_design"> Buildings</span>
-            </a>
             <a class="dropdown-item" href="warehouse_entry.php">
                 <i class="fa fa-bullseye" aria-hidden="true" style="color: #007BFF;"></i>
                 <span class="sub_menu_text_design"> Warehouse</span>
+            </a>
+            <a class="dropdown-item" href="equipment_entry.php">
+                <i class="fa fa-bullseye" aria-hidden="true" style="color: #007BFF;"></i>
+                <span class="sub_menu_text_design"> Euipments</span>
             </a>
             <!-- <a class="dropdown-item" href="user_entry.php">
                 <i class="fa fa-bullseye" aria-hidden="true" style="color: #007BFF;"></i>
