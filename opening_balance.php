@@ -63,9 +63,9 @@ display:none;
 						<th width="10%">Sub Category</th>
 						<th width="10%">Material Code</th>
 						<th width="35%">Material Name</th>
+						<th width="15%">Part No</th>
 						<th width="10%">Unit</th>
 						<th width="10%">OP Stock</th>
-						<th width="15%">OP Stock Value</th>
 					</tr>
 				</thead>
 				<tbody>
@@ -114,6 +114,7 @@ display:none;
 							<td></td>
 							<td><input class="form-control" name="material_id_code[]" id="material_id_code" type="text" value="<?php echo $rowmat['material_id_code']; ?>" readonly /></td>
 							<td><input class="form-control" name="material_description[]" id="material_description" type="text" value="<?php echo $rowmat['material_description']; ?>" readonly /></td>
+							<td><input class="form-control" name="part_no" id="part_no" type="text" value="<?php echo $rowmat['part_no']; ?>" readonly /></td>
 							<td><input class="form-control" name="material_description[]" id="material_description" type="text" value="<?php echo getDataRowByTableAndId('inv_item_unit', $rowmat['qty_unit'])->unit_name; ?>" readonly /></td>
 							
 							
@@ -146,7 +147,6 @@ display:none;
 							?>
 							
 							<td><input class="form-control" name="op_balance_qty[]" id="op_balance_qty" type="text" value="<?php echo $mbin_qty; ?>" <?php echo $validation; ?> /></td>
-							<td><input class="form-control" name="op_balance_val[]" id="op_balance_val" type="text" value="<?php echo $mbin_val; ?>" <?php echo $validation; ?> /></td>
 						</tr>
 						<?php } 
 						
