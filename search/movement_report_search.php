@@ -62,7 +62,7 @@ if(isset($_GET['submit'])){
 						<tr>
 							<th colspan="8">
 								<center>
-										<img src="images/Saif_Engineering_Logo_165X72.png" height="100px;"/><br>
+										<img src="images/Saif_Engineering_Logo_165X72.png" height="50px;"/><br>
 										<span>Material Movement Report</span><br>
 										From  <span class="dtext"><?php echo date("jS F Y", strtotime($from_date));?> </span>To  <span class="dtext"><?php echo date("jS F Y", strtotime($to_date));?> </span>
 								</center>
@@ -73,10 +73,9 @@ if(isset($_GET['submit'])){
 							<th width="30%">Material Name</th>
 							<th>Unit</th>
 							<th width="10%">Opening Stock</th>
-							<th>Receive</th>
-							<th>Issue</th>
-							<th width="15%">Closing Stock</th>
-							<th>Unit Price</th>
+							<th style="text-align:right;">Receive</th>
+							<th style="text-align:right;">Issue</th>
+							<th width="15%" style="text-align:right;">Closing Stock</th>
 						</tr>
 					</thead>
 					<tbody>
@@ -163,21 +162,6 @@ if(isset($_GET['submit'])){
 							</td>
 							<td style="text-align:right;">
 								<?php $closingStock = $opening_stock + $stockin -$stockout; echo number_format((float)$closingStock, 2, '.', '');?>
-							</td>
-							<td style="text-align:right;">
-								<?php
-								if($_SESSION['logged']['user_type'] !== 'whm'){
-									$sqlinval = "SELECT SUM(`mbin_val`) AS totalinval FROM `inv_materialbalance` WHERE `mb_materialid` = '$mb_materialid' AND mb_date <= '$to_date'";
-								}else{
-									$sqlinval = "SELECT SUM(`mbin_val`) AS totalinval FROM `inv_materialbalance` WHERE warehouse_id = $warehouse_id AND `mb_materialid` = '$mb_materialid' AND mb_date <= '$to_date'";
-								}
-								
-								$resultinval= mysqli_query($conn, $sqlinval);
-								$rowinval = mysqli_fetch_object($resultinval) ;								
-								if($stockin){
-								$avgprice = $rowinval->totalinval / $stockin;
-								echo number_format((float)$avgprice, 2, '.', '');
-								} ?>
 							</td>
 						</tr>
 						<?php
