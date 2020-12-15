@@ -1,2 +1,2 @@
-var baseUrl =   "http://localhost/cted_inv/";
+var baseUrl =   "http://dev.local:8080/saif_cted_inv/";
 

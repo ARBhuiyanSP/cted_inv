@@ -1,14 +1,13 @@
 -- phpMyAdmin SQL Dump
--- version 4.7.0
+-- version 5.0.3
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 13, 2020 at 11:56 AM
--- Server version: 10.1.26-MariaDB
--- PHP Version: 7.1.8
+-- Generation Time: Dec 15, 2020 at 05:15 AM
+-- Server version: 10.4.14-MariaDB
+-- PHP Version: 7.2.34
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
-SET AUTOCOMMIT = 0;
 START TRANSACTION;
 SET time_zone = "+00:00";
 
@@ -33,7 +32,7 @@ CREATE TABLE `buildings` (
   `building_id` varchar(100) NOT NULL,
   `building_type` varchar(100) NOT NULL,
   `package_id` varchar(100) NOT NULL,
-  `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `created_at` datetime NOT NULL DEFAULT current_timestamp(),
   `updated_at` datetime DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -79,6 +78,22 @@ CREATE TABLE `country` (
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `equipments`
+--
+
+CREATE TABLE `equipments` (
+  `id` int(11) NOT NULL,
+  `equipment_id` varchar(10) NOT NULL,
+  `equipment_no` varchar(25) NOT NULL,
+  `type_id` varchar(15) NOT NULL,
+  `project_id` varchar(15) NOT NULL,
+  `created_at` date NOT NULL,
+  `status` varchar(15) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `history`
 --
 
@@ -90,7 +105,7 @@ CREATE TABLE `history` (
   `icon` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `class` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `text` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `assets` text COLLATE utf8mb4_unicode_ci,
+  `assets` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -257,7 +272,7 @@ CREATE TABLE `inv_issue` (
   `project_id` varchar(25) CHARACTER SET utf8 NOT NULL,
   `warehouse_id` varchar(100) NOT NULL,
   `issued_by` varchar(100) NOT NULL,
-  `approval_status` tinyint(1) NOT NULL DEFAULT '0',
+  `approval_status` tinyint(1) NOT NULL DEFAULT 0,
   `approved_by` varchar(100) NOT NULL,
   `approved_at` datetime DEFAULT NULL,
   `approval_remarks` longtext NOT NULL,
@@ -280,11 +295,12 @@ CREATE TABLE `inv_issuedetail` (
   `issue_qty` float NOT NULL,
   `issue_price` float NOT NULL,
   `part_no` varchar(200) NOT NULL,
+  `use_in` varchar(50) NOT NULL,
   `project_id` varchar(100) NOT NULL,
   `warehouse_id` varchar(100) NOT NULL,
   `package_id` varchar(100) NOT NULL,
   `building_id` varchar(100) NOT NULL,
-  `approval_status` tinyint(1) NOT NULL DEFAULT '0'
+  `approval_status` tinyint(1) NOT NULL DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
@@ -303,9 +319,10 @@ CREATE TABLE `inv_item_unit` (
 --
 
 INSERT INTO `inv_item_unit` (`id`, `unit_name`) VALUES
-(17, 'PCS'),
-(18, 'TON'),
-(19, 'LIT');
+(20, 'Pcs'),
+(21, 'Ltr'),
+(22, 'Kg'),
+(23, 'Sets');
 
 -- --------------------------------------------------------
 
@@ -350,7 +367,7 @@ CREATE TABLE `inv_material` (
   `material_level3_id` int(11) DEFAULT NULL,
   `material_level4_id` int(11) DEFAULT NULL,
   `material_description` varchar(75) CHARACTER SET utf8 DEFAULT NULL,
-  `brand_name` varchar(100) NOT NULL,
+  `spec` varchar(100) NOT NULL,
   `type` varchar(100) NOT NULL,
   `material_min_stock` int(11) DEFAULT NULL,
   `avg_con_sump` int(11) DEFAULT NULL,
@@ -372,9 +389,108 @@ CREATE TABLE `inv_material` (
 -- Dumping data for table `inv_material`
 --
 
-INSERT INTO `inv_material` (`id`, `material_id_code`, `material_id`, `material_sub_id`, `material_level3_id`, `material_level4_id`, `material_description`, `brand_name`, `type`, `material_min_stock`, `avg_con_sump`, `lead_time`, `re_order_level`, `qty_unit`, `op_balance_qty`, `op_balance_val`, `chk_print`, `cur_qty`, `cur_price`, `cur_value`, `last_issue`, `last_receive`, `part_no`) VALUES
-(266, '01-01-01-0', '42', '109', 3, 1, 'ABC', 'Brand', 'CIVIL', 250, NULL, NULL, 0, '19', 0, 0, NULL, NULL, NULL, NULL, NULL, NULL, ''),
-(267, '01-01-01-01-002', '42', '109', 3, 1, 'ABC2', 'Brand2', 'CIVIL', 250, NULL, NULL, 0, '19', 0, 0, NULL, NULL, NULL, NULL, NULL, NULL, '');
+INSERT INTO `inv_material` (`id`, `material_id_code`, `material_id`, `material_sub_id`, `material_level3_id`, `material_level4_id`, `material_description`, `spec`, `type`, `material_min_stock`, `avg_con_sump`, `lead_time`, `re_order_level`, `qty_unit`, `op_balance_qty`, `op_balance_val`, `chk_print`, `cur_qty`, `cur_price`, `cur_value`, `last_issue`, `last_receive`, `part_no`) VALUES
+(275, '02-02-01-01-001', '47', '119', 20, 12, 'Ethernet Switch', '--', '', 2, NULL, NULL, 0, '20', 0, 0, NULL, NULL, NULL, NULL, NULL, NULL, 'JP116606'),
+(276, '02-02-04-04-001', '47', '119', 23, 15, 'Engine Control Unit', '--', '', 1, NULL, NULL, 0, '20', 0, 0, NULL, NULL, NULL, NULL, NULL, NULL, '21695319'),
+(277, '10-01-01-01-001', '55', '137', 70, 56, 'Air Filter', '--', '', 5, NULL, NULL, 0, '20', 0, 0, NULL, NULL, NULL, NULL, NULL, NULL, 'JO35501'),
+(278, '10-01-01-01-002', '55', '137', 70, 56, 'Air Filter', '--', '', 5, NULL, NULL, 0, '20', 0, 0, NULL, NULL, NULL, NULL, NULL, NULL, 'JO35502'),
+(279, '10-01-01-01-003', '55', '137', 70, 56, 'Air Filter', '--', '', 2, NULL, NULL, 0, '20', 0, 0, NULL, NULL, NULL, NULL, NULL, NULL, 'AF891M'),
+(280, '10-01-01-01-004', '55', '137', 70, 56, 'Air Filter', '--', '', 2, NULL, NULL, 0, '20', 0, 0, NULL, NULL, NULL, NULL, NULL, NULL, 'AF21702911'),
+(281, '10-01-01-01-005', '55', '137', 70, 56, 'Air Filter', '--', '', 2, NULL, NULL, 0, '20', 0, 0, NULL, NULL, NULL, NULL, NULL, NULL, 'A2418'),
+(282, '10-02-01-01-001', '55', '138', 71, 57, 'Fuel Pre Filter element', '--', '', 30, NULL, NULL, 0, '20', 0, 0, NULL, NULL, NULL, NULL, NULL, NULL, 'J036736'),
+(283, '10-02-01-01-002', '55', '138', 71, 57, 'Primary Fuel Filter Element', '--', '', 35, NULL, NULL, 0, '20', 0, 0, NULL, NULL, NULL, NULL, NULL, NULL, 'J015274'),
+(284, '10-03-01-01-001', '55', '139', 72, 58, 'Oil Filter', '--', '', 30, NULL, NULL, 0, '20', 0, 0, NULL, NULL, NULL, NULL, NULL, NULL, 'J027812'),
+(285, '02-02-04-04-001', '47', '119', 23, 16, 'AC PUMP, Pre Filter', '--', '', 1, NULL, NULL, 0, '20', 0, 0, NULL, NULL, NULL, NULL, NULL, NULL, 'J031358'),
+(286, '02-02-04-04-002', '47', '119', 23, 16, 'Air Filter Caging', '--', '', 1, NULL, NULL, 0, '20', 0, 0, NULL, NULL, NULL, NULL, NULL, NULL, 'J035270'),
+(287, '10-02-01-01-003', '55', '138', 71, 57, 'Fuel Filter', '--', '', 1, NULL, NULL, 0, '20', 0, 0, NULL, NULL, NULL, NULL, NULL, NULL, 'FF 5507'),
+(288, '10-02-01-01-004', '55', '138', 71, 57, 'Fuel-Water Seperator', '--', '', 1, NULL, NULL, 0, '20', 0, 0, NULL, NULL, NULL, NULL, NULL, NULL, 'FS 19735'),
+(289, '10-03-01-01-002', '55', '139', 72, 58, 'Oil Bypass Filter', '--', '', 1, NULL, NULL, 0, '20', 0, 0, NULL, NULL, NULL, NULL, NULL, NULL, 'LF 3654'),
+(290, '10-03-01-01-003', '55', '139', 72, 58, 'Oil Main Filter', '--', '', 2, NULL, NULL, 0, '20', 0, 0, NULL, NULL, NULL, NULL, NULL, NULL, 'LF 4112'),
+(291, '10-03-01-01-004', '55', '139', 72, 58, 'Oil Filter', '--', '', 1, NULL, NULL, 0, '20', 0, 0, NULL, NULL, NULL, NULL, NULL, NULL, 'LF9009'),
+(292, '10-02-01-01-005', '55', '138', 71, 57, 'Fuel-Water Seperator', '--', '', 1, NULL, NULL, 0, '20', 0, 0, NULL, NULL, NULL, NULL, NULL, NULL, 'FS 1000'),
+(293, '10-04-01-01-001', '55', '140', 73, 59, 'Coolant Filter', '', '', 1, NULL, NULL, 0, '20', 0, 0, NULL, NULL, NULL, NULL, NULL, NULL, 'WF2076'),
+(294, '02-02-04-04-003', '47', '119', 23, 16, 'Injector', '', '', 6, NULL, NULL, 0, '20', 0, 0, NULL, NULL, NULL, NULL, NULL, NULL, 'J031348'),
+(295, '02-02-04-04-004', '47', '119', 23, 16, 'Fuel Pump, AGCO SISU', '', '', 2, NULL, NULL, 0, '20', 0, 0, NULL, NULL, NULL, NULL, NULL, NULL, 'J031317'),
+(296, '02-02-04-04-005', '47', '119', 23, 16, 'Over Flow Valve, PRV', '', '', 2, NULL, NULL, 0, '20', 0, 0, NULL, NULL, NULL, NULL, NULL, NULL, 'J031334'),
+(297, '02-02-04-04-006', '47', '119', 23, 16, 'Valve Lifter, PUSHER', '', '', 12, NULL, NULL, 0, '20', 0, 0, NULL, NULL, NULL, NULL, NULL, NULL, '836014264'),
+(298, '02-02-04-04-007', '47', '119', 23, 16, 'Turbo Charger, AGCO SISU', '', '', 1, NULL, NULL, 0, '20', 0, 0, NULL, NULL, NULL, NULL, NULL, NULL, 'J03195.0100'),
+(299, '02-02-04-04-008', '47', '119', 23, 16, 'Engine Control Unit', '', '', 1, NULL, NULL, 0, '20', 0, 0, NULL, NULL, NULL, NULL, NULL, NULL, 'J033110'),
+(300, '02-02-01-01-002', '47', '119', 20, 12, 'PLC, WAGO power module ', '', '', 1, NULL, NULL, 0, '20', 0, 0, NULL, NULL, NULL, NULL, NULL, NULL, 'JP104392'),
+(301, '02-02-04-04-009', '47', '119', 23, 16, 'Main bearing, standard', '', '', 6, NULL, NULL, 0, '20', 0, 0, NULL, NULL, NULL, NULL, NULL, NULL, 'J028111'),
+(302, '02-02-04-04-010', '47', '119', 23, 16, 'Main bearing-sisu, standard', '', '', 1, NULL, NULL, 0, '20', 0, 0, NULL, NULL, NULL, NULL, NULL, NULL, 'J028112'),
+(303, '02-02-04-04-011', '47', '119', 23, 16, 'Big End bearing, standard', '', '', 6, NULL, NULL, 0, '23', 0, 0, NULL, NULL, NULL, NULL, NULL, NULL, 'J028395'),
+(304, '02-02-04-04-012', '47', '119', 23, 16, 'Piston ring', '', '', 6, NULL, NULL, 0, '23', 0, 0, NULL, NULL, NULL, NULL, NULL, NULL, 'J031440'),
+(305, '02-02-04-04-013', '47', '119', 23, 16, 'Cylinder liner', '', '', 6, NULL, NULL, 0, '20', 0, 0, NULL, NULL, NULL, NULL, NULL, NULL, 'J028311'),
+(306, '02-02-04-04-014', '47', '119', 23, 16, 'Overhauling kit, Gasket ', '', '', 1, NULL, NULL, 0, '23', 0, 0, NULL, NULL, NULL, NULL, NULL, NULL, 'J033123'),
+(307, '02-02-04-04-015', '47', '119', 23, 16, 'Belt Tightener', '', '', 1, NULL, NULL, 0, '20', 0, 0, NULL, NULL, NULL, NULL, NULL, NULL, 'J028658'),
+(308, '02-02-04-04-016', '47', '119', 23, 16, 'Impeller-Water Pump', '', '', 2, NULL, NULL, 0, '20', 0, 0, NULL, NULL, NULL, NULL, NULL, NULL, '836336047'),
+(309, '02-02-04-04-017', '47', '119', 23, 16, 'Shaft-Water Pump', '', '', 2, NULL, NULL, 0, '20', 0, 0, NULL, NULL, NULL, NULL, NULL, NULL, 'J031292'),
+(310, '02-02-04-04-018', '47', '119', 23, 16, 'Water Pump Gasket', '--', '', 2, NULL, NULL, 0, '20', 0, 0, NULL, NULL, NULL, NULL, NULL, NULL, 'J028599'),
+(311, '02-02-01-01-003', '47', '119', 20, 12, 'Proximity sensor, bromma', '24V, NPN, Ø25MM', '', 5, NULL, NULL, 0, '20', 0, 0, NULL, NULL, NULL, NULL, NULL, NULL, ' J03508.0100'),
+(312, '02-02-04-04-019', '47', '119', 23, 16, 'AVR, REGULATOR', 'MX342_2', '', 1, NULL, NULL, 0, '20', 0, 0, NULL, NULL, NULL, NULL, NULL, NULL, 'JP104924'),
+(313, '02-02-04-04-020', '47', '119', 23, 16, 'Diode, Battery Charging', '--', '', 0, NULL, NULL, 0, '20', 0, 0, NULL, NULL, NULL, NULL, NULL, NULL, 'J021472'),
+(314, '02-02-01-01-004', '47', '119', 20, 12, 'Profi safe', '750-660,8FDI MODULE', '', 1, NULL, NULL, 0, '20', 0, 0, NULL, NULL, NULL, NULL, NULL, NULL, 'JP104449'),
+(315, '02-02-01-01-005', '47', '119', 20, 12, 'Profi safe', '750-665,4FDO+4FDI MODULE', '', 1, NULL, NULL, 0, '20', 0, 0, NULL, NULL, NULL, NULL, NULL, NULL, 'JP104397'),
+(316, '02-02-01-01-006', '47', '119', 20, 12, 'PLC', '753-530, 8XDO MODULE', '', 1, NULL, NULL, 0, '20', 0, 0, NULL, NULL, NULL, NULL, NULL, NULL, 'JP104401'),
+(317, '02-02-01-01-007', '47', '119', 20, 12, 'PLC', '730-430, 8XDI MODULE', '', 1, NULL, NULL, 0, '20', 0, 0, NULL, NULL, NULL, NULL, NULL, NULL, 'JP104398'),
+(318, '02-02-04-04-021', '47', '119', 23, 16, 'Starter Motor, AGCO SISU', '24V, 11 TEETH', '', 1, NULL, NULL, 0, '20', 0, 0, NULL, NULL, NULL, NULL, NULL, NULL, 'J035071'),
+(319, '02-02-01-01-008', '47', '119', 20, 12, 'sensor, Absolute Encoder ', '', '', 1, NULL, NULL, 0, '20', 0, 0, NULL, NULL, NULL, NULL, NULL, NULL, 'JP104231'),
+(320, '02-02-01-01-009', '47', '119', 20, 12, 'Sensor', '', '', 1, NULL, NULL, 0, '20', 0, 0, NULL, NULL, NULL, NULL, NULL, NULL, 'JP102211'),
+(321, '02-02-01-01-010', '47', '119', 20, 12, 'PLC', '', '', 1, NULL, NULL, 0, '20', 0, 0, NULL, NULL, NULL, NULL, NULL, NULL, '65300230'),
+(322, '02-02-01-01-011', '47', '119', 20, 12, 'PLC', '', '', 1, NULL, NULL, 0, '20', 0, 0, NULL, NULL, NULL, NULL, NULL, NULL, '65300251'),
+(323, '02-02-01-01-012', '47', '119', 20, 12, 'Display unit, operators cabin', '', '', 0, NULL, NULL, 0, '20', 0, 0, NULL, NULL, NULL, NULL, NULL, NULL, 'JP104153'),
+(324, '02-02-01-01-013', '47', '119', 20, 12, 'TT drive chain', '', '', 1, NULL, NULL, 0, '20', 0, 0, NULL, NULL, NULL, NULL, NULL, NULL, 'KS100892'),
+(325, '02-02-01-01-014', '47', '119', 20, 12, 'Gantry brake solenoid', '', '', 1, NULL, NULL, 0, '20', 0, 0, NULL, NULL, NULL, NULL, NULL, NULL, '801904778'),
+(326, '02-02-01-01-015', '47', '119', 20, 0, 'RECTIFIER', '', '', 1, NULL, NULL, 0, '20', 0, 0, NULL, NULL, NULL, NULL, NULL, NULL, 'J028977'),
+(327, '02-02-01-01-015', '47', '119', 0, 0, 'RECTIFIER', '', '', 1, NULL, NULL, 0, '20', 0, 0, NULL, NULL, NULL, NULL, NULL, NULL, ''),
+(328, '02-02-01-01-016', '47', '119', 20, 12, 'ALTERNATOR REGULATOR', '', '', 1, NULL, NULL, 0, '20', 0, 0, NULL, NULL, NULL, NULL, NULL, NULL, '923944.1780'),
+(329, '02-02-01-01-017', '47', '119', 20, 12, 'CONTACTOR', '', '', 1, NULL, NULL, 0, '20', 0, 0, NULL, NULL, NULL, NULL, NULL, NULL, 'OLD P/N : J014795, NEW P/N : 806109804'),
+(330, '02-02-01-01-018', '47', '119', 20, 12, 'CONTACTOR', '--', '', 1, NULL, NULL, 0, '20', 0, 0, NULL, NULL, NULL, NULL, NULL, NULL, 'JP104444'),
+(331, '02-02-01-01-019', '47', '119', 20, 12, 'DIODE', '--', '', 1, NULL, NULL, 0, '20', 0, 0, NULL, NULL, NULL, NULL, NULL, NULL, 'JP106058'),
+(332, '02-02-01-01-020', '47', '119', 20, 12, 'REMOTE CONTROL', '--', '', 1, NULL, NULL, 0, '20', 0, 0, NULL, NULL, NULL, NULL, NULL, NULL, 'JP104477'),
+(333, '02-02-04-04-002', '47', '119', 23, 15, 'Turning tools', '--', '', 1, NULL, NULL, 0, '20', 0, 0, NULL, NULL, NULL, NULL, NULL, NULL, '9993590'),
+(334, '02-02-04-04-022', '47', '119', 23, 16, 'ALTERNATOR', '', '', 1, NULL, NULL, 0, '20', 0, 0, NULL, NULL, NULL, NULL, NULL, NULL, 'J028806'),
+(335, '02-02-04-04-003', '47', '119', 23, 15, 'Starter motor, TAD1641VE', '', '', 1, NULL, NULL, 0, '20', 0, 0, NULL, NULL, NULL, NULL, NULL, NULL, 'J028809'),
+(336, '02-02-04-04-023', '47', '119', 23, 16, 'Starter relay', '', '', 1, NULL, NULL, 0, '20', 0, 0, NULL, NULL, NULL, NULL, NULL, NULL, '923120.0708'),
+(337, '02-02-04-04-004', '47', '119', 23, 15, 'TURBO CHARGER , TAD1641VE', '', '', 1, NULL, NULL, 0, '20', 0, 0, NULL, NULL, NULL, NULL, NULL, NULL, 'J022021'),
+(338, '02-02-04-04-005', '47', '119', 23, 15, 'INJECTOR EXCHANGE(23000), TAD1641VE', '', '', 1, NULL, NULL, 0, '20', 0, 0, NULL, NULL, NULL, NULL, NULL, NULL, 'J018323A'),
+(339, '02-02-04-04-006', '47', '119', 23, 15, 'Fuel pump, TAD1641VE', '', '', 1, NULL, NULL, 0, '20', 0, 0, NULL, NULL, NULL, NULL, NULL, NULL, 'J028827'),
+(340, '02-02-04-04-007', '47', '119', 23, 15, 'FUEL PUMP', '', '', 1, NULL, NULL, 0, '20', 0, 0, NULL, NULL, NULL, NULL, NULL, NULL, 'J028828'),
+(341, '02-02-01-01-020', '47', '119', 20, 12, 'PLC', '', '', 1, NULL, NULL, 0, '20', 0, 0, NULL, NULL, NULL, NULL, NULL, NULL, 'JP104449'),
+(342, '02-02-01-01-021', '47', '119', 20, 12, 'PLC', '', '', 1, NULL, NULL, 0, '20', 0, 0, NULL, NULL, NULL, NULL, NULL, NULL, 'JP104397'),
+(343, '02-02-01-01-022', '47', '119', 20, 12, 'PLC', '', '', 1, NULL, NULL, 0, '20', 0, 0, NULL, NULL, NULL, NULL, NULL, NULL, 'JP104398'),
+(344, '02-02-01-01-023', '47', '119', 20, 12, 'PLC', '', '', 1, NULL, NULL, 0, '20', 0, 0, NULL, NULL, NULL, NULL, NULL, NULL, 'JP104401'),
+(345, '02-02-01-01-024', '47', '119', 20, 12, 'PLC', '', '', 1, NULL, NULL, 0, '20', 0, 0, NULL, NULL, NULL, NULL, NULL, NULL, 'JP104451'),
+(346, '02-02-01-01-025', '47', '119', 20, 12, 'MODULE ', '', '', 1, NULL, NULL, 0, '20', 0, 0, NULL, NULL, NULL, NULL, NULL, NULL, 'J027725'),
+(347, '02-02-01-01-026', '47', '119', 20, 12, 'WAGO analog module', '', '', 1, NULL, NULL, 0, '20', 0, 0, NULL, NULL, NULL, NULL, NULL, NULL, 'JP104399'),
+(348, '02-02-01-01-027', '47', '119', 20, 12, 'PLC', '', '', 1, NULL, NULL, 0, '20', 0, 0, NULL, NULL, NULL, NULL, NULL, NULL, 'JP108604'),
+(349, '02-02-01-01-028', '47', '119', 20, 12, 'PLC', '', '', 1, NULL, NULL, 0, '20', 0, 0, NULL, NULL, NULL, NULL, NULL, NULL, 'JP104402'),
+(350, '02-02-01-01-029', '47', '119', 20, 12, 'PLC', '', '', 1, NULL, NULL, 0, '20', 0, 0, NULL, NULL, NULL, NULL, NULL, NULL, 'JP104403'),
+(351, '02-02-01-01-030', '47', '119', 20, 12, 'WAGO END MODULE', '', '', 1, NULL, NULL, 0, '20', 0, 0, NULL, NULL, NULL, NULL, NULL, NULL, 'JP104393'),
+(352, '02-02-01-01-031', '47', '119', 20, 12, 'CAN-DP MODULE', '', '', 1, NULL, NULL, 0, '20', 0, 0, NULL, NULL, NULL, NULL, NULL, NULL, '65300215'),
+(353, '02-02-01-01-032', '47', '119', 20, 12, 'CONVERTOR', '', '', 1, NULL, NULL, 0, '20', 0, 0, NULL, NULL, NULL, NULL, NULL, NULL, 'JP107807'),
+(354, '02-02-01-01-033', '47', '119', 20, 12, 'SENSOR ', '', '', 1, NULL, NULL, 0, '20', 0, 0, NULL, NULL, NULL, NULL, NULL, NULL, 'OLD-OLD P/N : 806109569,  NEW P/N : 806109443'),
+(355, '02-02-01-01-034', '47', '119', 20, 12, 'RECTIFIER ', '', '', 1, NULL, NULL, 0, '20', 0, 0, NULL, NULL, NULL, NULL, NULL, NULL, 'J015089'),
+(356, '02-02-01-01-035', '47', '119', 20, 12, 'SOLENOID', '', '', 1, NULL, NULL, 0, '20', 0, 0, NULL, NULL, NULL, NULL, NULL, NULL, '801904778'),
+(357, '02-02-01-01-036', '47', '119', 20, 12, 'RECTIFIER', '', '', 1, NULL, NULL, 0, '20', 0, 0, NULL, NULL, NULL, NULL, NULL, NULL, 'J018949'),
+(358, '02-02-01-01-037', '47', '119', 20, 12, 'ENCODER', '', '', 1, NULL, NULL, 0, '20', 0, 0, NULL, NULL, NULL, NULL, NULL, NULL, 'OLD P/N : 806108358, NEW P/N : JO7300.0100'),
+(359, '02-02-01-01-038', '47', '119', 20, 12, 'RECTIFIER ', '', '', 1, NULL, NULL, 0, '20', 0, 0, NULL, NULL, NULL, NULL, NULL, NULL, 'J22286'),
+(360, '02-02-01-01-039', '47', '119', 20, 12, 'INDUCTIVE SWITCH', '', '', 1, NULL, NULL, 0, '20', 0, 0, NULL, NULL, NULL, NULL, NULL, NULL, 'JP107575'),
+(361, '02-02-01-01-040', '47', '119', 20, 12, 'INDUCTIVE SENSOR', '', '', 1, NULL, NULL, 0, '20', 0, 0, NULL, NULL, NULL, NULL, NULL, NULL, '807605708'),
+(362, '02-02-01-01-041', '47', '119', 20, 12, 'BRAKE PAD SET ', '', '', 1, NULL, NULL, 0, '20', 0, 0, NULL, NULL, NULL, NULL, NULL, NULL, '807605417'),
+(363, '02-02-01-01-042', '47', '119', 20, 12, 'BRAKE PAD SET ', '', '', 1, NULL, NULL, 0, '20', 0, 0, NULL, NULL, NULL, NULL, NULL, NULL, '801903895'),
+(364, '02-02-01-01-043', '47', '119', 20, 12, 'DIODE', '', '', 1, NULL, NULL, 0, '20', 0, 0, NULL, NULL, NULL, NULL, NULL, NULL, '806109740'),
+(365, '02-02-01-01-044', '47', '119', 20, 12, 'CONTACTOR', '', '', 1, NULL, NULL, 0, '20', 0, 0, NULL, NULL, NULL, NULL, NULL, NULL, 'JP105136'),
+(366, '02-02-01-01-045', '47', '119', 20, 12, 'TOUCH SCREEN', '', '', 1, NULL, NULL, 0, '20', 0, 0, NULL, NULL, NULL, NULL, NULL, NULL, 'JP106418'),
+(367, '02-02-01-01-046', '47', '119', 20, 12, 'PLC', '', '', 1, NULL, NULL, 0, '20', 0, 0, NULL, NULL, NULL, NULL, NULL, NULL, 'OLD P/N : 65300210, NEW P/N : J01786.0100'),
+(368, '02-02-01-01-047', '47', '119', 20, 12, 'PLC', '', '', 1, NULL, NULL, 0, '20', 0, 0, NULL, NULL, NULL, NULL, NULL, NULL, '65300230'),
+(369, '02-02-01-01-048', '47', '119', 20, 12, 'PLC', '', '', 1, NULL, NULL, 0, '20', 0, 0, NULL, NULL, NULL, NULL, NULL, NULL, '65300232'),
+(370, '02-02-01-01-049', '47', '119', 20, 12, 'PLC', '', '', 1, NULL, NULL, 0, '20', 0, 0, NULL, NULL, NULL, NULL, NULL, NULL, '65300251'),
+(371, '02-02-01-01-050', '47', '119', 20, 12, 'PROFIBUS DP CONNECTOR', '', '', 1, NULL, NULL, 0, '20', 0, 0, NULL, NULL, NULL, NULL, NULL, NULL, 'JP102256'),
+(372, '02-02-01-01-051', '47', '119', 20, 12, 'DC CONVERTER', '', '', 1, NULL, NULL, 0, '20', 0, 0, NULL, NULL, NULL, NULL, NULL, NULL, 'JP104448'),
+(373, '02-02-01-01-052', '47', '119', 20, 12, 'DC CONVERTER', '', '', 1, NULL, NULL, 0, '20', 0, 0, NULL, NULL, NULL, NULL, NULL, NULL, 'JP104828'),
+(374, '02-02-01-01-053', '47', '119', 20, 12, 'SAFETY RELAY', '', '', 1, NULL, NULL, 0, '20', 0, 0, NULL, NULL, NULL, NULL, NULL, NULL, 'JP104026'),
+(375, '02-02-01-01-054', '47', '119', 20, 12, 'PLC STOP RELAY', '', '', 1, NULL, NULL, 0, '20', 0, 0, NULL, NULL, NULL, NULL, NULL, NULL, 'J017427');
 
 -- --------------------------------------------------------
 
@@ -402,7 +518,7 @@ CREATE TABLE `inv_materialbalance` (
   `warehouse_id` varchar(100) NOT NULL,
   `package_id` varchar(100) NOT NULL,
   `building_id` varchar(100) NOT NULL,
-  `approval_status` tinyint(1) NOT NULL DEFAULT '0'
+  `approval_status` tinyint(1) NOT NULL DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
@@ -423,8 +539,26 @@ CREATE TABLE `inv_materialcategory` (
 --
 
 INSERT INTO `inv_materialcategory` (`id`, `material_sub_id`, `category_id`, `material_sub_description`) VALUES
-(109, '01-01-00-00-000', '42', 'ABA1'),
-(110, '01-02-00-00-000', '42', 'ABA2');
+(116, '01-01-00-00-000', '46', 'ZPMC'),
+(117, '01-02-00-00-000', '46', 'MHI'),
+(118, '02-01-00-00-000', '47', 'ZPMC'),
+(119, '02-02-00-00-000', '47', 'KALMAR'),
+(120, '02-03-00-00-000', '47', 'LIEBHERR'),
+(121, '03-01-00-00-000', '48', 'KALMAR'),
+(122, '03-02-00-00-000', '48', 'LIEBHERR'),
+(123, '06-01-00-00-000', '51', 'TATA'),
+(124, '06-02-00-00-000', '51', 'EICHER'),
+(125, '04-01-00-00-000', '49', 'KALMAR'),
+(126, '04-02-00-00-000', '49', 'DOOSAN'),
+(127, '05-01-00-00-000', '50', 'LIEBHERR'),
+(133, '06-03-00-00-000', '51', 'CHASSIS'),
+(134, '07-01-00-00-000', '52', 'TYRE'),
+(135, '09-01-00-00-000', '54', 'LUBRICANTS'),
+(136, '08-01-00-00-000', '53', 'FUEL'),
+(137, '10-01-00-00-000', '55', 'AIR FILTER'),
+(138, '10-02-00-00-000', '55', 'FUEL FILTER'),
+(139, '10-03-00-00-000', '55', 'OIL FILTER'),
+(140, '10-04-00-00-000', '55', 'Coolant Filter');
 
 -- --------------------------------------------------------
 
@@ -446,8 +580,16 @@ CREATE TABLE `inv_materialcategorysub` (
 --
 
 INSERT INTO `inv_materialcategorysub` (`id`, `category_id`, `category_description`, `stock_acct_id`, `chk_sbalance`, `consumption_ac`) VALUES
-(42, '01-00-00-00-000', 'ABC', NULL, NULL, NULL),
-(43, '02-00-00-00-000', 'ABC2', NULL, NULL, NULL);
+(46, '01-00-00-00-000', 'QGC', NULL, NULL, NULL),
+(47, '02-00-00-00-000', 'RTG', NULL, NULL, NULL),
+(48, '03-00-00-00-000', 'RST', NULL, NULL, NULL),
+(49, '04-00-00-00-000', 'FLT', NULL, NULL, NULL),
+(50, '05-00-00-00-000', 'MHC', NULL, NULL, NULL),
+(51, '06-00-00-00-000', 'TRAILER', NULL, NULL, NULL),
+(52, '07-00-00-00-000', 'TYRE', NULL, NULL, NULL),
+(53, '08-00-00-00-000', 'FUEL', NULL, NULL, NULL),
+(54, '09-00-00-00-000', 'LUBRICANTS', NULL, NULL, NULL),
+(55, '10-00-00-00-000', 'FILTER', NULL, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -468,9 +610,58 @@ CREATE TABLE `inv_material_level3` (
 --
 
 INSERT INTO `inv_material_level3` (`id`, `material_level3_code`, `category_id`, `category_sub_id`, `material_level3_description`) VALUES
-(3, '01-01-01-00-000', '42', '109', 'lv3 1st item'),
-(4, '01-01-02-00-00-', '42', '109', 'lv3 2nd item'),
-(5, '01-01-03-00-000', '42', '109', 'lv3 3rd item');
+(14, '01-02-01-00-000', '46', '117', 'Electrical'),
+(15, '01-02-02-00-000', '46', '117', 'Mechanical'),
+(16, '01-02-03-00-000', '46', '117', 'Hydraulic'),
+(17, '01-01-01-00-000', '46', '116', 'Electrical'),
+(18, '01-01-02-00-000', '46', '116', 'Mechanical'),
+(19, '01-01-03-00-000', '46', '116', 'Hydraulic'),
+(20, '02-02-01-00-000', '47', '119', 'Electrical'),
+(21, '02-02-02-00-000', '47', '119', 'Mechanical'),
+(22, '02-02-03-00-000', '47', '119', 'Hydraulic'),
+(23, '02-02-04-00-000', '47', '119', 'Engine'),
+(24, '02-03-01-00-000', '47', '120', 'Electrical'),
+(25, '02-03-02-00-000', '47', '120', 'Mechanical'),
+(26, '02-03-03-00-000', '47', '120', 'Hydraulic'),
+(27, '02-03-04-00-000', '47', '120', 'Engine'),
+(29, '02-01-01-00-000', '47', '118', 'Electrical'),
+(30, '02-01-02-00-000', '47', '118', 'Mechanical'),
+(31, '02-01-03-00-000', '47', '118', 'Hydraulic'),
+(32, '02-01-04-00-000', '47', '118', 'Engine'),
+(33, '05-01-01-00-000', '50', '127', 'Engine'),
+(34, '05-01-02-00-000', '50', '127', 'Electrical'),
+(35, '05-01-03-00-000', '50', '127', 'Mechanical'),
+(36, '05-01-04-00-000', '50', '127', 'Hydraulic'),
+(37, '03-01-01-00-000', '48', '121', 'Electrical'),
+(38, '03-01-02-00-000', '48', '121', 'Mechanical'),
+(39, '03-01-03-00-000', '48', '121', 'Hydraulic'),
+(40, '03-01-04-00-000', '48', '121', 'Engine'),
+(41, '03-02-01-00-000', '48', '122', 'Electrical'),
+(42, '03-02-02-00-000', '48', '122', 'Mechanical'),
+(43, '03-02-03-00-000', '48', '122', 'Hydraulic'),
+(44, '03-02-04-00-000', '48', '122', 'Engine'),
+(45, '04-02-01-00-000', '49', '126', 'Electrical'),
+(46, '04-02-02-00-000', '49', '126', 'Mechanical'),
+(47, '04-02-03-00-000', '49', '126', 'Hydraulic'),
+(48, '04-02-04-00-000', '49', '126', 'Engine'),
+(49, '04-01-01-00-000', '49', '125', 'Electrical'),
+(50, '04-01-02-00-000', '49', '125', 'Mechanical'),
+(51, '04-01-03-00-000', '49', '125', 'Hydraulic'),
+(52, '04-01-04-00-000', '49', '125', 'Engine'),
+(60, '06-02-01-00-000', '51', '124', 'Electrical'),
+(61, '06-02-02-00-000', '51', '124', 'Mechanical'),
+(62, '06-02-03-00-000', '51', '124', 'Engine'),
+(63, '06-01-01-00-000', '51', '123', 'Electrical'),
+(64, '06-01-02-00-000', '51', '123', 'Mechanical'),
+(65, '06-01-03-00-000', '51', '123', 'Engine'),
+(66, '06-03-01-00-000', '51', '133', 'Mechanical'),
+(67, '07-01-01-00-000', '52', '134', 'TYRE'),
+(68, '09-01-01-00-000', '54', '135', 'LUBRICANTS'),
+(69, '08-01-01-00-000', '53', '136', 'FUEL'),
+(70, '10-01-01-00-000', '55', '137', 'AIR FILTER'),
+(71, '10-02-01-00-000', '55', '138', 'FUEL FILTER'),
+(72, '10-03-01-00-000', '55', '139', 'OIL FILTER'),
+(73, '10-04-01-00-000', '55', '140', 'Coolant Filter');
 
 -- --------------------------------------------------------
 
@@ -492,8 +683,53 @@ CREATE TABLE `inv_material_level4` (
 --
 
 INSERT INTO `inv_material_level4` (`id`, `material_level4_code`, `category_id`, `category_sub_id`, `level3_id`, `material_level4_description`) VALUES
-(1, '01-01-01-01-000', '42', '109', '3', 'lv4 item1'),
-(2, '01-01-01-02-000', '43', '109', '3', 'lv4 item2');
+(6, '01-02-01-01-000', '46', '117', '14', 'Electrical '),
+(7, '01-02-03-01-000', '46', '117', '16', 'Hydraulic'),
+(8, '01-02-02-01-000', '46', '117', '15', 'Mechanical'),
+(9, '01-01-01-01-000', '46', '116', '17', 'Electrical'),
+(10, '01-01-03-01-000', '46', '116', '19', 'Hydraulic'),
+(11, '01-01-02-01-000', '46', '116', '18', 'Mechanical'),
+(12, '02-02-01-01-000', '47', '119', '20', 'Electrical'),
+(13, '02-02-02-01-000', '47', '119', '21', 'Mechanical'),
+(14, '02-02-03-01-000', '47', '119', '22', 'Hydraulic'),
+(15, '02-02-04-01-000', '47', '119', '23', 'Volvo Penta TAD1641VE'),
+(16, '02-02-04-02-000', '47', '119', '23', 'AGCO SISU 84WI'),
+(19, '02-01-04-01-000', '47', '118', '32', 'CUMMINS NTA 855-G4'),
+(20, '05-01-02-01-000', '50', '127', '34', 'Electrical'),
+(21, '05-01-03-01-000', '50', '127', '35', 'Mechanical'),
+(22, '05-01-04-01-000', '50', '127', '36', 'Hydraulic'),
+(23, '05-01-01-01-000', '50', '127', '33', 'MAN'),
+(24, '05-01-01-02-000', '50', '127', '33', 'LIEBHERR'),
+(25, '03-01-01-01-000', '48', '121', '37', 'Electrical'),
+(26, '03-01-03-01-000', '48', '121', '39', 'Hydraulic'),
+(27, '03-01-02-01-000', '48', '121', '38', 'Mechanical'),
+(29, '03-02-01-01-000', '48', '122', '41', 'Electrical'),
+(30, '03-02-02-01-000', '48', '122', '42', 'Mechanical'),
+(31, '03-02-03-01-000', '48', '122', '43', 'Hydraulic'),
+(33, '04-02-01-01-000', '49', '126', '45', 'Electrical'),
+(34, '04-01-01-01-000', '49', '125', '49', 'Electrical'),
+(35, '04-01-03-01-000', '49', '125', '51', 'Hydraulic'),
+(36, '04-01-02-01-000', '49', '125', '50', 'Mechanical'),
+(38, '04-01-04-02-000', '49', '125', '52', 'CUMMINS'),
+(39, '04-02-04-01-000', '49', '126', '48', 'DOOSAN'),
+(42, '06-03-01-01-000', '51', '133', '66', 'Mechanical'),
+(43, '06-02-01-01-000', '51', '124', '60', 'Electrical'),
+(44, '06-02-02-01-000', '51', '124', '61', 'Mechanical'),
+(45, '06-02-03-01-000', '51', '124', '62', 'CUMMINS'),
+(46, '06-01-01-01-000', '51', '123', '63', 'Electrical'),
+(47, '06-01-03-01-000', '51', '123', '65', 'CUMMINS'),
+(48, '06-01-02-01-000', '51', '123', '64', 'Mechanical'),
+(49, '02-03-01-01-000', '47', '120', '24', 'Electrical'),
+(50, '02-03-04-01-000', '47', '120', '27', 'VOLVO PENTA TAD1353VE'),
+(51, '02-03-03-01-000', '47', '120', '26', 'Hydraulic'),
+(52, '02-03-02-01-000', '47', '120', '25', 'Mechanical'),
+(53, '07-01-01-01-000', '52', '134', '67', 'TYRE'),
+(54, '09-01-01-01-000', '54', '135', '68', 'LUBRICANTS'),
+(55, '08-01-01-01-000', '53', '136', '69', 'FUEL'),
+(56, '10-01-01-01-000', '55', '137', '70', 'AIR FILTER'),
+(57, '10-02-01-01-000', '55', '138', '71', 'FUEL FILTER'),
+(58, '10-03-01-01-000', '55', '139', '72', 'OIL FILTER'),
+(59, '10-04-01-01-000', '55', '140', '73', 'Coolant Filter');
 
 -- --------------------------------------------------------
 
@@ -601,7 +837,7 @@ CREATE TABLE `inv_receive` (
   `requisitionno` varchar(500) DEFAULT NULL,
   `requisition_date` datetime DEFAULT NULL,
   `received_by` varchar(100) NOT NULL,
-  `approval_status` tinyint(1) NOT NULL DEFAULT '0',
+  `approval_status` tinyint(1) NOT NULL DEFAULT 0,
   `approved_by` varchar(100) NOT NULL,
   `approved_at` datetime DEFAULT NULL,
   `approval_remarks` longtext NOT NULL,
@@ -628,7 +864,7 @@ CREATE TABLE `inv_receivedetail` (
   `part_no` varchar(200) DEFAULT NULL,
   `project_id` varchar(100) NOT NULL,
   `warehouse_id` varchar(1000) NOT NULL,
-  `approval_status` tinyint(1) NOT NULL DEFAULT '0'
+  `approval_status` tinyint(1) NOT NULL DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
@@ -750,8 +986,15 @@ CREATE TABLE `inv_supplierbalance` (
   `sb_cr_amount` float NOT NULL,
   `sb_remark` varchar(175) CHARACTER SET utf8 NOT NULL,
   `sb_partac_id` varchar(25) CHARACTER SET utf8 NOT NULL,
-  `approval_status` tinyint(1) NOT NULL DEFAULT '0'
+  `approval_status` tinyint(1) NOT NULL DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `inv_supplierbalance`
+--
+
+INSERT INTO `inv_supplierbalance` (`id`, `sb_ref_id`, `warehouse_id`, `sb_date`, `sb_supplier_id`, `sb_dr_amount`, `sb_cr_amount`, `sb_remark`, `sb_partac_id`, `approval_status`) VALUES
+(1, 'OP', '', '2020-12-15', 'SID-001', 0, 0, 'Opening balance', 'OP', 0);
 
 -- --------------------------------------------------------
 
@@ -863,10 +1106,18 @@ CREATE TABLE `inv_warehosueinfo` (
   `address` varchar(1000) NOT NULL,
   `created_by` int(11) DEFAULT NULL,
   `updated_by` int(11) NOT NULL,
-  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
   `updated_at` timestamp NULL DEFAULT NULL,
   `deleted_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `inv_warehosueinfo`
+--
+
+INSERT INTO `inv_warehosueinfo` (`id`, `warehouse_id`, `name`, `short_name`, `project_id`, `address`, `created_by`, `updated_by`, `created_at`, `updated_at`, `deleted_at`) VALUES
+(1, 'WH-001', 'CTED Warehouse', 'CTW', '1', 'Chattogram Port, Chattogram', NULL, 0, '2020-12-14 04:49:26', NULL, NULL),
+(2, 'WH-002', 'Halishahar Warehouse', 'HW', '1', 'Halishahar, Chattogram', NULL, 0, '2020-12-14 04:50:03', NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -935,7 +1186,7 @@ CREATE TABLE `menus` (
   `id` int(10) UNSIGNED NOT NULL,
   `type` enum('backend','frontend') COLLATE utf8mb4_unicode_ci NOT NULL,
   `name` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `items` text COLLATE utf8mb4_unicode_ci,
+  `items` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `created_by` int(10) UNSIGNED NOT NULL,
   `updated_by` int(10) UNSIGNED DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
@@ -982,8 +1233,8 @@ CREATE TABLE `notifications` (
   `id` int(10) UNSIGNED NOT NULL,
   `message` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `user_id` int(10) UNSIGNED NOT NULL,
-  `type` tinyint(1) NOT NULL DEFAULT '1' COMMENT '1 - Dashboard , 2 - Email , 3 - Both',
-  `is_read` tinyint(1) NOT NULL DEFAULT '0',
+  `type` tinyint(1) NOT NULL DEFAULT 1 COMMENT '1 - Dashboard , 2 - Email , 3 - Both',
+  `is_read` tinyint(1) NOT NULL DEFAULT 0,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -1001,7 +1252,7 @@ CREATE TABLE `packages` (
   `warehouse_id` varchar(100) NOT NULL,
   `name` varchar(100) NOT NULL,
   `short_name` varchar(100) NOT NULL,
-  `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `created_at` datetime NOT NULL DEFAULT current_timestamp(),
   `updated_at` datetime DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -1015,12 +1266,12 @@ CREATE TABLE `pages` (
   `id` int(10) UNSIGNED NOT NULL,
   `title` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `page_slug` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `description` text COLLATE utf8mb4_unicode_ci,
+  `description` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `cannonical_link` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `seo_title` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `seo_keyword` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `seo_description` text COLLATE utf8mb4_unicode_ci,
-  `status` tinyint(1) NOT NULL DEFAULT '1',
+  `seo_description` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `status` tinyint(1) NOT NULL DEFAULT 1,
   `created_by` int(10) UNSIGNED NOT NULL,
   `updated_by` int(10) UNSIGNED DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
@@ -1064,8 +1315,8 @@ CREATE TABLE `permissions` (
   `id` int(10) UNSIGNED NOT NULL,
   `name` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `display_name` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `sort` smallint(5) UNSIGNED NOT NULL DEFAULT '0',
-  `status` tinyint(1) NOT NULL DEFAULT '1',
+  `sort` smallint(5) UNSIGNED NOT NULL DEFAULT 0,
+  `status` tinyint(1) NOT NULL DEFAULT 1,
   `created_by` int(11) DEFAULT NULL,
   `updated_by` int(10) UNSIGNED DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
@@ -1171,7 +1422,7 @@ CREATE TABLE `product_movement` (
   `project_form` int(11) DEFAULT NULL,
   `project_to` int(11) DEFAULT NULL,
   `total_quantity` int(11) NOT NULL,
-  `remarks` text,
+  `remarks` text DEFAULT NULL,
   `movement_type` int(11) NOT NULL,
   `created_by` int(11) DEFAULT NULL,
   `updated_by` int(11) DEFAULT NULL,
@@ -1209,13 +1460,20 @@ CREATE TABLE `projects` (
   `code` varchar(200) DEFAULT NULL,
   `name` varchar(500) NOT NULL,
   `incharge` varchar(100) NOT NULL,
-  `address` text,
+  `address` text DEFAULT NULL,
   `created_by` int(11) DEFAULT NULL,
   `updated_by` int(11) DEFAULT NULL,
-  `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  `created_at` timestamp NULL DEFAULT current_timestamp(),
   `updated_at` timestamp NULL DEFAULT NULL,
   `deleted_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `projects`
+--
+
+INSERT INTO `projects` (`id`, `code`, `name`, `incharge`, `address`, `created_by`, `updated_by`, `created_at`, `updated_at`, `deleted_at`) VALUES
+(1, 'PR-001', 'CTED, Chattogram', 'Lt Commander M Tafsir Uddin Ahmed(Retd)', 'Chattogram Port, Chattogram', NULL, NULL, '2020-12-14 04:48:32', NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -1228,60 +1486,10 @@ CREATE TABLE `project_type` (
   `name` varchar(600) DEFAULT NULL,
   `created_by` int(11) NOT NULL,
   `updated_by` int(11) NOT NULL,
-  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
   `updated_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
   `deleted_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
--- --------------------------------------------------------
-
---
--- Stand-in structure for view `qry_inv_issue`
--- (See below for the actual view)
---
-CREATE TABLE `qry_inv_issue` (
-`issue_id` varchar(25)
-,`issue_date` date
-,`material_id` varchar(9)
-,`issue_qty` float
-,`warehouse_id` varchar(100)
-,`project_id` varchar(25)
-,`package_id` varchar(100)
-,`building_id` varchar(100)
-);
-
--- --------------------------------------------------------
-
---
--- Stand-in structure for view `qry_typewiseconsumption`
--- (See below for the actual view)
---
-CREATE TABLE `qry_typewiseconsumption` (
-`material_id` varchar(9)
-,`issue_qty` float
-,`type` varchar(100)
-,`issue_date` date
-,`warehouse_id` varchar(100)
-);
-
--- --------------------------------------------------------
-
---
--- Stand-in structure for view `qry_typewisestock`
--- (See below for the actual view)
---
-CREATE TABLE `qry_typewisestock` (
-`mb_ref_id` varchar(25)
-,`mb_materialid` varchar(25)
-,`mb_date` date
-,`mbin_qty` float
-,`mbout_qty` float
-,`mbtype` varchar(30)
-,`project_id` varchar(100)
-,`warehouse_id` varchar(100)
-,`package_id` varchar(100)
-,`type` varchar(100)
-);
 
 -- --------------------------------------------------------
 
@@ -1292,9 +1500,9 @@ CREATE TABLE `qry_typewisestock` (
 CREATE TABLE `roles` (
   `id` int(10) UNSIGNED NOT NULL,
   `name` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `all` tinyint(1) NOT NULL DEFAULT '0',
-  `sort` smallint(5) UNSIGNED NOT NULL DEFAULT '0',
-  `status` tinyint(1) NOT NULL DEFAULT '1',
+  `all` tinyint(1) NOT NULL DEFAULT 0,
+  `sort` smallint(5) UNSIGNED NOT NULL DEFAULT 0,
+  `status` tinyint(1) NOT NULL DEFAULT 1,
   `created_by` int(11) DEFAULT NULL,
   `updated_by` int(10) UNSIGNED DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
@@ -1324,7 +1532,7 @@ CREATE TABLE `sessions` (
   `id` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `user_id` int(10) UNSIGNED DEFAULT NULL,
   `ip_address` varchar(45) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `user_agent` text COLLATE utf8mb4_unicode_ci,
+  `user_agent` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `payload` text COLLATE utf8mb4_unicode_ci NOT NULL,
   `last_activity` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -1341,10 +1549,10 @@ CREATE TABLE `settings` (
   `logo` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `favicon` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `seo_title` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `seo_keyword` text COLLATE utf8mb4_unicode_ci,
-  `seo_description` text COLLATE utf8mb4_unicode_ci,
+  `seo_keyword` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `seo_description` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `company_contact` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `company_address` text COLLATE utf8mb4_unicode_ci,
+  `company_address` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `from_name` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `from_email` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `facebook` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
@@ -1353,9 +1561,9 @@ CREATE TABLE `settings` (
   `google` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `copyright_text` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `footer_text` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `terms` text COLLATE utf8mb4_unicode_ci,
-  `disclaimer` text COLLATE utf8mb4_unicode_ci,
-  `google_analytics` text COLLATE utf8mb4_unicode_ci,
+  `terms` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `disclaimer` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `google_analytics` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `home_video1` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `home_video2` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `home_video3` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
@@ -1364,7 +1572,7 @@ CREATE TABLE `settings` (
   `explanation2` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `explanation3` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `explanation4` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `values` text COLLATE utf8mb4_unicode_ci,
+  `values` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `data_type` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `post_type` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
@@ -1456,6 +1664,13 @@ CREATE TABLE `suppliers` (
   `material_type` varchar(100) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+--
+-- Dumping data for table `suppliers`
+--
+
+INSERT INTO `suppliers` (`id`, `code`, `name`, `address`, `contact_person`, `supplier_phone`, `supplier_op_balance`, `supplier_type`, `material_type`) VALUES
+(1, 'SID-001', 'Saif Powertec Ltd', '-', '-', '-', '-', 'cash', '47');
+
 -- --------------------------------------------------------
 
 --
@@ -1543,7 +1758,7 @@ CREATE TABLE `temp_product_receive_data` (
   `part_no` varchar(500) NOT NULL,
   `supplier_id` varchar(250) DEFAULT NULL,
   `quantity` int(11) NOT NULL,
-  `unit_price` float NOT NULL DEFAULT '0',
+  `unit_price` float NOT NULL DEFAULT 0,
   `project_id` int(11) NOT NULL,
   `project_to_id` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
@@ -1564,10 +1779,10 @@ CREATE TABLE `users` (
   `warehouse_id` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
   `email` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `password` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `status` tinyint(1) NOT NULL DEFAULT '1',
+  `status` tinyint(1) NOT NULL DEFAULT 1,
   `confirmation_code` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `confirmed` tinyint(1) NOT NULL DEFAULT '0',
-  `is_term_accept` tinyint(1) NOT NULL DEFAULT '0' COMMENT ' 0 = not accepted,1 = accepted',
+  `confirmed` tinyint(1) NOT NULL DEFAULT 0,
+  `is_term_accept` tinyint(1) NOT NULL DEFAULT 0 COMMENT ' 0 = not accepted,1 = accepted',
   `remember_token` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `created_by` int(11) DEFAULT NULL,
   `updated_by` int(10) UNSIGNED DEFAULT NULL,
@@ -1581,38 +1796,8 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `id2`, `first_name`, `last_name`, `user_type`, `project_id`, `warehouse_id`, `email`, `password`, `status`, `confirmation_code`, `confirmed`, `is_term_accept`, `remember_token`, `created_by`, `updated_by`, `created_at`, `updated_at`, `deleted_at`) VALUES
-(1, 1, 'Admin', 'Saif', 'admin', '2', '13', 'admin@admin.com', 'bfb1e4e7ace6d70c18b69a2a6cf4a415', 1, 'b1970adb3f301c8440c81e45b526060c', 1, 0, 'PCgsDtfHhHDhADntGcj7D97A9e4U0gtx0hlLn2heuaMyQBq5Gaa2sP55BPGr', 1, 1, '2019-01-14 00:17:02', '2019-01-20 20:36:38', NULL),
-(2, 2, 'Chandupara', 'Warehouse', 'whm', '2', '10', 'cp_321@eel.com', 'a2abd69c54768a5c99541b57a3f790a2', 1, '68c7a7b3a2968803ae6db884ae89f446', 1, 0, NULL, 1, NULL, '2019-01-14 00:17:02', '2019-01-14 00:17:02', NULL),
-(3, 3, 'Londa', 'Warehouse', 'whm', '2', '11', 'londa_230@eel.com', '91b02fec7b8f126b94ca6cef9db35ec6', 1, 'fe3ae4e0b22211d756922a0bede508cf', 1, 0, NULL, 1, NULL, '2019-01-14 00:17:02', '2019-01-14 00:17:02', NULL),
-(4, 4, 'Super', 'Admin', 'superAdmin', '2', '7', 'superadmin@admin.com', 'be05977add575832dc52655d4ad5c42e', 1, 'b1970adb3f301c8440c81e45b526060c', 1, 0, 'PCgsDtfHhHDhADntGcj7D97A9e4U0gtx0hlLn2heuaMyQBq5Gaa2sP55BPGr', 4, 4, NULL, NULL, NULL),
-(6, 3, 'Lalua', 'Warehouse', 'whm', '2', '12', 'lalua_3541@eel.com', '115993e6efd414f7d2ebf560ee9d7b7c', 1, 'fe3ae4e0b22211d756922a0bede508cf', 1, 0, NULL, 1, NULL, '2019-01-14 00:17:02', '2019-01-14 00:17:02', NULL);
-
--- --------------------------------------------------------
-
---
--- Structure for view `qry_inv_issue`
---
-DROP TABLE IF EXISTS `qry_inv_issue`;
-
-CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `qry_inv_issue`  AS  select `inventory_module`.`inv_issue`.`issue_id` AS `issue_id`,`inventory_module`.`inv_issue`.`issue_date` AS `issue_date`,`inventory_module`.`inv_issuedetail`.`material_id` AS `material_id`,`inventory_module`.`inv_issuedetail`.`issue_qty` AS `issue_qty`,`inventory_module`.`inv_issue`.`warehouse_id` AS `warehouse_id`,`inventory_module`.`inv_issue`.`project_id` AS `project_id`,`inventory_module`.`inv_issuedetail`.`package_id` AS `package_id`,`inventory_module`.`inv_issuedetail`.`building_id` AS `building_id` from (`inventory_module`.`inv_issue` join `inventory_module`.`inv_issuedetail` on((convert(`inventory_module`.`inv_issue`.`issue_id` using utf8) = `inventory_module`.`inv_issuedetail`.`issue_id`))) ;
-
--- --------------------------------------------------------
-
---
--- Structure for view `qry_typewiseconsumption`
---
-DROP TABLE IF EXISTS `qry_typewiseconsumption`;
-
-CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `qry_typewiseconsumption`  AS  select `qry_inv_issue`.`material_id` AS `material_id`,`qry_inv_issue`.`issue_qty` AS `issue_qty`,`inventory_module`.`inv_material`.`type` AS `type`,`qry_inv_issue`.`issue_date` AS `issue_date`,`qry_inv_issue`.`warehouse_id` AS `warehouse_id` from (`inventory_module`.`inv_material` join `inventory_module`.`qry_inv_issue` on((convert(`inventory_module`.`inv_material`.`material_id_code` using utf8) = `qry_inv_issue`.`material_id`))) ;
-
--- --------------------------------------------------------
-
---
--- Structure for view `qry_typewisestock`
---
-DROP TABLE IF EXISTS `qry_typewisestock`;
-
-CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `qry_typewisestock`  AS  select `inventory_module`.`inv_materialbalance`.`mb_ref_id` AS `mb_ref_id`,`inventory_module`.`inv_materialbalance`.`mb_materialid` AS `mb_materialid`,`inventory_module`.`inv_materialbalance`.`mb_date` AS `mb_date`,`inventory_module`.`inv_materialbalance`.`mbin_qty` AS `mbin_qty`,`inventory_module`.`inv_materialbalance`.`mbout_qty` AS `mbout_qty`,`inventory_module`.`inv_materialbalance`.`mbtype` AS `mbtype`,`inventory_module`.`inv_materialbalance`.`project_id` AS `project_id`,`inventory_module`.`inv_materialbalance`.`warehouse_id` AS `warehouse_id`,`inventory_module`.`inv_materialbalance`.`package_id` AS `package_id`,`inventory_module`.`inv_material`.`type` AS `type` from (`inventory_module`.`inv_material` join `inventory_module`.`inv_materialbalance` on((convert(`inventory_module`.`inv_material`.`material_id_code` using utf8) = `inventory_module`.`inv_materialbalance`.`mb_materialid`))) ;
+(1, 1, 'Admin', 'Saif', 'admin', '1', '1', 'admin@admin.com', 'bfb1e4e7ace6d70c18b69a2a6cf4a415', 1, 'b1970adb3f301c8440c81e45b526060c', 1, 0, 'PCgsDtfHhHDhADntGcj7D97A9e4U0gtx0hlLn2heuaMyQBq5Gaa2sP55BPGr', 1, 1, '2019-01-14 00:17:02', '2019-01-20 20:36:38', NULL),
+(4, 4, 'Super', 'Admin', 'superAdmin', '1', '1', 'superadmin@admin.com', 'be05977add575832dc52655d4ad5c42e', 1, 'b1970adb3f301c8440c81e45b526060c', 1, 0, 'PCgsDtfHhHDhADntGcj7D97A9e4U0gtx0hlLn2heuaMyQBq5Gaa2sP55BPGr', 4, 4, NULL, NULL, NULL);
 
 --
 -- Indexes for dumped tables
@@ -1628,6 +1813,12 @@ ALTER TABLE `buildings`
 -- Indexes for table `complain_type`
 --
 ALTER TABLE `complain_type`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `equipments`
+--
+ALTER TABLE `equipments`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -1914,242 +2105,296 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `buildings`
 --
 ALTER TABLE `buildings`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2008;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
 --
 -- AUTO_INCREMENT for table `complain_type`
 --
 ALTER TABLE `complain_type`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `equipments`
+--
+ALTER TABLE `equipments`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
 --
 -- AUTO_INCREMENT for table `inv_challan`
 --
 ALTER TABLE `inv_challan`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=58;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
 --
 -- AUTO_INCREMENT for table `inv_complain`
 --
 ALTER TABLE `inv_complain`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
 --
 -- AUTO_INCREMENT for table `inv_complaindetails`
 --
 ALTER TABLE `inv_complaindetails`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
 --
 -- AUTO_INCREMENT for table `inv_designation`
 --
 ALTER TABLE `inv_designation`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
 --
 -- AUTO_INCREMENT for table `inv_employee`
 --
 ALTER TABLE `inv_employee`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=45;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
 --
 -- AUTO_INCREMENT for table `inv_invoice`
 --
 ALTER TABLE `inv_invoice`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
 --
 -- AUTO_INCREMENT for table `inv_invoice_details`
 --
 ALTER TABLE `inv_invoice_details`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=41;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
 --
 -- AUTO_INCREMENT for table `inv_issue`
 --
 ALTER TABLE `inv_issue`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1738;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
 --
 -- AUTO_INCREMENT for table `inv_issuedetail`
 --
 ALTER TABLE `inv_issuedetail`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6895;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
 --
 -- AUTO_INCREMENT for table `inv_item_unit`
 --
 ALTER TABLE `inv_item_unit`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
+
 --
 -- AUTO_INCREMENT for table `inv_job_card`
 --
 ALTER TABLE `inv_job_card`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
 --
 -- AUTO_INCREMENT for table `inv_job_card_details`
 --
 ALTER TABLE `inv_job_card_details`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
 --
 -- AUTO_INCREMENT for table `inv_material`
 --
 ALTER TABLE `inv_material`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=268;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=376;
+
 --
 -- AUTO_INCREMENT for table `inv_materialbalance`
 --
 ALTER TABLE `inv_materialbalance`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14728;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
 --
 -- AUTO_INCREMENT for table `inv_materialcategory`
 --
 ALTER TABLE `inv_materialcategory`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=111;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=141;
+
 --
 -- AUTO_INCREMENT for table `inv_materialcategorysub`
 --
 ALTER TABLE `inv_materialcategorysub`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=44;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=56;
+
 --
 -- AUTO_INCREMENT for table `inv_material_level3`
 --
 ALTER TABLE `inv_material_level3`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=74;
+
 --
 -- AUTO_INCREMENT for table `inv_material_level4`
 --
 ALTER TABLE `inv_material_level4`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=60;
+
 --
 -- AUTO_INCREMENT for table `inv_particulars`
 --
 ALTER TABLE `inv_particulars`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
 --
 -- AUTO_INCREMENT for table `inv_particulars_type`
 --
 ALTER TABLE `inv_particulars_type`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
 --
 -- AUTO_INCREMENT for table `inv_purchase`
 --
 ALTER TABLE `inv_purchase`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
 --
 -- AUTO_INCREMENT for table `inv_purchasedetail`
 --
 ALTER TABLE `inv_purchasedetail`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
 --
 -- AUTO_INCREMENT for table `inv_receive`
 --
 ALTER TABLE `inv_receive`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=826;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
 --
 -- AUTO_INCREMENT for table `inv_receivedetail`
 --
 ALTER TABLE `inv_receivedetail`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1164;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
 --
 -- AUTO_INCREMENT for table `inv_return`
 --
 ALTER TABLE `inv_return`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=56;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
 --
 -- AUTO_INCREMENT for table `inv_returndetail`
 --
 ALTER TABLE `inv_returndetail`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=75;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
 --
 -- AUTO_INCREMENT for table `inv_serviceinvoice`
 --
 ALTER TABLE `inv_serviceinvoice`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=27;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
 --
 -- AUTO_INCREMENT for table `inv_supplier`
 --
 ALTER TABLE `inv_supplier`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
 --
 -- AUTO_INCREMENT for table `inv_supplierbalance`
 --
 ALTER TABLE `inv_supplierbalance`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=604;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
 --
 -- AUTO_INCREMENT for table `inv_technicianinfo`
 --
 ALTER TABLE `inv_technicianinfo`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
 --
 -- AUTO_INCREMENT for table `inv_tranferdetail`
 --
 ALTER TABLE `inv_tranferdetail`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=98;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
 --
 -- AUTO_INCREMENT for table `inv_transfermaster`
 --
 ALTER TABLE `inv_transfermaster`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=58;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
 --
 -- AUTO_INCREMENT for table `inv_voucher`
 --
 ALTER TABLE `inv_voucher`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
 --
 -- AUTO_INCREMENT for table `inv_voucherdetails`
 --
 ALTER TABLE `inv_voucherdetails`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
 --
 -- AUTO_INCREMENT for table `inv_voucher_cat`
 --
 ALTER TABLE `inv_voucher_cat`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
 --
 -- AUTO_INCREMENT for table `inv_warehosueinfo`
 --
 ALTER TABLE `inv_warehosueinfo`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
 --
 -- AUTO_INCREMENT for table `materialbalance`
 --
 ALTER TABLE `materialbalance`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
 --
 -- AUTO_INCREMENT for table `packages`
 --
 ALTER TABLE `packages`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
 --
 -- AUTO_INCREMENT for table `projects`
 --
 ALTER TABLE `projects`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
 --
 -- AUTO_INCREMENT for table `sttable`
 --
 ALTER TABLE `sttable`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=143;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
 --
 -- AUTO_INCREMENT for table `suppliers`
 --
 ALTER TABLE `suppliers`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=173;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
 --
 -- AUTO_INCREMENT for table `supplier_payment`
 --
 ALTER TABLE `supplier_payment`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
 --
 -- AUTO_INCREMENT for table `tbl_customer`
 --
 ALTER TABLE `tbl_customer`
   MODIFY `CustomerID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+
 --
 -- AUTO_INCREMENT for table `tb_billpayment`
 --
 ALTER TABLE `tb_billpayment`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=36;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
 --
 -- AUTO_INCREMENT for table `tb_ledger`
 --
 ALTER TABLE `tb_ledger`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
 --
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;COMMIT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
