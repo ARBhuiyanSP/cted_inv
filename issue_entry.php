@@ -75,35 +75,6 @@
                                 <input type="hidden" name="warehouse_id" id="warehouse_id" class="form-control" readonly="readonly" value="<?php echo $_SESSION['logged']['warehouse_id']; ?>">
 
                             </div>
-
-                            <!-- <div class="form-group">
-    <label>Warehouse</label>
-                                    
-                            <?php
-                            if ($_SESSION['logged']['user_type'] == 'whm') {
-                                $warehouse_id = $_SESSION['logged']['warehouse_id'];
-                                $dataresult = getDataRowByTableAndId('inv_warehosueinfo', $warehouse_id);
-                                ?>
-                                        <input type="text" class="form-control" readonly="readonly" value="<?php echo (isset($dataresult) && !empty($dataresult) ? $dataresult->name : ''); ?>">
-                                        
-                                        <input type="hidden" name="warehouse_id" id="warehouse_id" class="form-control" readonly="readonly" value="<?php echo $_SESSION['logged']['warehouse_id']; ?>">
-<?php } else { ?>
-                                        <select class="form-control" id="warehouse_id" name="warehouse_id" required>
-            <option value="">Select</option>
-                                <?php
-                                $projectsData = getTableDataByTableName('inv_warehosueinfo');
-                                ;
-                                if (isset($projectsData) && !empty($projectsData)) {
-                                    foreach ($projectsData as $data) {
-                                        ?>
-                            <option value="<?php echo $data['id']; ?>"><?php echo $data['name']; ?></option>
-                                        <?php
-                                    }
-                                }
-                                ?>
-        </select>
-<?php } ?>
-</div> -->
                         </div>
 
 
@@ -142,7 +113,7 @@
                                             </select>
                                         </td>
                                         <td><input type="text" name="material_id[]" id="material_id0" class="form-control" required readonly></td>
-                                        <td><input type="text" name="part_no[]" id="part_no0" class="form-control" required readonly></td>
+                                        <td><input type="text" name="part_no[]" id="part_no0" class="form-control" required></td>
                                         <td>
                                             <select class="form-control" id="unit0" name="unit[]" required readonly>
                                                 <option value="">Select Unit</option>
@@ -159,7 +130,7 @@
                                             </select>
                                         </td>
                                         <td>
-                                            <input type="text" name="brand[]" id="brand0" class="form-control" >
+                                            <input type="text" name="use_in[]" id="use_in0" class="form-control" >
                                         </td>
                                         <td><input type="text" name="material_total_stock[]" id="material_total_stock0" class="form-control" readonly ></td>
                                         <td><input type="text" name="quantity[]" id="quantity0" onchange="sum(0)" onkeyup="check_stock_quantity_validation(0)" class="form-control common_issue_quantity" required></td>
@@ -228,14 +199,14 @@
                                             ?><option value="<?php echo $data['id']; ?>"><?php echo $data['material_name']; ?></option><?php
                                         }
                                     }
-                                    ?></select></td><td><input type="text" name="material_id[]" id="material_id' + i + '" class="form-control" required readonly></td><td><input type="text" name="part_no[]" id="part_no' + i + '" class="form-control" required readonly></td><td><select class="form-control select2" id="unit' + i + '" name="unit[]' + i + '" required readonly onchange="getAppendItemCodeByParam(' + i + ",'inv_material'" + ",'material_id_code'" + ",'material_id''" + ",'qty_unit'" + ')"><option value="">Select</option><?php
+                                    ?></select></td><td><input type="text" name="material_id[]" id="material_id' + i + '" class="form-control" required readonly></td><td><input type="text" name="part_no[]" id="part_no' + i + '" class="form-control" required></td><td><select class="form-control select2" id="unit' + i + '" name="unit[]' + i + '" required readonly onchange="getAppendItemCodeByParam(' + i + ",'inv_material'" + ",'material_id_code'" + ",'material_id''" + ",'qty_unit'" + ')"><option value="">Select</option><?php
                                     $projectsData = getTableDataByTableName('inv_item_unit', '', 'unit_name');
                                     if (isset($projectsData) && !empty($projectsData)) {
                                         foreach ($projectsData as $data) {
                                             ?><option value="<?php echo $data['id']; ?>"><?php echo $data['unit_name']; ?></option><?php
                                         }
                                     }
-                                    ?></select></td><td><input type="text" id="brand' + i + '" name="brand[]' + i + '" class="form-control" ></td><td><input type="text" name="material_total_stock[]" id="material_total_stock' + i + '" class="form-control" readonly></td><td><input type="text" name="quantity[]" id="quantity' + i + '" onchange="sum(0)"  onkeyup="check_stock_quantity_validation(' + i + ')" class="form-control common_issue_quantity" required></td><td><button type="button" name="remove" id="' + i + '" class="btn btn_remove" style="background-color:#f26522;color:#ffffff;">X</button></td></tr>');
+                                    ?></select></td><td><input type="text" id="use_in' + i + '" name="use_in[]' + i + '" class="form-control" ></td><td><input type="text" name="material_total_stock[]" id="material_total_stock' + i + '" class="form-control" readonly></td><td><input type="text" name="quantity[]" id="quantity' + i + '" onchange="sum(0)"  onkeyup="check_stock_quantity_validation(' + i + ')" class="form-control common_issue_quantity" required></td><td><button type="button" name="remove" id="' + i + '" class="btn btn_remove" style="background-color:#f26522;color:#ffffff;">X</button></td></tr>');
             
         });
 
