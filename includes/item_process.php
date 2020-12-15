@@ -914,6 +914,7 @@ if(isset($_GET['process_type']) && $_GET['process_type'] == 'getItemCodeByParam'
         'qty_unit'  =>  $qty_unit,
         'totalStock'  =>  $totalStock,
         'brand_name'  =>  (isset($materialData->brand_name) && !empty($materialData->brand_name) ? $materialData->brand_name : ''),
+        'part_no'  =>  (isset($materialData->part_no) && !empty($materialData->part_no) ? $materialData->part_no : ''),
     ];    
     echo json_encode($feedback);
 }

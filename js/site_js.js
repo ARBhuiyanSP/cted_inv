@@ -622,6 +622,9 @@ function getItemCodeByParam(id, table, field, selector, qty_unit = '') {
                 if (response.brand_name) {
                     $('#brand0').val(response.brand_name);
                 }
+                if (response.part_no) {
+                    $('#part_no0').val(response.part_no);
+                }
             }
         });
     } else {
@@ -655,6 +658,9 @@ function getAppendItemCodeByParam(id, table, field, selector, qty_unit = '') {
                 }
                 if (response.brand_name) {
                     $('#brand' + id).val(response.brand_name);
+                }
+                if (response.part_no) {
+                    $('#part_no' + id).val(response.part_no);
                 }
             }
         });
