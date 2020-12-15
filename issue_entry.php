@@ -130,7 +130,19 @@
                                             </select>
                                         </td>
                                         <td>
-                                            <input type="text" name="use_in[]" id="use_in0" class="form-control" >
+											<select class="form-control material_select_2" name="use_in[]" id="use_in0" required >
+                                                <option value="">Select Unit</option>
+                                                <?php
+                                                $projectsData = getTableDataByTableName('equipments', '', 'equipment_no');
+                                                if (isset($projectsData) && !empty($projectsData)) {
+                                                    foreach ($projectsData as $data) {
+                                                        ?>
+                                                        <option value="<?php echo $data['equipment_no']; ?>"><?php echo $data['equipment_no']; ?></option>
+                                                        <?php
+                                                    }
+                                                }
+                                                ?>
+                                            </select>
                                         </td>
                                         <td><input type="text" name="material_total_stock[]" id="material_total_stock0" class="form-control" readonly ></td>
                                         <td><input type="text" name="quantity[]" id="quantity0" onchange="sum(0)" onkeyup="check_stock_quantity_validation(0)" class="form-control common_issue_quantity" required></td>
@@ -184,7 +196,6 @@
             <!--here your code will go-->
         </div>
     </div>
-
 </div>
 <!-- /.container-fluid -->
 <script>
@@ -206,7 +217,7 @@
                                             ?><option value="<?php echo $data['id']; ?>"><?php echo $data['unit_name']; ?></option><?php
                                         }
                                     }
-                                    ?></select></td><td><input type="text" id="use_in' + i + '" name="use_in[]' + i + '" class="form-control" ></td><td><input type="text" name="material_total_stock[]" id="material_total_stock' + i + '" class="form-control" readonly></td><td><input type="text" name="quantity[]" id="quantity' + i + '" onchange="sum(0)"  onkeyup="check_stock_quantity_validation(' + i + ')" class="form-control common_issue_quantity" required></td><td><button type="button" name="remove" id="' + i + '" class="btn btn_remove" style="background-color:#f26522;color:#ffffff;">X</button></td></tr>');
+                                    ?></select></td><td><select class="form-control material_select_2" id="use_in' + i + '" name="use_in[]' + i + '" required ><option value="">Select Unit</option><?php $projectsData = getTableDataByTableName('equipments', '', 'equipment_no'); if (isset($projectsData) && !empty($projectsData)) { foreach ($projectsData as $data) { ?> <option value="<?php echo $data['equipment_no']; ?>"><?php echo $data['equipment_no']; ?></option> <?php } } ?> </select></td><td><input type="text" name="material_total_stock[]" id="material_total_stock' + i + '" class="form-control" readonly></td><td><input type="text" name="quantity[]" id="quantity' + i + '" onchange="sum(0)"  onkeyup="check_stock_quantity_validation(' + i + ')" class="form-control common_issue_quantity" required></td><td><button type="button" name="remove" id="' + i + '" class="btn btn_remove" style="background-color:#f26522;color:#ffffff;">X</button></td></tr>');
             
             $(".material_select_2").select2();
         });
