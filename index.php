@@ -2,6 +2,11 @@
 include 'connection/connect.php';
 include 'includes/login_process.php';
 ?>
+<style>
+body {
+ background-image: url("bg.jpg");
+}
+</style>
 <!DOCTYPE html>
 <html lang="en">
     <head>
