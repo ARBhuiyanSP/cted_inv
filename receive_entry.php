@@ -260,7 +260,7 @@
                                                     foreach ($projectsData as $data) {
                                                         ?><option value="<?php echo $data['id']; ?>"><?php echo $data['unit_name']; ?></option><?php }
                                                 }
-                                                ?></select></td><td><input type="text" name="quantity[]" id="quantity' + i + '" class="form-control" required></td><td><input type="text" name="part_no[]" id="part_no' + i + '" class="form-control" required></td><td><button type="button" name="remove" id="' + i + '" class="btn btn_remove" style="background-color:#f26522;color:#ffffff;">X</button></td></tr>');
+                                                ?></select></td><td><input type="text" name="part_no[]" id="part_no' + i + '" class="form-control" required></td><td><input type="text" name="quantity[]" id="quantity' + i + '" class="form-control" required></td><td><button type="button" name="remove" id="' + i + '" class="btn btn_remove" style="background-color:#f26522;color:#ffffff;">X</button></td></tr>');
         });
 
         $(document).on('click', '.btn_remove', function () {
