@@ -40,8 +40,8 @@ $issue_id=$_GET['no']; ?>
 						<div class="row">
 							<div class="col-sm-6">	
 								<p>
-								<img src="images/Saif_Engineering_Logo_165X72.png" height="100px;"/>
-								<h5>E-engineering Ltd</h5><span>Payra Project</span></br></p></div>
+								<img src="images/Saif_Engineering_Logo_165X72.png" height="50px;"/>
+								<h5>CTED</h5><span>Chattogram Port</span></br></p></div>
 							<div class="col-sm-6">
 								<table class="table table-bordered">
 									<tr>
@@ -84,8 +84,6 @@ $issue_id=$_GET['no']; ?>
 									<th>Material Name</th>
 									<th>Material Unit</th>
 									<th>Quantity</th>
-									<th>Package</th>
-									<th>Building</th>
 								</tr>
 							</thead>
 							<tbody id="material_receive_list_body">
@@ -111,11 +109,6 @@ $issue_id=$_GET['no']; ?>
 										?>
 									</td>
 									<td><?php echo $row['issue_qty'] ?></td>
-									<td><?php 
-											$dataresult =   getDataRowByTableAndId('packages', $row['package_id']);
-											echo (isset($dataresult) && !empty($dataresult) ? $dataresult->name : '');
-										?></td>
-									<td><?php echo $row['building_id'] ?></td>
 								</tr>
 								<?php } ?>
 								<tr>
@@ -125,13 +118,12 @@ $issue_id=$_GET['no']; ?>
 										$sql2 = "SELECT sum(issue_qty) FROM  `inv_issuedetail` where `issue_id`='$issue_id'";
 										$result2 = mysqli_query($conn, $sql2);
 										for($i=0; $row2 = mysqli_fetch_array($result2); $i++){
-										$fgfg2=number_format((float)$row2['sum(issue_qty)'], 3, '.', '');
+										$fgfg2=number_format((float)$row2['sum(issue_qty)'], 2, '.', '');
 										
 										echo $fgfg2 ;
 										}
 										?>
 									</td>
-									<td colspan="2" class=""></td>
 								</tr>
 							</tbody>
 						</table>
