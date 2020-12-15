@@ -62,8 +62,9 @@ display:none;
 						<th width="10%">Category</th>
 						<th width="10%">Sub Category</th>
 						<th width="10%">Material Code</th>
-						<th width="35%">Material Name</th>
+						<th width="20%">Material Name</th>
 						<th width="15%">Part No</th>
+						<th width="15%">Spec</th>
 						<th width="10%">Unit</th>
 						<th width="10%">OP Stock</th>
 					</tr>
@@ -83,7 +84,7 @@ display:none;
 								echo (isset($dataresult) && !empty($dataresult) ? $dataresult->category_description : '');
 								?>
 							</td>
-							<td colspan="6"></td>
+							<td colspan="7"></td>
 						</tr>
 						<?php 
 							$material_id = $row['material_id'];
@@ -100,7 +101,7 @@ display:none;
 								echo (isset($dataresult) && !empty($dataresult) ? $dataresult->material_sub_description : '');
 								?>
 							</td>
-							<td colspan="5"></td>
+							<td colspan="6"></td>
 						</tr>
 						<?php 
 							$material_sub_id = $rowall['material_sub_id'];
@@ -115,6 +116,7 @@ display:none;
 							<td><input class="form-control" name="material_id_code[]" id="material_id_code" type="text" value="<?php echo $rowmat['material_id_code']; ?>" readonly /></td>
 							<td><input class="form-control" name="material_description[]" id="material_description" type="text" value="<?php echo $rowmat['material_description']; ?>" readonly /></td>
 							<td><input class="form-control" name="part_no" id="part_no" type="text" value="<?php echo $rowmat['part_no']; ?>" readonly /></td>
+							<td><input class="form-control" name="spec" id="spec" type="text" value="<?php echo $rowmat['spec']; ?>" readonly /></td>
 							<td><input class="form-control" name="material_description[]" id="material_description" type="text" value="<?php echo getDataRowByTableAndId('inv_item_unit', $rowmat['qty_unit'])->unit_name; ?>" readonly /></td>
 							
 							
