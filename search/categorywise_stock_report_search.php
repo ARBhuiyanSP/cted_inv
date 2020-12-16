@@ -11,12 +11,13 @@
     <div class="card-header">
 		<button class="btn btn-info linktext" onclick="window.location.href='stock_report.php';"> Stock Report Search</button>
 		<button class="btn btn-success linktext"> Categorywise Stock Report </button>
+		<button class="btn btn-info linktext" onclick="window.location.href='material_wise_stock_report.php';"> Materialwise Stock Report </button>
 		<button class="btn btn-info linktext" onclick="window.location.href='typewise_stock_report.php';"> Typeywise Stock Report </button>
-		<?php if($_SESSION['logged']['user_type'] !== 'whm') {?>
+		<!-- <?php if($_SESSION['logged']['user_type'] !== 'whm') {?>
 		<button class="btn btn-info linktext" onclick="window.location.href='total_stock_report.php';"> Total Stock Report</button>
 		<button class="btn btn-info linktext" onclick="window.location.href='warehouse_stock_report.php';"> Warehouse Stock Report </button>
 		<button class="btn btn-info linktext" onclick="window.location.href='warehouse_categorywise_stock_report.php';"> Warehouse Categorywise Stock Report </button>
-		<?php } ?>
+		<?php } ?> -->
 	</div>
 
     <div class="card-body">
@@ -84,7 +85,7 @@ if(isset($_GET['submit'])){
 				<div class="col-sm-12">	
 					<center>
 						<p>
-							<img src="images/Saif_Engineering_Logo_165X72.png" height="100px;"/><br>
+							<img src="images/Saif_Engineering_Logo_165X72.png" height="50px;"/><br>
 							<span>Material Stock Report</span><br>
 							Till  <span class="dtext"><?php echo date("jS F Y", strtotime($to_date));?> </span><br>
 						</p>
@@ -99,8 +100,6 @@ if(isset($_GET['submit'])){
 							<th>Material Name</th>
 							<th>Unit</th>
 							<th>In Stock</th>
-							<th>Unit Price</th>
-							<th>Total Price</th>
 						</tr>
 					</thead>
 					<tbody>
@@ -117,7 +116,7 @@ if(isset($_GET['submit'])){
 								echo (isset($dataresult) && !empty($dataresult) ? $dataresult->category_description : '');
 								?>
 							</td>
-							<td colspan="6"></td>
+							<td colspan="4"></td>
 						</tr>
 								<?php 
 									$material_id = $row['material_id'];
@@ -134,7 +133,7 @@ if(isset($_GET['submit'])){
 										echo (isset($dataresult) && !empty($dataresult) ? $dataresult->material_sub_description : '');
 										?>
 									</td>
-									<td colspan="5"></td>
+									<td colspan="3"></td>
 								</tr>
 										<?php 
 											$material_sub_id = $rowall['material_sub_id'];
@@ -172,29 +171,6 @@ if(isset($_GET['submit'])){
 													$rowoutqty = mysqli_fetch_object($resultoutqty) ;
 													
 													echo $rowinqty->totalin -$rowoutqty->totalout;
-												?>
-											</td>
-											<td>
-												<?php
-												
-												if($_SESSION['logged']['user_type'] !== 'whm'){
-													$sqlinval = "SELECT SUM(`mbin_val`) AS totalinval FROM `inv_materialbalance` WHERE `mb_materialid` = '$mb_materialid' AND mb_date <= '$to_date'";
-												}else{
-													$sqlinval = "SELECT SUM(`mbin_val`) AS totalinval FROM `inv_materialbalance` WHERE warehouse_id = $warehouse_id AND `mb_materialid` = '$mb_materialid' AND mb_date <= '$to_date'";
-												}
-												
-												
-												$resultinval= mysqli_query($conn, $sqlinval);
-												$rowinval = mysqli_fetch_object($resultinval) ;								
-												if($rowinqty->totalin){
-												$avgprice = $rowinval->totalinval / $rowinqty->totalin;
-												echo number_format((float)$avgprice, 2, '.', '');
-												} ?>
-											</td>
-											<td>
-												<?php
-												$totalinvalue = $rowinval->totalinval;
-												echo $english_format_number = number_format($totalinvalue);
 												?>
 											</td>
 										</tr>

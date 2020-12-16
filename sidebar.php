@@ -59,14 +59,14 @@
                 <i class="fa fa-bullseye" aria-hidden="true" style="color: #007BFF;"></i>
                 <span class="sub_menu_text_design"> UOM</span>
             </a>
-            <a class="dropdown-item" href="supplier_entry.php">
+            <!-- <a class="dropdown-item" href="supplier_entry.php">
                 <i class="fa fa-bullseye" aria-hidden="true" style="color: #007BFF;"></i>
                 <span class="sub_menu_text_design"> Supplier Add</span>
             </a>
 			<a class="dropdown-item" href="supplier_info.php">
                 <i class="fa fa-bullseye" aria-hidden="true" style="color: #007BFF;"></i>
                 <span class="sub_menu_text_design"> Supplier Report</span>
-            </a>
+            </a> -->
             <a class="dropdown-item" href="project_entry.php">
                 <i class="fa fa-bullseye" aria-hidden="true" style="color: #007BFF;"></i>
                 <span class="sub_menu_text_design"> Projects</span>
@@ -125,7 +125,7 @@
             <a class="dropdown-item" href="issue-list.php"><i class="fa fa-list" aria-hidden="true" style="color: #007BFF;"></i><span class="sub_menu_text_design">Issue List</span></a>
         </div>
     </li>
-    <li class="nav-item dropdown">
+    <!--<li class="nav-item dropdown">
         <a class="nav-link dropdown-toggle" href="#" id="pagesDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             <i class="fas fa-fw fa-text-width " aria-hidden="true" style="color: #007BFF;"></i>
             <span>Warehouse Transfer</span>
@@ -145,7 +145,7 @@
             <a class="dropdown-item" href="return-list.php"><i class="fa fa-list" aria-hidden="true" style="color: #007BFF;"></i><span class="sub_menu_text_design">Return List</span></a>
         </div>
     </li>
-<!--    <li class="nav-item">
+    <li class="nav-item">
         <a class="nav-link" href="returntovendor_entry.php">
             <i class="fa fa-history" aria-hidden="true" style="color: red;"></i>
             <span>Return To Vendor</span></a>
@@ -156,11 +156,11 @@
             <i class="fa fa-key" aria-hidden="true" style="color: #007BFF;"></i>
             <span>Opening Stock Entry</span></a>
     </li>
-	 <li class="nav-item">
+	 <!-- <li class="nav-item">
         <a class="nav-link" href="payment_entry.php">
             <i class="fa fa-money-bill" aria-hidden="true" style="color: #007BFF;"></i>
             <span>Payment Entry</span></a>
-    </li>
+    </li> -->
 
 	<?php } ?>
 	<li class="nav-item" style="background-color:#007BFF;">
@@ -175,11 +175,11 @@
             <i class="fa fa-registered" aria-hidden="true" style="color: #007BFF;"></i>
             <span>Material List</span></a>
     </li>
-	<li class="nav-item">
+	<!-- <li class="nav-item">
         <a class="nav-link" href="materialtype_info.php">
             <i class="fa fa-registered" aria-hidden="true" style="color: #007BFF;"></i>
             <span>TypeWise Material List</span></a>
-    </li>
+    </li> -->
 	<li class="nav-item">
         <a class="nav-link" href="stock_report.php">
             <i class="fa fa-registered" aria-hidden="true" style="color: #007BFF;"></i>
@@ -195,11 +195,11 @@
             <i class="fa fa-registered" aria-hidden="true" style="color: #007BFF;"></i>
             <span>Consumption Reports</span></a>
     </li>
-	<li class="nav-item">
+	<!-- <li class="nav-item">
         <a class="nav-link" href="supplier_ledger.php">
             <i class="fa fa-registered" aria-hidden="true" style="color: #007BFF;"></i>
             <span>Supplier Ledger</span></a>
-    </li>
+    </li> -->
 	<li class="nav-item">
         <a class="nav-link" href="receive_report.php">
             <i class="fa fa-registered" aria-hidden="true" style="color: #007BFF;"></i>
@@ -210,7 +210,7 @@
             <i class="fa fa-registered" aria-hidden="true" style="color: #007BFF;"></i>
             <span>Issue details</span></a>
     </li>
-	<li class="nav-item">
+	<!-- <li class="nav-item">
         <a class="nav-link" href="warhousetransfer_report.php">
             <i class="fa fa-registered" aria-hidden="true" style="color: #007BFF;"></i>
             <span>Transfer details</span></a>
@@ -224,6 +224,6 @@
         <a class="nav-link" href="inventory_sheet.php"> 
             <i class="fa fa-registered" aria-hidden="true" style="color: #007BFF;"></i>
             <span>Inventory Sheet</span></a>
-    </li>
+    </li> -->
 	
 </ul>

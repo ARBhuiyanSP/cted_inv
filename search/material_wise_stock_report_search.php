@@ -9,10 +9,9 @@
 </style>
 <div class="card mb-3">
     <div class="card-header">
-	
-		<button class="btn btn-success linktext"> Stock Report Search</button>
-		<button class="btn btn-info linktext" onclick="window.location.href='categorywise_stock_report.php';"> Categorywise Stock Report </button>
-		<button class="btn btn-info linktext" onclick="window.location.href='material_wise_stock_report.php';"> Materialwise Stock Report </button>
+		<button class="btn btn-info linktext" onclick="window.location.href='stock_report.php';"> Stock Report Search</button>
+		<button class="btn btn-info linktext" onclick="window.location.href='material_wise_stock_report.php';"> Categorywise Stock Report </button>
+		<button class="btn btn-success linktext"> Materialwise Stock Report </button>
 		<button class="btn btn-info linktext" onclick="window.location.href='typewise_stock_report.php';"> Typeywise Stock Report </button>
 		<!-- <?php if($_SESSION['logged']['user_type'] !== 'whm') {?>
 		<button class="btn btn-info linktext" onclick="window.location.href='total_stock_report.php';"> Total Stock Report</button>
@@ -27,6 +26,27 @@
                 <table class="table table-borderless search-table">
                     <tbody>
                         <tr>  
+							<td>
+                                <div class="form-group">
+									<label for="sel1">Material Category:</label>
+									<select class="form-control select2" id="material_id" name="material_id">
+										<option value="">Select</option>
+										<?php
+										$parentCats = getTableDataByTableName('inv_materialcategorysub', '', 'category_description');
+										if (isset($parentCats) && !empty($parentCats)) {
+											foreach ($parentCats as $pcat) {
+												if($_GET['material_id'] == $pcat['id']){
+													$selected	= 'selected';
+													}else{
+													$selected	= '';
+													}
+												?>
+												<option value="<?php echo $pcat['id'] ?>" <?php echo $selected; ?>><?php echo $pcat['category_description'] ?></option>
+											<?php }
+										} ?>
+									</select>
+								</div>
+                            </td>
 							<td>
                                 <div class="form-group">
                                     <label for="todate">To Date</label>
@@ -50,6 +70,7 @@
 <?php
 if(isset($_GET['submit'])){
 	
+	$material_id	=	$_GET['material_id'];
 	$to_date		=	$_GET['to_date'];
 	$warehouse_id	=	$_SESSION['logged']['warehouse_id'];
 	
@@ -74,16 +95,16 @@ if(isset($_GET['submit'])){
 				<table id="" class="table table-bordered table-striped ">
 					<thead>
 						<tr>
-							<th colspan="3">Material Name</th>
-							<th>Part No</th>
-							<th>Specification</th>
+							<th>Parent category</th>
+							<th>Sub category</th>
+							<th>Material Name</th>
 							<th>Unit</th>
-							<th width="10%">In Stock</th>
+							<th>In Stock</th>
 						</tr>
 					</thead>
 					<tbody>
 					<?php
-						$sql	=	"SELECT * FROM inv_material  GROUP BY `material_id`";
+						$sql	=	"SELECT * FROM inv_material WHERE `material_id`='$material_id'  GROUP BY `material_id`";
 						$result = mysqli_query($conn, $sql);
 						while($row=mysqli_fetch_array($result))
 						{
@@ -95,7 +116,7 @@ if(isset($_GET['submit'])){
 								echo (isset($dataresult) && !empty($dataresult) ? $dataresult->category_description : '');
 								?>
 							</td>
-							<td colspan="6"></td>
+							<td colspan="4"></td>
 						</tr>
 								<?php 
 									$material_id = $row['material_id'];
@@ -112,7 +133,7 @@ if(isset($_GET['submit'])){
 										echo (isset($dataresult) && !empty($dataresult) ? $dataresult->material_sub_description : '');
 										?>
 									</td>
-									<td colspan="5"></td>
+									<td colspan="3"></td>
 								</tr>
 										<?php 
 											$material_sub_id = $rowall['material_sub_id'];
@@ -125,10 +146,8 @@ if(isset($_GET['submit'])){
 											<td></td>
 											<td></td>
 											<td><?php echo $rowmat['material_description']; ?></td>
-											<td><?php echo $rowmat['part_no']; ?></td>
-											<td style=""><?php echo $rowmat['spec']; ?></td>
 											<td><?php echo getDataRowByTableAndId('inv_item_unit', $rowmat['qty_unit'])->unit_name; ?></td>
-											<td style="text-align:right;">
+											<td>
 												<?php 
 													$mb_materialid = $rowmat['material_id_code'];
 													
@@ -151,16 +170,8 @@ if(isset($_GET['submit'])){
 													$resultoutqty = mysqli_query($conn, $sqloutqty);
 													$rowoutqty = mysqli_fetch_object($resultoutqty) ;
 													
-													$instock = $rowinqty->totalin -$rowoutqty->totalout;
-													
-												
-												
-													$minStock = $rowmat['material_min_stock'];
-													if($minStock >= $instock){
-											?>
-												<span><img src="images/alert.gif" height="15px"/></span>
-											<?php }echo number_format((float)$instock, 2, '.', ''); ?>
-												
+													echo $rowinqty->totalin -$rowoutqty->totalout;
+												?>
 											</td>
 										</tr>
 								<?php } 
