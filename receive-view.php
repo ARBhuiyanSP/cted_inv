@@ -99,13 +99,10 @@ $mrr_no=$_GET['no']; ?>
 							<thead>
 								<tr>
 									<th>SL #</th>
-									<th>Material ID</th>
 									<th>Material Name</th>
 									<th>Part No</th>
 									<th>Material Unit</th>
 									<th>Quantity</th>
-									<th>Unit Price</th>
-									<th>Amount</th>
 								</tr>
 							</thead>
 							<tbody id="material_receive_list_body">
@@ -117,7 +114,6 @@ $mrr_no=$_GET['no']; ?>
 								?>
 								<tr>
 									<td><?php echo $i; ?></td>
-									<td><?php echo $row['material_id']; ?></td>
 									<td>
 										<?php 
 											$dataresult =   getDataRowByTableAndId('inv_material', $row['material_name']);
@@ -132,12 +128,10 @@ $mrr_no=$_GET['no']; ?>
 										?>
 									</td>
 									<td><?php echo $row['receive_qty'] ?></td>
-									<td><?php echo $row['unit_price'] ?></td>
-									<td><?php echo $row['total_receive'] ?></td>
 								</tr>
 								<?php } ?>
 								<tr>
-									<td colspan="5" class="grand_total">Grand Total:</td>
+									<td colspan="4" class="grand_total">Grand Total:</td>
 									<td>
 										<?php 
 										$sql2 			= "SELECT sum(receive_qty) FROM  `inv_receivedetail` where `mrr_no`='$mrr_no'";
@@ -148,23 +142,9 @@ $mrr_no=$_GET['no']; ?>
 										}
 										?>
 									</td>
-									<td></td>
-									<td>
-										<?php 
-										$sql2			= "SELECT sum(total_receive) FROM  `inv_receivedetail` where `mrr_no`='$mrr_no'";
-										$result2		= mysqli_query($conn, $sql2);
-										for($i=0; $row2 = mysqli_fetch_array($result2); $i++){
-										$totalAmount	= number_format((float)$row2['sum(total_receive)'], 2, '.', '');
-										echo $totalAmount ;
-										}
-										?>
-									</td>
 								</tr>
 							</tbody>
-						</table>
-						<b>Total Amount in words: 
-							<span class="amountWords"><?php echo convertNumberToWords($totalAmount).' Only';?></span>
-						</b> 
+						</table> 
 						<div class="row" style="text-align:center">
 							<div class="col-sm-5"></br><?php 
 										if($rowd['received_by']){

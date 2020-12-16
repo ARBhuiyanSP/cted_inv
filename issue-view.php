@@ -74,15 +74,15 @@ $issue_id=$_GET['no']; ?>
 								</table>
 							</div>
 						</div>
-						<center><h3 >GATE PASS</h3></center>
-						<center>MATERIAL ISSUE DETAILS</center>
+						<center><h3 >MATERIAL ISSUE DETAILS</h3></center>
+						<center></center>
 						<table class="table table-bordered" id="material_receive_list"> 
 							<thead>
 								<tr>
 									<th>SL #</th>
-									<th>Material ID</th>
 									<th>Material Name</th>
 									<th>Part No</th>
+									<th>Used in</th>
 									<th>Material Unit</th>
 									<th>Quantity</th>
 								</tr>
@@ -96,7 +96,6 @@ $issue_id=$_GET['no']; ?>
 								?>
 								<tr>
 									<td><?php echo $i; ?></td>
-									<td><?php echo $row['material_id']; ?></td>
 									<td>
 										<?php 
 											$dataresult =   getDataRowByTableAndId('inv_material', $row['material_name']);
@@ -104,6 +103,7 @@ $issue_id=$_GET['no']; ?>
 										?>
 									</td>
 									<td><?php echo $row['part_no']; ?></td>
+									<td><?php echo $row['use_in']; ?></td>
 									<td>
 										<?php 
 										$dataresult =   getDataRowByTableAndId('inv_item_unit', $row['unit']);

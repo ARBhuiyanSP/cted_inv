@@ -75,10 +75,9 @@ if(isset($_GET['submit'])){
 						<tr>
 							<th colspan="3">Material Name</th>
 							<th>Part No</th>
+							<th>Specification</th>
 							<th>Unit</th>
 							<th width="10%">In Stock</th>
-							<th>Unit Price</th>
-							<th>Total Price</th>
 						</tr>
 					</thead>
 					<tbody>
@@ -95,7 +94,7 @@ if(isset($_GET['submit'])){
 								echo (isset($dataresult) && !empty($dataresult) ? $dataresult->category_description : '');
 								?>
 							</td>
-							<td colspan="7"></td>
+							<td colspan="6"></td>
 						</tr>
 								<?php 
 									$material_id = $row['material_id'];
@@ -112,7 +111,7 @@ if(isset($_GET['submit'])){
 										echo (isset($dataresult) && !empty($dataresult) ? $dataresult->material_sub_description : '');
 										?>
 									</td>
-									<td colspan="6"></td>
+									<td colspan="5"></td>
 								</tr>
 										<?php 
 											$material_sub_id = $rowall['material_sub_id'];
@@ -126,6 +125,7 @@ if(isset($_GET['submit'])){
 											<td></td>
 											<td><?php echo $rowmat['material_description']; ?></td>
 											<td><?php echo $rowmat['part_no']; ?></td>
+											<td style=""><?php echo $rowmat['spec']; ?></td>
 											<td><?php echo getDataRowByTableAndId('inv_item_unit', $rowmat['qty_unit'])->unit_name; ?></td>
 											<td style="text-align:right;">
 												<?php 
@@ -160,28 +160,6 @@ if(isset($_GET['submit'])){
 												<span><img src="images/alert.gif" height="15px"/></span>
 											<?php }echo number_format((float)$instock, 2, '.', ''); ?>
 												
-											</td>
-											<td style="text-align:right;">
-												<?php
-												if($_SESSION['logged']['user_type'] !== 'whm'){
-														$sqlinval = "SELECT SUM(`mbin_val`) AS totalinval FROM `inv_materialbalance` WHERE `mb_materialid` = '$mb_materialid' AND mb_date <= '$to_date'";
-													}else{
-														$sqlinval = "SELECT SUM(`mbin_val`) AS totalinval FROM `inv_materialbalance` WHERE warehouse_id = $warehouse_id AND `mb_materialid` = '$mb_materialid' AND mb_date <= '$to_date'";
-													}
-													
-												
-												$resultinval= mysqli_query($conn, $sqlinval);
-												$rowinval = mysqli_fetch_object($resultinval) ;								
-												if($rowinqty->totalin){
-												$avgprice = $rowinval->totalinval / $rowinqty->totalin;
-												echo number_format((float)$avgprice, 2, '.', '');
-												} ?>
-											</td>
-											<td style="text-align:right;">
-												<?php
-												$totalinvalue = $rowinval->totalinval;
-												echo $english_format_number = number_format($totalinvalue);
-												?>
 											</td>
 										</tr>
 								<?php } 
