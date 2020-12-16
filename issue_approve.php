@@ -79,30 +79,29 @@ $issue_id=$_GET['issue']; ?>
 							<thead>
 								<tr>
 									<th>SL #</th>
-									<th>Material ID</th>
 									<th>Material Name</th>
+									<th>Part No</th>
+									<th>Used in</th>
 									<th>Material Unit</th>
 									<th>Quantity</th>
-									<th>Package</th>
-									<th>Building</th>
 								</tr>
 							</thead>
 							<tbody id="material_receive_list_body">
 								<?php
-								$issue_id=$_GET['issue'];
 								$sql = "select * from `inv_issuedetail` where `issue_id`='$issue_id'";
 								$result = mysqli_query($conn, $sql);
 									for($i=1; $row = mysqli_fetch_array($result); $i++){
 								?>
 								<tr>
 									<td><?php echo $i; ?></td>
-									<td><?php echo $row['material_id']; ?></td>
 									<td>
 										<?php 
 											$dataresult =   getDataRowByTableAndId('inv_material', $row['material_name']);
 											echo (isset($dataresult) && !empty($dataresult) ? $dataresult->material_description : '');
 										?>
 									</td>
+									<td><?php echo $row['part_no']; ?></td>
+									<td><?php echo $row['use_in']; ?></td>
 									<td>
 										<?php 
 										$dataresult =   getDataRowByTableAndId('inv_item_unit', $row['unit']);
@@ -110,27 +109,21 @@ $issue_id=$_GET['issue']; ?>
 										?>
 									</td>
 									<td><?php echo $row['issue_qty'] ?></td>
-									<td><?php 
-											$dataresult =   getDataRowByTableAndId('packages', $row['package_id']);
-											echo (isset($dataresult) && !empty($dataresult) ? $dataresult->package_id : '');
-										?></td>
-									<td><?php echo $row['building_id'] ?></td>
 								</tr>
 								<?php } ?>
 								<tr>
-									<td colspan="4" class="grand_total">Grand Total:</td>
+									<td colspan="5" class="grand_total">Grand Total:</td>
 									<td>
 										<?php 
 										$sql2 = "SELECT sum(issue_qty) FROM  `inv_issuedetail` where `issue_id`='$issue_id'";
 										$result2 = mysqli_query($conn, $sql2);
 										for($i=0; $row2 = mysqli_fetch_array($result2); $i++){
-										$fgfg2=number_format((float)$row2['sum(issue_qty)'], 3, '.', '');
+										$fgfg2=number_format((float)$row2['sum(issue_qty)'], 2, '.', '');
 										
 										echo $fgfg2 ;
 										}
 										?>
 									</td>
-									<td colspan="2" class=""></td>
 								</tr>
 							</tbody>
 						</table>
