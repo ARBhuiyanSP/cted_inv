@@ -133,15 +133,19 @@
 						<div class="col-xs-2">
                             <div class="form-group">
                                 <label>Warehouse</label>
-								
-								<?php  
-									$warehouse_id = $_SESSION['logged']['warehouse_id'];								
-									$dataresult =   getDataRowByTableAndId('inv_warehosueinfo', $warehouse_id);
-								?>
-								<input type="text" class="form-control" readonly="readonly" value="<?php echo (isset($dataresult) && !empty($dataresult) ? $dataresult->name : ''); ?>">
-								
-								<input type="hidden" name="warehouse_id" id="warehouse_id" class="form-control" readonly="readonly" value="<?php echo $_SESSION['logged']['warehouse_id']; ?>">
-								
+                                <select class="form-control" id="warehouse_id" name="warehouse_id" >
+                                    <?php
+                                    $projectsData = getTableDataByTableName('inv_warehosueinfo');
+                                    ;
+                                    if (isset($projectsData) && !empty($projectsData)) {
+                                        foreach ($projectsData as $data) {
+                                            ?>
+                                            <option value="<?php echo $data['id']; ?>"><?php echo $data['name']; ?></option>
+                                            <?php
+                                        }
+                                    }
+                                    ?>
+                                </select>
                             </div>
                         </div>
                     </div>

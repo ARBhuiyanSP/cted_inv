@@ -63,17 +63,21 @@
                             </div>
                         </div>
                         <div class="col-xs-3">
-                            <div class="form-group">
+							<div class="form-group">
                                 <label>Warehouse</label>
-
-                                <?php
-                                $warehouse_id = $_SESSION['logged']['warehouse_id'];
-                                $dataresult = getDataRowByTableAndId('inv_warehosueinfo', $warehouse_id);
-                                ?>
-                                <input type="text" class="form-control" readonly="readonly" value="<?php echo (isset($dataresult) && !empty($dataresult) ? $dataresult->name : ''); ?>">
-
-                                <input type="hidden" name="warehouse_id" id="warehouse_id" class="form-control" readonly="readonly" value="<?php echo $_SESSION['logged']['warehouse_id']; ?>">
-
+                                <select class="form-control" id="warehouse_id" name="warehouse_id" >
+                                    <?php
+                                    $projectsData = getTableDataByTableName('inv_warehosueinfo');
+                                    ;
+                                    if (isset($projectsData) && !empty($projectsData)) {
+                                        foreach ($projectsData as $data) {
+                                            ?>
+                                            <option value="<?php echo $data['id']; ?>"><?php echo $data['name']; ?></option>
+                                            <?php
+                                        }
+                                    }
+                                    ?>
+                                </select>
                             </div>
                         </div>
 
@@ -90,7 +94,7 @@
                                 <th width="10%">Material ID</th>
                                 <th width="10%">Part No</th>
                                 <th width="10%">Unit</th>
-                                <th width="10%">Where To Use</th>
+                                <th width="10%">Use To</th>
                                 <th width="10%">In Stock</th>
                                 <th width="10%">Qty<span class="reqfield"> ***required</span></th>
                                 <th width="5%"></th>
