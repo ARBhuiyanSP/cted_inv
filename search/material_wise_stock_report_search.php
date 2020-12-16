@@ -31,8 +31,13 @@
 						$parentCats = getTableDataByTableName('inv_materialcategorysub', '', 'category_description');
 						if (isset($parentCats) && !empty($parentCats)) {
 							foreach ($parentCats as $pcat) {
+								if($_GET['parent_item_id'] == $pcat['id']){
+								$selected	= 'selected';
+								}else{
+								$selected	= '';
+								}
 								?>
-								<option value="<?php echo $pcat['id'] ?>"><?php echo $pcat['category_description'] ?></option>
+								<option value="<?php echo $pcat['id'] ?>" <?php echo $selected; ?>><?php echo $pcat['category_description'] ?></option>
 							<?php }
 						} ?>
 					</select>
@@ -47,8 +52,13 @@
 						$parentCats = getTableDataByTableName('inv_materialcategory','','material_sub_description');
 						if (isset($parentCats) && !empty($parentCats)) {
 							foreach ($parentCats as $pcat) {
+								if($_GET['sub_item_id'] == $pcat['id']){
+								$selected	= 'selected';
+								}else{
+								$selected	= '';
+								}
 								?>
-								<option value="<?php echo $pcat['id'] ?>"><?php echo $pcat['material_sub_description'] ?></option>
+								<option value="<?php echo $pcat['id'] ?>" <?php echo $selected; ?>><?php echo $pcat['material_sub_description'] ?></option>
 							<?php }
 						} ?>
 					</select>
@@ -63,8 +73,13 @@
 						$parentCats = getTableDataByTableName('inv_material_level3','','material_level3_description');
 						if (isset($parentCats) && !empty($parentCats)) {
 							foreach ($parentCats as $pcat) {
+								if($_GET['material_level3_id'] == $pcat['id']){
+								$selected	= 'selected';
+								}else{
+								$selected	= '';
+								}
 								?>
-								<option value="<?php echo $pcat['id'] ?>"><?php echo $pcat['material_level3_description'] ?></option>
+								<option value="<?php echo $pcat['id'] ?>" <?php echo $selected; ?>><?php echo $pcat['material_level3_description'] ?></option>
 							<?php }
 						} ?>
 					</select>
@@ -79,8 +94,13 @@
 						$parentCats = getTableDataByTableName('inv_material_level4','','material_level4_description');
 						if (isset($parentCats) && !empty($parentCats)) {
 							foreach ($parentCats as $pcat) {
+								if($_GET['material_level4_id'] == $pcat['id']){
+								$selected	= 'selected';
+								}else{
+								$selected	= '';
+								}
 								?>
-								<option value="<?php echo $pcat['id'] ?>"><?php echo $pcat['material_level4_description'] ?></option>
+								<option value="<?php echo $pcat['id'] ?>" <?php echo $selected; ?>><?php echo $pcat['material_level4_description'] ?></option>
 							<?php }
 						} ?>
 					</select>
@@ -125,8 +145,32 @@
 					<center>
 						<p>
 							<img src="images/Saif_Engineering_Logo_165X72.png" height="50px;"/><br>
-							<span>Material Stock Report</span><br>
-							Till  <span class="dtext"><?php echo date("jS F Y", strtotime($to_date));?> </span><br>
+							<h5>Material Stock Report</h5>
+							<span>
+								<?php
+								$dataresult =   getDataRowByTableAndId('inv_materialcategorysub', $parent_item_id);
+								echo (isset($dataresult) && !empty($dataresult) ? $dataresult->category_description : '');
+								?>
+							</span> <i class="fas fa-arrow-right"></i> 
+							<span>
+								<?php
+								$dataresult =   getDataRowByTableAndId('inv_materialcategory', $sub_item_id);
+								echo (isset($dataresult) && !empty($dataresult) ? $dataresult->material_sub_description : '');
+								?>
+							</span> <i class="fas fa-arrow-right"></i>
+							<span>
+								<?php
+								$dataresult =   getDataRowByTableAndId('inv_material_level3', $material_level3_id);
+								echo (isset($dataresult) && !empty($dataresult) ? $dataresult->material_level3_description : '');
+								?>
+							</span> <i class="fas fa-arrow-right"></i>	
+							<span>
+								<?php
+								$dataresult =   getDataRowByTableAndId('inv_material_level4', $material_level4_id);
+								echo (isset($dataresult) && !empty($dataresult) ? $dataresult->material_level4_description : '');
+								?>
+							</span> 
+							<br>Till  <span class="dtext"><?php echo date("jS F Y", strtotime($to_date));?> </span><br>
 						</p>
 					</center>
 				</div>
@@ -134,135 +178,53 @@
 				<table id="" class="table table-bordered table-striped ">
 					<thead>
 						<tr>
-							<th>Level - 1</th>
-							<th>Level - 2</th>
-							<th>Level - 3</th>
-							<th>Level - 4</th>
 							<th>Material Name</th>
+							<th>Part No</th>
+							<th>Specification</th>
 							<th>Unit</th>
 							<th>In Stock</th>
 						</tr>
 					</thead>
-					<tbody>
-					<?php
-						$sql	=	"SELECT * FROM inv_material WHERE  `material_id` = '$parent_item_id' AND `material_sub_id` = '$sub_item_id' AND `material_level3_id` = '$material_level3_id' AND `material_level4_id` = '$material_level4_id'  GROUP BY `material_id`";
-						$result = mysqli_query($conn, $sql);
-						while($row=mysqli_fetch_array($result))
-						{
-					?>
+					<tbody>	
+						<?php 
+							$sqlmat	=	"SELECT * FROM inv_material WHERE  `material_id` = '$parent_item_id' AND `material_sub_id` = '$sub_item_id' AND `material_level3_id` = '$material_level3_id' AND `material_level4_id` = '$material_level4_id' GROUP BY `material_id_code`;";
+							$resultmat = mysqli_query($conn, $sqlmat);
+							while($rowmat=mysqli_fetch_array($resultmat))
+							{ ?>
+						
 						<tr>
+							<td><?php echo $rowmat['material_description']; ?></td>
+							<td><?php echo $rowmat['part_no']; ?></td>
+							<td><?php echo $rowmat['spec']; ?></td>
+							<td><?php echo getDataRowByTableAndId('inv_item_unit', $rowmat['qty_unit'])->unit_name; ?></td>
 							<td>
 								<?php 
-								$dataresult =   getDataRowByTableAndId('inv_materialcategorysub', $row['material_id']);
-								echo (isset($dataresult) && !empty($dataresult) ? $dataresult->category_description : '');
+									$mb_materialid = $rowmat['material_id_code'];
+									
+									if($_SESSION['logged']['user_type'] !== 'whm'){
+										$sqlinqty = "SELECT SUM(`mbin_qty`) AS totalin FROM `inv_materialbalance` WHERE `mb_materialid` = '$mb_materialid' AND mb_date <= '$to_date'";
+									}else{
+										$sqlinqty = "SELECT SUM(`mbin_qty`) AS totalin FROM `inv_materialbalance` WHERE warehouse_id = $warehouse_id AND `mb_materialid` = '$mb_materialid' AND mb_date <= '$to_date'";
+									}
+									
+									
+									$resultinqty = mysqli_query($conn, $sqlinqty);
+									$rowinqty = mysqli_fetch_object($resultinqty) ;
+									
+									if($_SESSION['logged']['user_type'] !== 'whm'){
+										$sqloutqty = "SELECT SUM(`mbout_qty`) AS totalout FROM `inv_materialbalance` WHERE `mb_materialid` = '$mb_materialid' AND mb_date <= '$to_date'";
+									}else{
+										$sqloutqty = "SELECT SUM(`mbout_qty`) AS totalout FROM `inv_materialbalance` WHERE warehouse_id = $warehouse_id AND `mb_materialid` = '$mb_materialid' AND mb_date <= '$to_date'";
+									}
+									
+									$resultoutqty = mysqli_query($conn, $sqloutqty);
+									$rowoutqty = mysqli_fetch_object($resultoutqty) ;
+									
+									echo $rowinqty->totalin -$rowoutqty->totalout;
 								?>
 							</td>
-							<td colspan="6"></td>
 						</tr>
-								<?php 
-									$material_id = $row['material_id'];
-									$sqlall	=	"SELECT * FROM inv_material WHERE `material_id` = '$material_id' GROUP BY `material_sub_id`;";
-									$resultall = mysqli_query($conn, $sqlall);
-									while($rowall=mysqli_fetch_array($resultall))
-									{ ?>
-								
-								<tr>
-									<td></td>
-									<td>
-										<?php
-										$dataresult =   getDataRowByTableAndId('inv_materialcategory', $rowall['material_sub_id']);
-										echo (isset($dataresult) && !empty($dataresult) ? $dataresult->material_sub_description : '');
-										?>
-									</td>
-									<td colspan="5"></td>
-								</tr>
-								<!------ LEVEL-3------>
-								<?php 
-									$material_id = $row['material_id'];
-									$sqllevel3	=	"SELECT * FROM inv_material WHERE `material_id` = '$material_id' GROUP BY `material_level3_id`;";
-									$resultlevel3 = mysqli_query($conn, $sqllevel3);
-									while($rowlevel3=mysqli_fetch_array($resultlevel3))
-									{ ?>
-								
-								<tr>
-									<td></td>
-									<td></td>
-									<td>
-										<?php
-										$dataresult =   getDataRowByTableAndId('inv_material_level3', $rowlevel3['material_level3_id']);
-										echo (isset($dataresult) && !empty($dataresult) ? $dataresult->material_level3_description : '');
-										?>
-									</td>
-									<td colspan="5"></td>
-								</tr>
-								<!------ LEVEL-3------>
-								<!------ LEVEL-4------>
-								<?php 
-									$material_id = $row['material_id'];
-									$sqllevel4	=	"SELECT * FROM inv_material WHERE `material_id` = '$material_id' GROUP BY `material_level4_id`;";
-									$resultlevel4 = mysqli_query($conn, $sqllevel4);
-									while($rowlevel4=mysqli_fetch_array($resultlevel4))
-									{ ?>
-								
-								<tr>
-									<td></td>
-									<td></td>
-									<td></td>
-									<td>
-										<?php
-										$dataresult =   getDataRowByTableAndId('inv_material_level4', $rowlevel4['material_level4_id']);
-										echo (isset($dataresult) && !empty($dataresult) ? $dataresult->material_level4_description : '');
-										?>
-									</td>
-									<td colspan="5"></td>
-								</tr>
-								<!------ LEVEL-4------>
-								
-										<?php 
-											$material_sub_id = $rowall['material_sub_id'];
-											$sqlmat	=	"SELECT * FROM inv_material WHERE `material_sub_id` = '$material_sub_id' GROUP BY `material_id_code`;";
-											$resultmat = mysqli_query($conn, $sqlmat);
-											while($rowmat=mysqli_fetch_array($resultmat))
-											{ ?>
-										
-										<tr>
-											<td></td>
-											<td></td>
-											<td></td>
-											<td></td>
-											<td><?php echo $rowmat['material_description']; ?></td>
-											<td><?php echo getDataRowByTableAndId('inv_item_unit', $rowmat['qty_unit'])->unit_name; ?></td>
-											<td>
-												<?php 
-													$mb_materialid = $rowmat['material_id_code'];
-													
-													if($_SESSION['logged']['user_type'] !== 'whm'){
-														$sqlinqty = "SELECT SUM(`mbin_qty`) AS totalin FROM `inv_materialbalance` WHERE `mb_materialid` = '$mb_materialid' AND mb_date <= '$to_date'";
-													}else{
-														$sqlinqty = "SELECT SUM(`mbin_qty`) AS totalin FROM `inv_materialbalance` WHERE warehouse_id = $warehouse_id AND `mb_materialid` = '$mb_materialid' AND mb_date <= '$to_date'";
-													}
-													
-													
-													$resultinqty = mysqli_query($conn, $sqlinqty);
-													$rowinqty = mysqli_fetch_object($resultinqty) ;
-													
-													if($_SESSION['logged']['user_type'] !== 'whm'){
-														$sqloutqty = "SELECT SUM(`mbout_qty`) AS totalout FROM `inv_materialbalance` WHERE `mb_materialid` = '$mb_materialid' AND mb_date <= '$to_date'";
-													}else{
-														$sqloutqty = "SELECT SUM(`mbout_qty`) AS totalout FROM `inv_materialbalance` WHERE warehouse_id = $warehouse_id AND `mb_materialid` = '$mb_materialid' AND mb_date <= '$to_date'";
-													}
-													
-													$resultoutqty = mysqli_query($conn, $sqloutqty);
-													$rowoutqty = mysqli_fetch_object($resultoutqty) ;
-													
-													echo $rowinqty->totalin -$rowoutqty->totalout;
-												?>
-											</td>
-										</tr>
-								<?php } 
-									} 
-						} }}
-								?>
+				<?php } ?>
 					</tbody>
 				</table>
 				
