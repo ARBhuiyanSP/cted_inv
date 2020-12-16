@@ -10,7 +10,7 @@
 <div class="card mb-3">
     <div class="card-header">
 		<button class="btn btn-info linktext" onclick="window.location.href='stock_report.php';"> Stock Report Search</button>
-		<button class="btn btn-info linktext" onclick="window.location.href='material_wise_stock_report.php';"> Categorywise Stock Report </button>
+		<button class="btn btn-info linktext" onclick="window.location.href='categorywise_stock_report.php';"> Categorywise Stock Report </button>
 		<button class="btn btn-success linktext"> Materialwise Stock Report </button>
 		<button class="btn btn-info linktext" onclick="window.location.href='typewise_stock_report.php';"> Typeywise Stock Report </button>
 		<!-- <?php if($_SESSION['logged']['user_type'] !== 'whm') {?>
@@ -145,6 +145,7 @@
 					<center>
 						<p>
 							<img src="images/Saif_Engineering_Logo_165X72.png" height="50px;"/><br>
+							<h5>CTED CHATTOGRAM</h5>
 							<h5>Material Stock Report</h5>
 							<span>
 								<?php
