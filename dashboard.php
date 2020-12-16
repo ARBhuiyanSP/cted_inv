@@ -114,7 +114,7 @@ $(document).ready(function() {
 							<form name="" action="" method="GET">
 								<div class="col-md-12">
 									<div class="form-group">
-										<label>Individual Material Stock Search</label>
+										<label>Material Stock Search</label>
 										<select class="form-control js-example-basic-single" id="material_name" name="material_name" required>
 											<?php
 											$projectsData = get_product_with_category();
