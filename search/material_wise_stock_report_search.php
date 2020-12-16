@@ -29,22 +29,23 @@
 							<td>
                                 <div class="form-group">
 									<label for="sel1">Material Category:</label>
-									<select class="form-control select2" id="material_id" name="material_id">
-										<option value="">Select</option>
-										<?php
-										$parentCats = getTableDataByTableName('inv_materialcategorysub', '', 'category_description');
-										if (isset($parentCats) && !empty($parentCats)) {
-											foreach ($parentCats as $pcat) {
-												if($_GET['material_id'] == $pcat['id']){
-													$selected	= 'selected';
-													}else{
-													$selected	= '';
-													}
-												?>
-												<option value="<?php echo $pcat['id'] ?>" <?php echo $selected; ?>><?php echo $pcat['category_description'] ?></option>
-											<?php }
-										} ?>
-									</select>
+									<select class="form-control material_select_2" id="material_name" name="material_name" required>
+											<?php
+											$projectsData = get_product_with_category();
+											if (isset($projectsData) && !empty($projectsData)) {
+												foreach ($projectsData as $data) {
+													if($_GET['material_name'] == $data['item_code']){
+														$selected	= 'selected';
+														}else{
+														$selected	= '';
+														}
+													?>
+													<option value="<?php echo $data['item_code']; ?>" <?php echo $selected; ?>><?php echo $data['material_name']; ?>-<?php echo $data['part_no']; ?>-<?php echo $data['spec']; ?></option>
+													<?php
+												}
+											}
+											?>
+										</select>
 								</div>
                             </td>
 							<td>
@@ -67,15 +68,7 @@
         </form>
     </div>
 </div>
-<?php
-if(isset($_GET['submit'])){
-	
-	$material_id	=	$_GET['material_id'];
-	$to_date		=	$_GET['to_date'];
-	$warehouse_id	=	$_SESSION['logged']['warehouse_id'];
-	
-	
-?>
+
 <center>
 	
 	<div class="row">
@@ -104,80 +97,26 @@ if(isset($_GET['submit'])){
 					</thead>
 					<tbody>
 					<?php
-						$sql	=	"SELECT * FROM inv_material WHERE `material_id`='$material_id'  GROUP BY `material_id`";
-						$result = mysqli_query($conn, $sql);
-						while($row=mysqli_fetch_array($result))
-						{
+					if(isset($_GET['submit'])){
+					$material_name=$_GET['material_name'];
+					//echo $material_name;
+						$material_id_code = $material_name;
+						$to_date		=	$_GET['to_date'];
+						$warehouse_id	=	$_SESSION['logged']['warehouse_id'];
+						
+						$sqlmat	=	"SELECT * FROM `inv_material` WHERE `material_id_code` = '$material_id_code' ";
+						$resultmat = mysqli_query($conn, $sqlmat);
+						$rowmat=mysqli_fetch_array($resultmat);
+											
 					?>
 						<tr>
-							<td>
-								<?php 
-								$dataresult =   getDataRowByTableAndId('inv_materialcategorysub', $row['material_id']);
-								echo (isset($dataresult) && !empty($dataresult) ? $dataresult->category_description : '');
-								?>
-							</td>
-							<td colspan="4"></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
 						</tr>
-								<?php 
-									$material_id = $row['material_id'];
-									$sqlall	=	"SELECT * FROM inv_material WHERE `material_id` = '$material_id' GROUP BY `material_sub_id`;";
-									$resultall = mysqli_query($conn, $sqlall);
-									while($rowall=mysqli_fetch_array($resultall))
-									{ ?>
-								
-								<tr>
-									<td></td>
-									<td>
-										<?php
-										$dataresult =   getDataRowByTableAndId('inv_materialcategory', $rowall['material_sub_id']);
-										echo (isset($dataresult) && !empty($dataresult) ? $dataresult->material_sub_description : '');
-										?>
-									</td>
-									<td colspan="3"></td>
-								</tr>
-										<?php 
-											$material_sub_id = $rowall['material_sub_id'];
-											$sqlmat	=	"SELECT * FROM inv_material WHERE `material_sub_id` = '$material_sub_id' GROUP BY `material_id_code`;";
-											$resultmat = mysqli_query($conn, $sqlmat);
-											while($rowmat=mysqli_fetch_array($resultmat))
-											{ ?>
-										
-										<tr>
-											<td></td>
-											<td></td>
-											<td><?php echo $rowmat['material_description']; ?></td>
-											<td><?php echo getDataRowByTableAndId('inv_item_unit', $rowmat['qty_unit'])->unit_name; ?></td>
-											<td>
-												<?php 
-													$mb_materialid = $rowmat['material_id_code'];
-													
-													if($_SESSION['logged']['user_type'] !== 'whm'){
-														$sqlinqty = "SELECT SUM(`mbin_qty`) AS totalin FROM `inv_materialbalance` WHERE `mb_materialid` = '$mb_materialid' AND mb_date <= '$to_date'";
-													}else{
-														$sqlinqty = "SELECT SUM(`mbin_qty`) AS totalin FROM `inv_materialbalance` WHERE warehouse_id = $warehouse_id AND `mb_materialid` = '$mb_materialid' AND mb_date <= '$to_date'";
-													}
-													
-													
-													$resultinqty = mysqli_query($conn, $sqlinqty);
-													$rowinqty = mysqli_fetch_object($resultinqty) ;
-													
-													if($_SESSION['logged']['user_type'] !== 'whm'){
-														$sqloutqty = "SELECT SUM(`mbout_qty`) AS totalout FROM `inv_materialbalance` WHERE `mb_materialid` = '$mb_materialid' AND mb_date <= '$to_date'";
-													}else{
-														$sqloutqty = "SELECT SUM(`mbout_qty`) AS totalout FROM `inv_materialbalance` WHERE warehouse_id = $warehouse_id AND `mb_materialid` = '$mb_materialid' AND mb_date <= '$to_date'";
-													}
-													
-													$resultoutqty = mysqli_query($conn, $sqloutqty);
-													$rowoutqty = mysqli_fetch_object($resultoutqty) ;
-													
-													echo $rowinqty->totalin -$rowoutqty->totalout;
-												?>
-											</td>
-										</tr>
-								<?php } 
-									} 
-								} 
-								?>
+					<?php } ?>
 					</tbody>
 				</table>
 				<center><div class="row">
@@ -195,7 +134,6 @@ if(isset($_GET['submit'])){
 		<center><button class="btn btn-default" onclick="printDiv('printableArea')"><i class="fa fa-print" aria-hidden="true" style="    font-size: 17px;"> Print</i></button></center>
 		<div class="col-md-1"></div>
 </center>
-<?php }?>
 <script>
 function printDiv(divName) {
 	 var printContents = document.getElementById(divName).innerHTML;
@@ -229,6 +167,7 @@ function printDiv(divName) {
             changeMonth: true
         });
     });
+	$(".material_select_2").select2();
 </script>
 
 

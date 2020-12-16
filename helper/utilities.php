@@ -224,8 +224,8 @@ function get_product_with_category() {
                                 'parent_item_id'        => $material->material_id,
                                 'sub_item_id'           => $material->material_sub_id,
                                 'item_code'             => $material->material_id_code,
-                                'part_no'             => $material->part_no,
-                                'spec'             => $material->spec,
+                                'part_no'             	=> $material->part_no,
+                                'spec'             		=> $material->spec,
                                 'material_name'         => $material->material_description.' ('.$parent_name.' - '.$sub_item_name.')',
                             ];
                         }
