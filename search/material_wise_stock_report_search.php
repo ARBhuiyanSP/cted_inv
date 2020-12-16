@@ -145,8 +145,7 @@
 					<center>
 						<p>
 							<img src="images/Saif_Engineering_Logo_165X72.png" height="50px;"/><br>
-							<h5>CTED CHATTOGRAM</h5>
-							<h5>Material Stock Report</h5>
+							<h5>CTED CHATTOGRAM - Material Stock Report</h5>
 							<span>
 								<?php
 								$dataresult =   getDataRowByTableAndId('inv_materialcategorysub', $parent_item_id);
