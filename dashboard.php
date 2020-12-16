@@ -192,6 +192,135 @@ $(document).ready(function() {
             </div>
           </div>
         </div>
+		<div class="row">
+			
+          <div class="col-xl-3 col-sm-6 mb-3">
+            <div class="card text-white bg-primary o-hidden h-100">
+				<div class="card-body">
+					<div class="card-body-icon">
+						<i class="fas fa-fw fa-truck"></i>
+					</div>
+				<?php
+				/* if($_SESSION['logged']['user_type'] == 'superAdmin') {
+					$sqlpmrr	=	"SELECT * FROM `inv_receive` WHERE `approval_status` = '0'";
+				}else{
+					$sqlpmrr	=	"SELECT * FROM `inv_receive` WHERE `warehouse_id`='$warehouse_id' AND `approval_status` = '0'";
+				} */
+				$sqlpmrr	=	"SELECT * FROM `inv_receive` WHERE `approval_status` = '0'";
+				$resultpmrr = mysqli_query($conn, $sqlpmrr);
+				$totalPendingMrr = mysqli_num_rows($resultpmrr);
+				?>
+					<div class="mr-5"><?php echo $totalPendingMrr; ?> Pending Receive</div>
+				</div>
+				<a class="card-footer text-white clearfix small z-1" href="receive-list.php">
+				<span class="float-left">View Details</span>
+				<span class="float-right">
+					<i class="fas fa-angle-right"></i>
+				</span>
+				</a>
+            </div>
+          </div>
+          <div class="col-xl-3 col-sm-6 mb-3">
+            <div class="card text-white bg-primary o-hidden h-100">
+				<div class="card-body">
+					<div class="card-body-icon">
+						<i class="fas fa-fw fa-truck"></i>
+					</div>
+				<?php
+				/* if($_SESSION['logged']['user_type'] == 'superAdmin') {
+					$sqlpmrr	=	"SELECT * FROM `inv_issue` WHERE `approval_status` = '0'";	
+				}else{
+					$sqlpmrr	=	"SELECT * FROM `inv_issue` WHERE `warehouse_id`='$warehouse_id' AND `approval_status` = '0'";
+				} */
+				$sqlpmrr	=	"SELECT * FROM `inv_issue` WHERE `approval_status` = '0'";
+				$resultpmrr = mysqli_query($conn, $sqlpmrr);
+				$totalPendingMrr = mysqli_num_rows($resultpmrr);
+				?>
+					<div class="mr-5"><?php echo $totalPendingMrr; ?> Pending Issue</div>
+				</div>
+				<a class="card-footer text-white clearfix small z-1" href="issue-list.php">
+				<span class="float-left">View Details</span>
+				<span class="float-right">
+					<i class="fas fa-angle-right"></i>
+				</span>
+				</a>
+            </div>
+          </div>
+		</div>
+		<div class="row">
+			<form name="" action="" method="GET">
+			<div class="col-xs-2">
+				<div class="form-group">
+					<label for="id">Level-1</label><span class="reqfield"> ***required</span>
+					<select class="form-control js-example-basic-single" id="level_1_id_l5" name="parent_item_id" onchange="get5_2By1(this.value);">
+						<option value="">Select</option>
+						<?php
+						$parentCats = getTableDataByTableName('inv_materialcategorysub', '', 'category_description');
+						if (isset($parentCats) && !empty($parentCats)) {
+							foreach ($parentCats as $pcat) {
+								?>
+								<option value="<?php echo $pcat['id'] ?>"><?php echo $pcat['category_description'] ?></option>
+							<?php }
+						} ?>
+					</select>
+				</div>
+			</div>
+			<div class="col-xs-2">
+				<div class="form-group">
+					<label for="id">Level-2</label><span class="reqfield"> ***required</span>
+					<select class="form-control js-example-basic-single" id="level_2_id_l5" name="sub_item_id" onchange="get5_3By2(this.value);">
+						<option value="">Select</option>
+						<?php
+						$parentCats = getTableDataByTableName('inv_materialcategory','','material_sub_description');
+						if (isset($parentCats) && !empty($parentCats)) {
+							foreach ($parentCats as $pcat) {
+								?>
+								<option value="<?php echo $pcat['id'] ?>"><?php echo $pcat['material_sub_description'] ?></option>
+							<?php }
+						} ?>
+					</select>
+				</div>
+			</div>
+			<div class="col-xs-2">
+				<div class="form-group">
+					<label for="id">Level-3</label><span class="reqfield"> ***required</span>
+					<select class="form-control js-example-basic-single" id="material_level3_id" name="material_level3_id" onchange="get5_4By3(this.value);">
+						<option value="">Select</option>
+						<?php
+						$parentCats = getTableDataByTableName('inv_material_level3','','material_level3_description');
+						if (isset($parentCats) && !empty($parentCats)) {
+							foreach ($parentCats as $pcat) {
+								?>
+								<option value="<?php echo $pcat['id'] ?>"><?php echo $pcat['material_level3_description'] ?></option>
+							<?php }
+						} ?>
+					</select>
+				</div>
+			</div>
+			<div class="col-xs-2">
+				<div class="form-group">
+					<label for="id">Level-4</label><span class="reqfield"> ***required</span>
+					<select class="form-control js-example-basic-single" id="material_level4_id" name="material_level4_id" onchange="getMatCodeBySubId(this.value);">
+						<option value="">Select</option>
+						<?php
+						$parentCats = getTableDataByTableName('inv_material_level4','','material_level4_description');
+						if (isset($parentCats) && !empty($parentCats)) {
+							foreach ($parentCats as $pcat) {
+								?>
+								<option value="<?php echo $pcat['id'] ?>"><?php echo $pcat['material_level4_description'] ?></option>
+							<?php }
+						} ?>
+					</select>
+				</div>
+			</div>
+			<div class="col-xs-2">
+				<div class="form-group">
+					<label for="id" style="color:#fff;">.</label>
+					<input type="submit" name="name_submit" id="submit" class="btn btn-block" style="background-color:#007BFF;color:#ffffff;" value="SEARCH" />   				
+				</div>
+			</div>
+			</form>
+		</div>
 		
 <?php } ?>
 
