@@ -28,7 +28,20 @@
                         <div class="col-xs-3">
                             <div class="form-group">
                                 <label>Issue No</label>
-                                <input type="text" name="issue_id" id="issue_id" class="form-control" value="" required>
+                                <?php
+                                if ($_SESSION['logged']['user_type'] == 'whm') {
+                                    $warehouse_id = $_SESSION['logged']['warehouse_id'];
+                                    $sql = "SELECT * FROM inv_warehosueinfo WHERE `id`='$warehouse_id'";
+                                    $result = mysqli_query($conn, $sql);
+                                    $row = mysqli_fetch_array($result);
+                                    $short_name = $row['short_name'];
+                                    $issueCode = 'IS-' . $short_name;
+                                } else {
+                                    $issueCode = 'IS-CW-';
+                                }
+                                ?>
+                                <input type="text" name="issue_id" id="issue_id" class="form-control" value="<?php echo getDefaultCategoryCodeByWarehouse('inv_issue', 'issue_id', '03d', '001', $issueCode) ?>" readonly>
+                                <input type="hidden" name="issue_no" id="issue_no" value="<?php echo getDefaultCategoryCodeByWarehouse('inv_issue', 'issue_id', '03d', '001', $issueCode) ?>">
                             </div>
                         </div>
                         <div class="col-xs-3">
