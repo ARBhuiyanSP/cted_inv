@@ -69,7 +69,6 @@ if(isset($_GET['submit'])){
 					<thead>
 						<tr>
 							<th>MRR Date</th>
-							<th>MRR No</th>
 							<th>Material Name</th>
 							<th>Part No</th>
 							<th>Specification</th>
@@ -103,7 +102,6 @@ if(isset($_GET['submit'])){
 						?>
 						<tr>
 							<td><?php echo date("jS F Y", strtotime($row['mrr_date']));?></td>
-							<td><?php echo $rowall['mrr_no']; ?></td>
 							<td><?php 
 								$mb_materialid = $rowall['material_id'];
 								$sqlname	=	"SELECT * FROM `inv_material` WHERE `material_id_code` = '$mb_materialid' ";
@@ -132,6 +130,11 @@ if(isset($_GET['submit'])){
 							<td></td>
 						</tr>
 						<?php } ?>
+						<tr>
+							<td colspan="5" class="grand_total">Total:</td>
+							<td><?php echo $totalQty; ?></td>
+							<td></td>
+						</tr>
 						<?php } ?>
 					</tbody>
 				</table>
