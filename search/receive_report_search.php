@@ -102,7 +102,7 @@ if(isset($_GET['submit'])){
 								$totalAmount += $rowall['total_receive'];
 						?>
 						<tr>
-							<td><?php echo date("jS F Y", strtotime($row['mrr_date']));?></td>
+							<td><?php echo date("j M y", strtotime($row['mrr_date']));?></td>
 							<td><?php echo $rowall['mrr_no']; ?></td>
 							<td><?php 
 								$mb_materialid = $rowall['material_id'];

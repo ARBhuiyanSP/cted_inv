@@ -190,12 +190,12 @@
             <i class="fa fa-registered" aria-hidden="true" style="color: #007BFF;"></i>
             <span>Movement Reports</span></a>
     </li>
-	<li class="nav-item">
+	<!-- <li class="nav-item">
         <a class="nav-link" href="consumption_report.php">
             <i class="fa fa-registered" aria-hidden="true" style="color: #007BFF;"></i>
             <span>Consumption Reports</span></a>
     </li>
-	<!-- <li class="nav-item">
+	<li class="nav-item">
         <a class="nav-link" href="supplier_ledger.php">
             <i class="fa fa-registered" aria-hidden="true" style="color: #007BFF;"></i>
             <span>Supplier Ledger</span></a>
