@@ -68,14 +68,14 @@ if(isset($_GET['submit'])){
 				<table id="" class="table table-bordered">
 					<thead>
 						<tr>
-							<th>Voucher Date</th>
-							<th>Voucher No</th>
-							<th>Material Name</th>
-							<th>Part No</th>
-							<th>Specification</th>
-							<th>Unit</th>
-							<th>Received QTY</th>
-							<th>Remarks</th>
+							<th style="text-align:center">Voucher Date</th>
+							<th style="text-align:center">Voucher No</th>
+							<th style="text-align:center">Material Name</th>
+							<th style="text-align:center">Part No</th>
+							<th style="text-align:center">Specification</th>
+							<th style="text-align:center">Unit</th>
+							<th style="text-align:center">Received QTY</th>
+							<th style="text-align:center">Remarks</th>
 						</tr>
 					</thead>
 					<tbody>
@@ -102,9 +102,9 @@ if(isset($_GET['submit'])){
 								$totalAmount += $rowall['total_receive'];
 						?>
 						<tr>
-							<td><?php echo date("j M y", strtotime($row['mrr_date']));?></td>
-							<td><?php echo $rowall['mrr_no']; ?></td>
-							<td><?php 
+							<td style="text-align:center"><?php echo date("j M y", strtotime($row['mrr_date']));?></td>
+							<td style="text-align:center"><?php echo $rowall['mrr_no']; ?></td>
+							<td style="text-align:center"><?php 
 								$mb_materialid = $rowall['material_id'];
 								$sqlname	=	"SELECT * FROM `inv_material` WHERE `material_id_code` = '$mb_materialid' ";
 								$resultname = mysqli_query($conn, $sqlname);
@@ -114,7 +114,7 @@ if(isset($_GET['submit'])){
 							</td>
 							
 							
-							<td><?php echo $rowall['part_no']; ?></td>
+							<td style="text-align:center"><?php echo $rowall['part_no']; ?></td>
 							
 							
 							<?php 
@@ -124,11 +124,11 @@ if(isset($_GET['submit'])){
 								$rowspec=mysqli_fetch_array($resultspec);
 								
 							?>
-							<td><?php echo $rowspec['spec']; ?></td>
+							<td style="text-align:center"><?php echo $rowspec['spec']; ?></td>
 							
 							
-							<td><?php echo getDataRowByTableAndId('inv_item_unit', $rowall['unit_id'])->unit_name; ?></td>
-							<td><?php echo $rowall['receive_qty']; ?></td>
+							<td style="text-align:center"><?php echo getDataRowByTableAndId('inv_item_unit', $rowall['unit_id'])->unit_name; ?></td>
+							<td style="text-align:center"><?php echo $rowall['receive_qty']; ?></td>
 							<td></td>
 						</tr>
 						<?php } ?>
