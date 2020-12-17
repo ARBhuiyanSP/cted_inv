@@ -34,19 +34,7 @@
                         <div class="col-xs-2">
                             <div class="form-group">
                                 <label>Voucher No</label>
-								<?php if($_SESSION['logged']['user_type'] == 'whm')
-									{
-										$warehouse_id	=	$_SESSION['logged']['warehouse_id'];
-										$sql	=	"SELECT * FROM inv_warehosueinfo WHERE `id`='$warehouse_id'";
-										$result = mysqli_query($conn, $sql);
-										$row=mysqli_fetch_array($result);
-										$short_name = $row['short_name'];
-										$mrrcode= 'MRR-'.$short_name;
-									} else{
-										$mrrcode= 'MRR-CW';
-									}
-								?>
-                                <input type="text" name="mrr_no" id="mrr_no" class="form-control" value="">
+                                <input type="text" name="mrr_no" id="mrr_no" class="form-control" value="" required >
                             </div>
                         </div>
                         <div class="col-xs-2">
@@ -289,6 +277,17 @@
 <script>
     $(function () {
         $("#challan_date").datepicker({
+            inline: true,
+            dateFormat: "yy-mm-dd",
+            yearRange: "-50:+10",
+            changeYear: true,
+            changeMonth: true
+        });
+    });
+</script>
+<script>
+    $(function () {
+        $("#Purchase_date").datepicker({
             inline: true,
             dateFormat: "yy-mm-dd",
             yearRange: "-50:+10",
