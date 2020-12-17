@@ -67,12 +67,11 @@ if(isset($_GET['submit'])){
 				<table id="" class="table table-bordered">
 					<thead>
 						<tr>
-							<th>Material ID</th>
 							<th>Material Name</th>
+							<th>Part No</th>
+							<th>Specification</th>
 							<th>Unit</th>
 							<th>Receive QTY</th>
-							<th>Unit Price</th>
-							<th>Total Amount</th>
 						</tr>
 					</thead>
 					<tbody>
@@ -91,7 +90,7 @@ if(isset($_GET['submit'])){
 							<td>MRR No : <?php echo $row['mrr_no']; ?></td>
 							<td>Date : <?php echo date("jS F Y", strtotime($row['mrr_date']));?></td>
 							<td>Challan No : <?php echo $row['challanno']; ?></td>
-							<td colspan="3">Supplier : <?php 
+							<td colspan="2">Supplier : <?php 
 								$supplier_id = $row['supplier_id'];
 								$sqlunit	=	"SELECT * FROM `suppliers` WHERE `code` = '$supplier_id' ";
 								$resultunit = mysqli_query($conn, $sqlunit);
@@ -112,7 +111,6 @@ if(isset($_GET['submit'])){
 								$totalAmount += $rowall['total_receive'];
 						?>
 						<tr>
-							<td><?php echo $rowall['material_id']; ?></td>
 							<td><?php 
 								$mb_materialid = $rowall['material_id'];
 								$sqlname	=	"SELECT * FROM `inv_material` WHERE `material_id_code` = '$mb_materialid' ";
@@ -121,10 +119,23 @@ if(isset($_GET['submit'])){
 								echo $rowname['material_description'];
 							?>
 							</td>
+							
+							
+							<td><?php echo $rowall['part_no']; ?></td>
+							
+							
+							<?php 
+							$material_id_code = $rowall['material_id'];
+								$sqlspec	=	"SELECT * FROM `inv_material` WHERE `material_id_code` = '$mb_materialid' ";
+								$resultspec = mysqli_query($conn, $sqlspec);
+								$rowspec=mysqli_fetch_array($resultspec);
+								
+							?>
+							<td><?php echo $rowspec['spec']; ?></td>
+							
+							
 							<td><?php echo getDataRowByTableAndId('inv_item_unit', $rowall['unit_id'])->unit_name; ?></td>
 							<td><?php echo $rowall['receive_qty']; ?></td>
-							<td><?php echo $rowall['unit_price']; ?></td>
-							<td><?php echo $rowall['total_receive']; ?></td>
 						</tr>
 						<?php } ?>
 						<tr>
