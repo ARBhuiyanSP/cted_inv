@@ -14,8 +14,9 @@ include 'header.php';
             <table id="example" class="table table-striped table-bordered" style="width:100%">
 				<thead>
 					<tr>
-						<th>Issue ID</th>
 						<th>Issue Date</th>
+						<th>Material Name</th>
+						<th>Use in</th>
 						<th>Project</th>
 						<th>Ware House</th>
 					     <th>Action</th>
@@ -36,8 +37,32 @@ include 'header.php';
 							<?php  }else{ ?>
 							<tr style="background-color: #218838;max-height:10px;">
 							<?php  }?>
-								<td><?php echo $item['issue_id']; ?></td>
 								<td><?php echo $item['issue_date']; ?></td>
+								
+								
+								<td><?php 
+								$issue_id = $item['issue_id'];
+								$sql = "select * from `inv_issuedetail` where `issue_id`='$issue_id'";
+								$result = mysqli_query($conn, $sql);
+									for($i=1; $row = mysqli_fetch_array($result); $i++){
+											$dataresult =   getDataRowByTableAndId('inv_material', $row['material_name']);
+											echo (isset($dataresult) && !empty($dataresult) ? $dataresult->material_description : '') . ',' ;
+									}
+								
+								?></td>
+								<?php 
+								$sql = "select * from `inv_issuedetail` where `issue_id`='$issue_id'";
+								
+								
+								$user_categories = mysqli_query($conn, "select `use_in` from `inv_issuedetail` where `issue_id`='$issue_id'");
+								$category_ids = mysqli_fetch_all($user_categories,MYSQLI_NUM);
+								$category_ids_imploded = implode(', ', array_map(function ($entry) {
+								  return $entry['0'];
+								}, $category_ids));
+								
+								?>
+								
+								<td><?php echo $category_ids_imploded; ?></td>
 								<td>
 									<?php 
 									$dataresult =   getDataRowByTableAndId('projects', $item['project_id']);
