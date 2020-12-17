@@ -73,6 +73,7 @@ if(isset($_GET['submit'])){
 							<th>Specification</th>
 							<th>Unit</th>
 							<th>Receive QTY</th>
+							<th>Remarks</th>
 						</tr>
 					</thead>
 					<tbody>
@@ -91,7 +92,7 @@ if(isset($_GET['submit'])){
 							<td>MRR No : <?php echo $row['mrr_no']; ?></td>
 							<td>Date : <?php echo date("jS F Y", strtotime($row['mrr_date']));?></td>
 							<td>Challan No : <?php echo $row['challanno']; ?></td>
-							<td colspan="2">Supplier : <?php 
+							<td colspan="3">Supplier : <?php 
 								$supplier_id = $row['supplier_id'];
 								$sqlunit	=	"SELECT * FROM `suppliers` WHERE `code` = '$supplier_id' ";
 								$resultunit = mysqli_query($conn, $sqlunit);
@@ -137,11 +138,13 @@ if(isset($_GET['submit'])){
 							
 							<td><?php echo getDataRowByTableAndId('inv_item_unit', $rowall['unit_id'])->unit_name; ?></td>
 							<td><?php echo $rowall['receive_qty']; ?></td>
+							<td></td>
 						</tr>
 						<?php } ?>
 						<tr>
 							<td colspan="4" class="grand_total">Total:</td>
 							<td><?php echo $totalQty; ?></td>
+							<td></td>
 						</tr>
 						<?php } ?>
 					</tbody>
