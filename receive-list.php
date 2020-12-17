@@ -13,8 +13,8 @@
 				<table id="example" class="table table-striped table-bordered">
 					<thead>
 						<tr>
-							<th>MRR No</th>
 							<th>MRR Date</th>
+							<th>Material Name</th>
 							<th>Project</th>
 							<th>Ware House</th>
 							<th>Supplier name</th>
@@ -39,8 +39,17 @@
 								<?php  }else{ ?>
 								<tr style="background-color: #218838;max-height:10px;">
 								<?php  }?>
-									<td><?php echo $item['mrr_no']; ?></td>
 									<td><?php echo $item['mrr_date']; ?></td>
+									<td><?php 
+										$mrr_no = $item['mrr_no'];
+										$sql = "select * from `inv_receivedetail` where `mrr_no`='$mrr_no'";
+										$result = mysqli_query($conn, $sql);
+											for($i=1; $row = mysqli_fetch_array($result); $i++){
+													$dataresult =   getDataRowByTableAndId('inv_material', $row['material_name']);
+													echo (isset($dataresult) && !empty($dataresult) ? $dataresult->material_description : '') . ',' ;
+											}
+										
+										?></td>
 									<td>
 										<?php 
 										$dataresult =   getDataRowByTableAndId('projects', $item['project_id']);
