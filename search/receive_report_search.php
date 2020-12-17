@@ -57,8 +57,9 @@ if(isset($_GET['submit'])){
 				<div class="col-sm-12">	
 					<center>
 						<p>
-							<img src="images/Saif_Engineering_Logo_165X72.png" height="100px;"/><br>
-							<span>Material Receive Report</span><br>
+							<img src="images/Saif_Engineering_Logo_165X72.png" height="50px;"/><br>
+							<h5>CTED CHATTOGRAM</h5> 
+							<span>Material Stock Report</span></br>
 							From <span class="dtext"><?php echo date("jS F Y", strtotime($from_date));?></span> To  <span class="dtext"><?php echo date("jS F Y", strtotime($to_date));?> </span><br>
 						</p>
 					</center>
@@ -139,10 +140,8 @@ if(isset($_GET['submit'])){
 						</tr>
 						<?php } ?>
 						<tr>
-							<td colspan="3" class="grand_total">Total:</td>
+							<td colspan="4" class="grand_total">Total:</td>
 							<td><?php echo $totalQty; ?></td>
-							<td></td>
-							<td><?php echo $totalAmount; ?></td>
 						</tr>
 						<?php } ?>
 					</tbody>
