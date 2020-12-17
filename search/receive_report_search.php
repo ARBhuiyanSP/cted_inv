@@ -68,6 +68,7 @@ if(isset($_GET['submit'])){
 				<table id="" class="table table-bordered">
 					<thead>
 						<tr>
+							<th>MRR Date</th>
 							<th>Material Name</th>
 							<th>Part No</th>
 							<th>Specification</th>
@@ -88,19 +89,6 @@ if(isset($_GET['submit'])){
 							while($row=mysqli_fetch_array($result))
 							{
 						?>
-						<tr style="background-color:#E9ECEF;">
-							<td>MRR No : <?php echo $row['mrr_no']; ?></td>
-							<td>Date : <?php echo date("jS F Y", strtotime($row['mrr_date']));?></td>
-							<td>Challan No : <?php echo $row['challanno']; ?></td>
-							<td colspan="3">Supplier : <?php 
-								$supplier_id = $row['supplier_id'];
-								$sqlunit	=	"SELECT * FROM `suppliers` WHERE `code` = '$supplier_id' ";
-								$resultunit = mysqli_query($conn, $sqlunit);
-								$rowunit=mysqli_fetch_array($resultunit);
-								echo $rowunit['name'];
-								?>
-							</td>
-						</tr>
 						<?php
 							$totalQty = 0;
 							$totalAmount = 0;
@@ -113,6 +101,7 @@ if(isset($_GET['submit'])){
 								$totalAmount += $rowall['total_receive'];
 						?>
 						<tr>
+							<td><?php echo date("jS F Y", strtotime($row['mrr_date']));?></td>
 							<td><?php 
 								$mb_materialid = $rowall['material_id'];
 								$sqlname	=	"SELECT * FROM `inv_material` WHERE `material_id_code` = '$mb_materialid' ";
@@ -142,7 +131,7 @@ if(isset($_GET['submit'])){
 						</tr>
 						<?php } ?>
 						<tr>
-							<td colspan="4" class="grand_total">Total:</td>
+							<td colspan="5" class="grand_total">Total:</td>
 							<td><?php echo $totalQty; ?></td>
 							<td></td>
 						</tr>
