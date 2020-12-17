@@ -53,11 +53,11 @@ $mrr_no=$_GET['no']; ?>
 							<div class="col-sm-6">
 								<table class="table table-bordered">
 									<tr>
-										<th>MRR No:</th>
+										<th>Voucher No:</th>
 										<td><?php echo $mrr_no; ?></td>
 									</tr>
 									<tr>
-										<th>MRR Date:</th>
+										<th>Voucher Date:</th>
 										<td><?php
 										echo $rowd['mrr_date']; ?></td>
 									</tr>

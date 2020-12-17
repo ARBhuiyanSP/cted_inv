@@ -13,7 +13,7 @@
 				<table id="example" class="table table-striped table-bordered">
 					<thead>
 						<tr>
-							<th>MRR Date</th>
+							<th>Voucher Date</th>
 							<th>Material Name</th>
 							<th>Project</th>
 							<th>Ware House</th>

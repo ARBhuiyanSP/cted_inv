@@ -27,13 +27,13 @@
                     <div class="row" id="div1" style="">
                         <div class="col-xs-2">
                             <div class="form-group">
-                                <label>MRR Date</label>
+                                <label>Voucher Date</label>
                                 <input type="text" autocomplete="off" name="mrr_date" id="mrr_date" class="form-control datepicker" value="<?php echo date('Y-m-d'); ?>">
                             </div>
                         </div>
                         <div class="col-xs-2">
                             <div class="form-group">
-                                <label>MRR No</label>
+                                <label>Voucher No</label>
 								<?php if($_SESSION['logged']['user_type'] == 'whm')
 									{
 										$warehouse_id	=	$_SESSION['logged']['warehouse_id'];
@@ -46,8 +46,7 @@
 										$mrrcode= 'MRR-CW';
 									}
 								?>
-                                <input type="text" name="mrr_no" id="mrr_no" class="form-control" value="<?php echo getDefaultCategoryCodeByWarehouse('inv_receive', 'mrr_no', '03d', '001', $mrrcode) ?>" readonly>
-                                <input type="hidden" name="receive_no" id="receive_no" value="<?php echo getDefaultCategoryCodeByWarehouse('inv_receive', 'mrr_no', '03d', '001', $mrrcode) ?>">
+                                <input type="text" name="mrr_no" id="mrr_no" class="form-control" value="">
                             </div>
                         </div>
                         <div class="col-xs-2">
