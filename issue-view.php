@@ -127,7 +127,7 @@ $issue_id=$_GET['no']; ?>
 								</tr>
 								<?php } ?>
 								<tr>
-									<td colspan="5" class="grand_total">Grand Total:</td>
+									<td colspan="6" class="grand_total">Grand Total:</td>
 									<td>
 										<?php 
 										$sql2 = "SELECT sum(issue_qty) FROM  `inv_issuedetail` where `issue_id`='$issue_id'";
