@@ -72,9 +72,9 @@ if(isset($_GET['submit'])){
 							<th style="text-align:center">Voucher No</th>
 							<th style="text-align:center">Material Name</th>
 							<th style="text-align:center">Part No</th>
-							<th style="text-align:center">Specification</th>
+							<th style="text-align:center">Specs</th>
 							<th style="text-align:center">Unit</th>
-							<th style="text-align:center">Received QTY</th>
+							<th style="text-align:center">QTY</th>
 							<th style="text-align:center">Remarks</th>
 						</tr>
 					</thead>
@@ -118,7 +118,6 @@ if(isset($_GET['submit'])){
 							
 							
 							<?php 
-							$material_id_code = $rowall['material_id'];
 								$sqlspec	=	"SELECT * FROM `inv_material` WHERE `material_id_code` = '$mb_materialid' ";
 								$resultspec = mysqli_query($conn, $sqlspec);
 								$rowspec=mysqli_fetch_array($resultspec);

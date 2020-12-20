@@ -71,8 +71,12 @@ if(isset($_GET['submit'])){
 							<th>Issue Date</th>
 							<th>Issue No</th>
 							<th>Material Name</th>
+							<th>Part No</th>
+							<th>Specs</th>
+							<th>Use in</th>
 							<th>Unit</th>
-							<th>Issue QTY</th>
+							<th>QTY</th>
+							<th>Remarks</th>
 
 						</tr>
 					</thead>
@@ -88,18 +92,6 @@ if(isset($_GET['submit'])){
 							while($row=mysqli_fetch_array($result))
 							{
 						?>
-						<tr style="background-color:#E9ECEF;">
-							<td>ISSUE No : <?php echo $row['issue_id']; ?></td>
-							<td>Date : <?php echo date("jS F Y", strtotime($row['issue_date']));?></td>
-							<td colspan="4">Warehouse : <?php 
-								$warehouse_id = $row['warehouse_id'];
-								$sqlunit	=	"SELECT * FROM `inv_warehosueinfo` WHERE `id` = '$warehouse_id' ";
-								$resultunit = mysqli_query($conn, $sqlunit);
-								$rowunit=mysqli_fetch_array($resultunit);
-								echo $rowunit['name'];
-								?>
-							</td>
-						</tr>
 						<?php
 							$totalQty = 0;
 							
@@ -112,28 +104,28 @@ if(isset($_GET['submit'])){
 								
 						?>
 						<tr>
-							<td><?php echo $rowall['material_id']; ?></td>
+							<td><?php echo date("j M y", strtotime($row['issue_date']));?></td>
+							<td><?php echo $row['issue_id']; ?></td>
 							<td><?php 
-								$mb_materialid = $rowall['material_id'];
-								$sqlname	=	"SELECT * FROM `inv_material` WHERE `material_id_code` = '$mb_materialid' ";
-								$resultname = mysqli_query($conn, $sqlname);
-								$rowname=mysqli_fetch_array($resultname);
-								echo $rowname['material_description'];
+								$dataresult =   getDataRowByTableAndId('inv_material', $rowall['material_name']);
+								echo (isset($dataresult) && !empty($dataresult) ? $dataresult->material_description : '');
 							?>
 							</td>
+							<td><?php echo $rowall['part_no']; ?></td>
+							<?php 
+							$material_id_code = $rowall['material_id'];
+								$sqlspec	=	"SELECT * FROM `inv_material` WHERE `material_id_code` = '$material_id_code' ";
+								$resultspec = mysqli_query($conn, $sqlspec);
+								$rowspec=mysqli_fetch_array($resultspec);
+								
+							?>
+							<td style="text-align:center"><?php echo $rowspec['spec']; ?></td>
+							<td><?php echo $rowall['use_in']; ?></td>
 							<td><?php echo getDataRowByTableAndId('inv_item_unit', $rowall['unit'])->unit_name; ?></td>
 							<td><?php echo $rowall['issue_qty']; ?></td>
-							
-							
+							<td></td>
 						</tr>
 						<?php } ?>
-						<tr>
-							<td colspan="3" class="grand_total">Total:</td>
-							<td><?php echo $totalQty; ?></td>
-							<td></td>
-							<td></td>
-							
-						</tr>
 						<?php } ?>
 					</tbody>
 				</table>
