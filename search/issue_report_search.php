@@ -68,7 +68,8 @@ if(isset($_GET['submit'])){
 				<table id="" class="table table-bordered">
 					<thead>
 						<tr>
-							<th>Material ID</th>
+							<th>Issue Date</th>
+							<th>Issue No</th>
 							<th>Material Name</th>
 							<th>Unit</th>
 							<th>Issue QTY</th>

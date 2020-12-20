@@ -82,6 +82,7 @@ $issue_id=$_GET['no']; ?>
 									<th>SL #</th>
 									<th>Material Name</th>
 									<th>Part No</th>
+									<th>Specs</th>
 									<th>Used in</th>
 									<th>Material Unit</th>
 									<th>Quantity</th>
@@ -103,6 +104,18 @@ $issue_id=$_GET['no']; ?>
 										?>
 									</td>
 									<td><?php echo $row['part_no']; ?></td>
+									
+									<td>
+									<?php
+										$material_id_code = $row['material_id'];
+										$sqlspec = "select `spec` from `inv_material` where `material_id_code`='$material_id_code'";
+										$resultspec = mysqli_query($conn, $sqlspec);
+										$rowspec = mysqli_fetch_array($resultspec);
+										echo $rowspec['spec'];
+									?>
+									</td>
+									
+									
 									<td><?php echo $row['use_in']; ?></td>
 									<td>
 										<?php 
