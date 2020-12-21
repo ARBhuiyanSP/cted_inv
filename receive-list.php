@@ -1,5 +1,14 @@
 <?php include 'header.php' ?>
+
 <link href="css/dataTables.bootstrap4.min.css" rel="stylesheet">
+<style>
+table th{
+	 font-size:14px;
+}
+table td{
+	 font-size:14px;
+}
+</style>
 <div class="container-fluid">
     <!-- DataTables Example -->
     <div class="card mb-3">
@@ -14,7 +23,8 @@
 					<thead>
 						<tr>
 							<th>Voucher Date</th>
-							<th>Material Name</th>
+							<th>Voucher No</th>
+							<th width="30%">Material Name</th>
 							<th>Project</th>
 							<th>Ware House</th>
 							<th>Supplier name</th>
@@ -39,6 +49,7 @@
 								<tr style="background-color: #218838;max-height:10px;">
 								<?php  }?>
 									<td><?php echo $item['mrr_date']; ?></td>
+									<td><?php echo $item['mrr_no']; ?></td>
 									<td><?php 
 										$mrr_no = $item['mrr_no'];
 										$sql = "select * from `inv_receivedetail` where `mrr_no`='$mrr_no'";

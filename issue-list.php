@@ -3,7 +3,14 @@ include 'header.php';
 
  ?>
 <link href="css/dataTables.bootstrap4.min.css" rel="stylesheet">
-
+<style>
+table th{
+	 font-size:14px;
+}
+table td{
+	 font-size:14px;
+}
+</style>
 <div class="container-fluid">
     <!-- DataTables Example -->
     <div class="card mb-3">
@@ -15,7 +22,8 @@ include 'header.php';
 				<thead>
 					<tr>
 						<th>Issue Date</th>
-						<th>Material Name</th>
+						<th>Issue No</th>
+						<th width="30%">Material Name</th>
 						<th>Use in</th>
 						<th>Project</th>
 						<th>Ware House</th>
@@ -38,6 +46,7 @@ include 'header.php';
 							<tr style="background-color: #218838;max-height:10px;">
 							<?php  }?>
 								<td><?php echo $item['issue_date']; ?></td>
+								<td><?php echo $item['issue_id']; ?></td>
 								
 								
 								<td><?php 
