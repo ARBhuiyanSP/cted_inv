@@ -48,7 +48,7 @@ table td{
 								<?php  }else{ ?>
 								<tr style="background-color: #218838;max-height:10px;">
 								<?php  }?>
-									<td><?php echo $item['mrr_date']; ?></td>
+									<td><?php echo date("j M y", strtotime($item['mrr_date'])); ?></td>
 									<td><?php echo $item['mrr_no']; ?></td>
 									<td><?php 
 										$mrr_no = $item['mrr_no'];

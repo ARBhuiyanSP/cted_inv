@@ -51,7 +51,7 @@ $issue_id=$_GET['no']; ?>
 									<tr>
 										<th>Issue Date:</th>
 										<td><?php
-										echo $rowd['issue_date'] ?></td>
+										echo date("j M y", strtotime($rowd['issue_date'])); ?></td>
 									</tr>
 									<tr>
 										<th>Project:</th>

@@ -45,7 +45,7 @@ table td{
 							<?php  }else{ ?>
 							<tr style="background-color: #218838;max-height:10px;">
 							<?php  }?>
-								<td><?php echo $item['issue_date']; ?></td>
+									<td><?php echo date("j M y", strtotime($item['issue_date'])); ?></td>
 								<td><?php echo $item['issue_id']; ?></td>
 								
 								

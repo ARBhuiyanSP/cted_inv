@@ -59,7 +59,7 @@ $mrr_no=$_GET['no']; ?>
 									<tr>
 										<th>Voucher Date:</th>
 										<td><?php
-										echo $rowd['mrr_date']; ?></td>
+										echo date("j M y", strtotime($rowd['mrr_date'])); ?></td>
 									</tr>
 									<tr>
 										<th>Project:</th>
