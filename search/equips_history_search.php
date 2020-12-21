@@ -22,8 +22,13 @@
 										$projectsData = getTableDataByTableName('equipments', '', 'equipment_no');
 										if (isset($projectsData) && !empty($projectsData)) {
 											foreach ($projectsData as $data) {
+												if($_GET['equipments'] == $data['equipment_no']){
+												$selected	= 'selected';
+												}else{
+												$selected	= '';
+												}
 												?>
-												<option value="<?php echo $data['equipment_no']; ?>"><?php echo $data['equipment_no']; ?></option>
+												<option value="<?php echo $data['equipment_no']; ?>" <?php echo $selected; ?>><?php echo $data['equipment_no']; ?></option>
 												<?php
 											}
 										}

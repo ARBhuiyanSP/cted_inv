@@ -545,7 +545,7 @@ if(isset($_GET['process_type']) && $_GET['process_type'] == 'material_edit'){
             <div class="form-group">
                 <label class="control-label col-sm-5" for="parent_code">Parent Category:</label>
                 <div class="col-sm-7">
-                    <select class="form-control" id="edit_main_item_id" name="parent_item_id" onchange="getSubCategoryByParent(this.value, 'edit_sub_item_id');">
+                    <select class="form-control" id="edit_main_item_id" name="parent_item_id" onchange="get5_2By1(this.value, 'edit_sub_item_id');">
                         <option value="">Select</option>
                         <?php
                         $parentCats = getTableDataByTableName('inv_materialcategorysub', '', 'category_description');
