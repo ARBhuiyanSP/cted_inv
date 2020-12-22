@@ -195,6 +195,11 @@
             <i class="fa fa-registered" aria-hidden="true" style="color: #007BFF;"></i>
             <span>Equips.History Report</span></a>
     </li>
+	<li class="nav-item">
+        <a class="nav-link" href="material-history.php">
+            <i class="fa fa-registered" aria-hidden="true" style="color: #007BFF;"></i>
+            <span>Material History Report</span></a>
+    </li>
 	<!-- <li class="nav-item">
         <a class="nav-link" href="consumption_report.php">
             <i class="fa fa-registered" aria-hidden="true" style="color: #007BFF;"></i>
