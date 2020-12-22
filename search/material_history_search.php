@@ -143,9 +143,12 @@ if(isset($_GET['submit'])){
 						<tr>
 							<td><?php echo date("j M y", strtotime($rowall['mb_date']));?></td>
 							<td><?php echo $rowall['mb_ref_id']; ?></td>
-							<td><?php echo getDataRowByTableAndId('inv_item_unit', $rowall['mbunit_id'])->unit_name; ?></td>
-							<td style="text-align:right;"><?php echo $rowall['mbin_qty']; ?></td>
 							
+							<!-- <td><?php //echo getDataRowByTableAndId('inv_item_unit', $rowall['mbunit_id'])->unit_name; ?></td> -->
+							<td><?php echo getDataRowByTableAndId('inv_item_unit', $rowmat['qty_unit'])->unit_name;?>
+							</td>
+							
+							<td style="text-align:right;"><?php echo $rowall['mbin_qty']; ?></td>
 							<td style="text-align:right;"><?php echo $rowall['mbout_qty']; ?></td>
 							<td style="text-align:right;"><?php echo $balance; ?></td>
 							
