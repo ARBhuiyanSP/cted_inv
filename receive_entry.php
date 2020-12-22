@@ -145,6 +145,8 @@
                                 <th width="10%">Unit</th>
                                 <th>Part No</th>
                                 <th>Qty<span class="reqfield"> ***required</span></th>
+                                <th>Unit Price<span class="reqfield"> ***required</span></th>
+                                <th>Amount</th>
                                 <th></th>
                                 </thead>
                                 <tbody>
@@ -181,35 +183,20 @@
                                             </select>
                                         </td>
                                         <td><input type="text" name="part_no[]" id="part_no0" class="form-control" readonly></td>
-                                        <td><input type="text" name="quantity[]" id="quantity0"  class="form-control" required></td>
+                                        <td><input type="text" name="quantity[]" id="quantity0" onchange="sum(0)" class="form-control" required></td>
+                                        <td><input type="text" name="unit_price[]" id="unit_price0" onchange="sum(0)" class="form-control" required></td>
+                                        <td><input type="text" name="totalamount[]" id="sum0" class="form-control"></td>
                                         <td><button type="button" name="add" id="add" class="btn" style="background-color:#2e3192;color:#ffffff;">+</button></td>
                                     </tr>
                                 </tbody>
                             </table>
-                        </div>
-                    </div>
-					<div class="row" style="">
-                        <div class="col-xs-6">
-                            <div class="form-group">
-                                <input type="file" accept="image/*"  name="file" id="picture">
-								<p id="error1" style="display:none; color:#FF0000;">
-								Invalid Image Format! Image Format Must Be JPG, JPEG, PNG or GIF.
-								</p>
-								<p id="error2" style="display:none; color:#FF0000;">
-								Maximum File Size Limit is 500KB.
-								</p>
-								<script>
-								  var loadFile = function(event) {
-									var output = document.getElementById('output');
-									output.src = URL.createObjectURL(event.target.files[0]);
-									output.onload = function() {
-									  URL.revokeObjectURL(output.src) // free memory
-									}
-								  };
-								  
-								</script>
-								
-                            </div>
+							
+							<table class="table table-bordered">
+								<tr>
+									<td width="80%" style="text-align:right;">Total Amount</td>
+									<td><input type="text" class="form-control" maxlength="30" name="sub_total_amount" id="allsum" readonly /></td>
+								</tr>
+							</table>
                         </div>
                     </div>
                     <div class="row" style="">
@@ -251,16 +238,45 @@
                                                     foreach ($projectsData as $data) {
                                                         ?><option value="<?php echo $data['id']; ?>"><?php echo $data['unit_name']; ?></option><?php }
                                                 }
-                                                ?></select></td><td><input type="text" name="part_no[]" id="part_no' + i + '" class="form-control" readonly></td><td><input type="text" name="quantity[]" id="quantity' + i + '" class="form-control" required></td><td><button type="button" name="remove" id="' + i + '" class="btn btn_remove" style="background-color:#f26522;color:#ffffff;">X</button></td></tr>');
+                                                ?></select></td><td><input type="text" name="part_no[]" id="part_no' + i + '" class="form-control" readonly></td><td><input type="text" name="quantity[]" id="quantity' + i + '" onchange="sum(0)" class="form-control" required></td><td><input type="text" name="unit_price[]" id="unit_price' + i + '" onchange="sum(0)" class="form-control" required></td><td><input type="text" name="totalamount[]" id="sum' + i + '" class="form-control"></td><td><button type="button" name="remove" id="' + i + '" class="btn btn_remove" style="background-color:#f26522;color:#ffffff;">X</button></td></tr>');
 												$(".material_select_2").select2();
+												$('#quantity' + i + ', #unit_price' + i).change(function () {
+                sum(i)
+            });
         });
 
         $(document).on('click', '.btn_remove', function () {
             var button_id = $(this).attr("id");
             $('#row' + button_id + '').remove();
+            sum_total();
         });
     });
 
+
+ $(document).ready(function () {
+        //this calculates values automatically 
+        sum(0);
+    });
+
+    function sum(i) {
+        var quantity1 = document.getElementById('quantity' + i).value;
+        var unit_price1 = document.getElementById('unit_price' + i).value;
+        var result = parseFloat(quantity1) * parseFloat(unit_price1);
+        if (!isNaN(result)) {
+            document.getElementById('sum' + i).value = result;
+        }
+        sum_total();
+    }
+    function sum_total() {
+        var newTot = 0;
+        for (var a = 0; a <= i; a++) {
+            aVal = $('#sum' + a);
+            if (aVal && aVal.length) {
+                newTot += aVal[0].value ? parseFloat(aVal[0].value) : 0;
+            }
+        }
+        document.getElementById('allsum').value = newTot.toFixed(2);
+    }
   
 </script>
 <script>
@@ -306,34 +322,5 @@
             changeMonth: true
         });
     });
-</script>
-<script>
-$('input[type="submit"]').prop("disabled", false);
-var a=0;
-//binds to onchange event of your input field
-$('#picture').bind('change', function() {
-if ($('input:submit').attr('disabled',false)){
- $('input:submit').attr('disabled',true);
- }
-var ext = $('#picture').val().split('.').pop().toLowerCase();
-if ($.inArray(ext, ['gif','png','jpg','jpeg']) == -1){
- $('#error1').slideDown("slow");
- $('#error2').slideUp("slow");
- a=0;
- }else{
- var picsize = (this.files[0].size);
- if (picsize > 500000){
- $('#error2').slideDown("slow");
- a=0;
- }else{
- a=1;
- $('#error2').slideUp("slow");
- }
- $('#error1').slideUp("slow");
- if (a==1){
- $('input:submit').attr('disabled',false);
- }
-}
-});
 </script>
 <?php include 'footer.php' ?>
