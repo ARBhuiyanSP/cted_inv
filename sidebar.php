@@ -13,6 +13,7 @@
 	color: #007bff;
 	padding-left: 20px;
     padding-top: 5px;
+	font-weight:bold;
 }
 .sidebar ul li {
 	border-bottom: 1px solid #444;
