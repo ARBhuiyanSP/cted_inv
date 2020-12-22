@@ -17,7 +17,7 @@
                                 <div class="form-group">
                                     <label for="todate">Equipments Name</label>
                                     <select class="form-control material_select_2" name="equipments" id="equipments" required >
-										<option value="">Select Unit</option>
+										<option value="">Select</option>
 										<?php
 										$projectsData = getTableDataByTableName('equipments', '', 'equipment_no');
 										if (isset($projectsData) && !empty($projectsData)) {
