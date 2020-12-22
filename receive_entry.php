@@ -145,7 +145,7 @@
                                 <th width="10%">Unit</th>
                                 <th>Part No</th>
                                 <th>Qty<span class="reqfield"> ***required</span></th>
-                                <th>Unit Price<span class="reqfield"> ***required</span></th>
+                                <th>Unit Price<span class="reqfield"> ***req</span></th>
                                 <th>Amount</th>
                                 <th></th>
                                 </thead>
