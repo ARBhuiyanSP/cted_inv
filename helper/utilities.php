@@ -244,6 +244,8 @@ function isDuplicateData($table, $where, $notWhere=''){
     if(isset($notWhere) && !empty($notWhere)){
         $sql.=" And $notWhere";
     }
+	/* echo $sql;
+	exit; */
     $result = $conn->query($sql);
     if ($result->num_rows > 0) {
         return true;

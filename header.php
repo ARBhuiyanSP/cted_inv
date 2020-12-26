@@ -104,6 +104,6 @@ include 'includes/equipment_process.php';
     <!-- Sidebar -->
     <?php include 'sidebar.php' ?>
 
-    <div id="content-wrapper">    
+    <div id="content-wrapper" style="">    
         <!-- Sidebar -->
     <?php include 'operation_message.php'; ?>
