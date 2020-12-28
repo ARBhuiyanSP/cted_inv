@@ -126,12 +126,12 @@
             <a class="dropdown-item" href="issue-list.php"><i class="fa fa-list" aria-hidden="true" style="color: #007BFF;"></i><span class="sub_menu_text_design">Issue List</span></a>
         </div>
     </li>
-	<li class="nav-item">
+	<!--<li class="nav-item">
         <a class="nav-link " href="daily-activities.php">
             <i class="fas fa-fw fa-server" aria-hidden="true" style="color: #007BFF;"></i>
             <span>Daily Activities</span></a>
     </li>
-    <!--<li class="nav-item dropdown">
+    <li class="nav-item dropdown">
         <a class="nav-link dropdown-toggle" href="#" id="pagesDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             <i class="fas fa-fw fa-text-width " aria-hidden="true" style="color: #007BFF;"></i>
             <span>Warehouse Transfer</span>
