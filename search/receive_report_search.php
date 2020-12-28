@@ -75,6 +75,8 @@ if(isset($_GET['submit'])){
 							<th style="text-align:center">Specs</th>
 							<th style="text-align:center">Unit</th>
 							<th style="text-align:center">QTY</th>
+							<th style="text-align:center">Unit Price</th>
+							<th style="text-align:center">Amount</th>
 							<th style="text-align:center">Remarks</th>
 						</tr>
 					</thead>
@@ -128,10 +130,39 @@ if(isset($_GET['submit'])){
 							
 							<td style="text-align:center"><?php echo getDataRowByTableAndId('inv_item_unit', $rowall['unit_id'])->unit_name; ?></td>
 							<td style="text-align:center"><?php echo $rowall['receive_qty']; ?></td>
+									<td><?php echo $rowall['unit_price'] ?></td>
+									<td style="text-align:right"><?php echo $rowall['total_receive'] ?></td>
 							<td></td>
 						</tr>
+						
 						<?php } ?>
 						<?php } ?>
+						<tr>
+									<td colspan="6" class="grand_total" style="text-align:right">Grand Total:</td>
+									<td style="text-align:center">
+										<?php 
+										$sql2 			= "SELECT sum(`no_of_material`) FROM `inv_receive` where `mrr_date` BETWEEN '$from_date' AND '$to_date'";
+										$result2 		= mysqli_query($conn, $sql2);
+										for($i=0; $row2 = mysqli_fetch_array($result2); $i++){
+										$totalReceived	=$row2['sum(`no_of_material`)'];
+										echo $totalReceived ;
+										}
+										?>
+									</td>
+									<td></td>
+									<td style="text-align:right">
+									<?php 
+										$sql2			= "SELECT sum(`receive_total`) FROM `inv_receive` where `mrr_date` BETWEEN '$from_date' AND '$to_date'";
+										$result2		= mysqli_query($conn, $sql2);
+										for($i=0; $row2 = mysqli_fetch_array($result2); $i++){
+										$totalAmount	= number_format((float)$row2['sum(`receive_total`)'], 2, '.', '');
+										echo $totalAmount ;
+										}
+										?>
+									</td>
+									<td></td>
+								</tr>
+						
 					</tbody>
 				</table>
 				<center><div class="row">
