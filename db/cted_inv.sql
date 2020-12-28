@@ -1,13 +1,14 @@
 -- phpMyAdmin SQL Dump
--- version 5.0.3
+-- version 4.9.0.1
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 15, 2020 at 05:15 AM
--- Server version: 10.4.14-MariaDB
--- PHP Version: 7.2.34
+-- Generation Time: Dec 28, 2020 at 05:22 AM
+-- Server version: 10.4.6-MariaDB
+-- PHP Version: 7.2.22
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+SET AUTOCOMMIT = 0;
 START TRANSACTION;
 SET time_zone = "+00:00";
 
@@ -78,6 +79,29 @@ CREATE TABLE `country` (
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `cted_daily_activities`
+--
+
+CREATE TABLE `cted_daily_activities` (
+  `id` int(11) NOT NULL,
+  `equipment_id` varchar(25) NOT NULL,
+  `night_shift` varchar(15) NOT NULL,
+  `day_shift` varchar(15) NOT NULL,
+  `total_hours` varchar(15) NOT NULL,
+  `work_type` varchar(15) NOT NULL,
+  `work_status` varchar(15) NOT NULL,
+  `job_code` varchar(15) NOT NULL,
+  `remarks` longtext NOT NULL,
+  `job_title` varchar(1000) NOT NULL,
+  `remedial_action` longtext NOT NULL,
+  `new_problem` varchar(1000) NOT NULL,
+  `status` varchar(15) NOT NULL,
+  `used_parts` longtext NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `equipments`
 --
 
@@ -90,6 +114,205 @@ CREATE TABLE `equipments` (
   `created_at` date NOT NULL,
   `status` varchar(15) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `equipments`
+--
+
+INSERT INTO `equipments` (`id`, `equipment_id`, `equipment_no`, `type_id`, `project_id`, `created_at`, `status`) VALUES
+(2, 'CTED-001', 'QGC-01', '46', '1', '0000-00-00', ''),
+(3, 'CTED-002', 'QGC-02', '46', '1', '0000-00-00', ''),
+(4, 'CTED-003', 'QGC-03', '46', '1', '0000-00-00', ''),
+(5, 'CTED-004', 'QGC-04', '46', '1', '0000-00-00', ''),
+(6, 'CTED-005', 'QGC-05', '46', '1', '0000-00-00', ''),
+(7, 'CTED-006', 'QGC-06', '46', '1', '0000-00-00', ''),
+(8, 'CTED-007', 'QGC-07', '46', '1', '0000-00-00', ''),
+(9, 'CTED-008', 'QGC-08', '46', '1', '0000-00-00', ''),
+(10, 'CTED-009', 'QGC-09', '46', '1', '0000-00-00', ''),
+(11, 'CTED-010', 'QGC-10', '46', '1', '0000-00-00', ''),
+(12, 'CTED-011', 'QGC-11', '46', '1', '0000-00-00', ''),
+(13, 'CTED-012', 'QGC-12', '46', '1', '0000-00-00', ''),
+(14, 'CTED-013', 'QGC-13', '46', '1', '0000-00-00', ''),
+(15, 'CTED-014', 'QGC-14', '46', '1', '0000-00-00', ''),
+(16, 'CTED-015', 'RTG-07', '47', '1', '0000-00-00', ''),
+(17, 'CTED-016', 'RTG-08', '47', '1', '0000-00-00', ''),
+(18, 'CTED-017', 'RTG-08', '47', '1', '0000-00-00', ''),
+(19, 'CTED-018', 'RTG-09', '47', '1', '0000-00-00', ''),
+(20, 'CTED-019', 'RTG-10', '47', '1', '0000-00-00', ''),
+(21, 'CTED-020', 'RTG-11', '47', '1', '0000-00-00', ''),
+(22, 'CTED-021', 'RTG-12', '47', '1', '0000-00-00', ''),
+(23, 'CTED-022', 'RTG-13', '47', '1', '0000-00-00', ''),
+(24, 'CTED-023', 'RTG-14', '47', '1', '0000-00-00', ''),
+(25, 'CTED-024', 'RTG-15', '47', '1', '0000-00-00', ''),
+(26, 'CTED-024', 'RTG-15', '47', '1', '0000-00-00', ''),
+(27, 'CTED-026', 'RTG-16', '47', '1', '0000-00-00', ''),
+(28, 'CTED-027', 'RTG-17', '47', '1', '0000-00-00', ''),
+(29, 'CTED-028', 'RTG-18', '47', '1', '0000-00-00', ''),
+(30, 'CTED-029', 'RTG-19', '47', '1', '0000-00-00', ''),
+(31, 'CTED-030', 'RTG-20', '47', '1', '0000-00-00', ''),
+(32, 'CTED-031', 'RTG-21', '47', '1', '0000-00-00', ''),
+(33, 'CTED-032', 'RTG-22', '47', '1', '0000-00-00', ''),
+(34, 'CTED-033', 'RTG-23', '47', '1', '0000-00-00', ''),
+(35, 'CTED-033', 'RTG-23', '47', '1', '0000-00-00', ''),
+(36, 'CTED-035', 'RTG-24', '47', '1', '0000-00-00', ''),
+(37, 'CTED-036', 'RTG-25', '47', '1', '0000-00-00', ''),
+(38, 'CTED-037', 'RTG-26', '47', '1', '0000-00-00', ''),
+(39, 'CTED-038', 'RTG-27', '47', '1', '0000-00-00', ''),
+(40, 'CTED-039', 'RTG-28', '47', '1', '0000-00-00', ''),
+(41, 'CTED-040', 'RTG-31', '47', '1', '0000-00-00', ''),
+(42, 'CTED-041', 'RTG-32', '47', '1', '0000-00-00', ''),
+(43, 'CTED-042', 'RTG-33', '47', '1', '0000-00-00', ''),
+(44, 'CTED-043', 'RTG-34', '47', '1', '0000-00-00', ''),
+(45, 'CTED-044', 'RTG-35', '47', '1', '0000-00-00', ''),
+(46, 'CTED-045', 'RTG-36', '47', '1', '0000-00-00', ''),
+(47, 'CTED-046', 'RTG-37', '47', '1', '0000-00-00', ''),
+(48, 'CTED-047', 'RTG-38', '47', '1', '0000-00-00', ''),
+(49, 'CTED-048', 'SP-08', '51', '1', '0000-00-00', '1'),
+(50, 'CTED-049', 'SP-09', '51', '1', '0000-00-00', '1'),
+(51, 'CTED-050', 'SP-10', '51', '1', '0000-00-00', '1'),
+(52, 'CTED-051', 'SP-11', '51', '1', '0000-00-00', '1'),
+(53, 'CTED-052', 'SP-12', '51', '1', '0000-00-00', '1'),
+(54, 'CTED-053', 'SP-13', '51', '1', '0000-00-00', '1'),
+(55, 'CTED-054', 'SP-14', '51', '1', '0000-00-00', '1'),
+(56, 'CTED-055', 'SP-15', '51', '1', '0000-00-00', '1'),
+(57, 'CTED-056', 'SP-16', '51', '1', '0000-00-00', '1'),
+(58, 'CTED-057', 'SP-17', '51', '1', '0000-00-00', '1'),
+(59, 'CTED-058', 'SP-19', '51', '1', '0000-00-00', '1'),
+(60, 'CTED-059', 'SP-22', '51', '1', '0000-00-00', '1'),
+(61, 'CTED-060', 'SP-23', '51', '1', '0000-00-00', '1'),
+(62, 'CTED-061', 'SP-24', '51', '1', '0000-00-00', '1'),
+(63, 'CTED-062', 'SP-25', '51', '1', '0000-00-00', '1'),
+(64, 'CTED-063', 'SP-26', '51', '1', '0000-00-00', '1'),
+(65, 'CTED-064', 'SP-27', '51', '1', '0000-00-00', '1'),
+(66, 'CTED-065', 'SP-28', '51', '1', '0000-00-00', '1'),
+(67, 'CTED-066', 'SP-30', '51', '1', '0000-00-00', '1'),
+(68, 'CTED-067', 'SP-31', '51', '1', '0000-00-00', '1'),
+(69, 'CTED-068', 'SP-32', '51', '1', '0000-00-00', '1'),
+(70, 'CTED-069', 'SP-33', '51', '1', '0000-00-00', '1'),
+(71, 'CTED-070', 'SP-35', '51', '1', '0000-00-00', '1'),
+(72, 'CTED-071', 'SP-36', '51', '1', '0000-00-00', '1'),
+(73, 'CTED-072', 'SP-37', '51', '1', '0000-00-00', '1'),
+(74, 'CTED-073', 'SP-39', '51', '1', '0000-00-00', '1'),
+(75, 'CTED-074', 'SP-40', '51', '1', '0000-00-00', '1'),
+(76, 'CTED-075', 'SP-41', '51', '1', '0000-00-00', '1'),
+(77, 'CTED-076', 'SP-42', '51', '1', '0000-00-00', '1'),
+(78, 'CTED-077', 'SP-43', '51', '1', '0000-00-00', '1'),
+(79, 'CTED-078', 'SP-44', '51', '1', '0000-00-00', '1'),
+(80, 'CTED-079', 'SP-45', '51', '1', '0000-00-00', '1'),
+(81, 'CTED-080', 'SP-46', '51', '1', '0000-00-00', '1'),
+(82, 'CTED-081', 'SP-47', '51', '1', '0000-00-00', '1'),
+(83, 'CTED-082', 'SP-48', '51', '1', '0000-00-00', '1'),
+(84, 'CTED-083', 'SP-49', '51', '1', '0000-00-00', '1'),
+(85, 'CTED-084', 'SP-50', '51', '1', '0000-00-00', '1'),
+(86, 'CTED-085', 'SP-51', '51', '1', '0000-00-00', '1'),
+(87, 'CTED-086', 'SP-52', '51', '1', '0000-00-00', '1'),
+(88, 'CTED-087', 'SP-53', '51', '1', '0000-00-00', '1'),
+(89, 'CTED-088', 'SP-54', '51', '1', '0000-00-00', '1'),
+(90, 'CTED-089', 'SP-55', '51', '1', '0000-00-00', '1'),
+(91, 'CTED-090', 'SP-56', '51', '1', '0000-00-00', '1'),
+(92, 'CTED-091', 'SP-57', '51', '1', '0000-00-00', '1'),
+(93, 'CTED-092', 'SP-58', '51', '1', '0000-00-00', '1'),
+(94, 'CTED-093', 'SP-59', '51', '1', '0000-00-00', '1'),
+(95, 'CTED-094', 'SP-60', '51', '1', '0000-00-00', '1'),
+(96, 'CTED-095', 'SP-61', '51', '1', '0000-00-00', '1'),
+(97, 'CTED-096', 'SP-62', '51', '1', '0000-00-00', '1'),
+(98, 'CTED-097', 'SP-63', '51', '1', '0000-00-00', '1'),
+(99, 'CTED-098', 'SP-64', '51', '1', '0000-00-00', '1'),
+(100, 'CTED-099', 'SP-65', '51', '1', '0000-00-00', '1'),
+(101, 'CTED-100', 'SP-66', '51', '1', '0000-00-00', '1'),
+(102, 'CTED-101', 'SP-67', '51', '1', '0000-00-00', '1'),
+(103, 'CTED-102', 'SP-68', '51', '1', '0000-00-00', '1'),
+(104, 'CTED-103', 'SP-69', '51', '1', '0000-00-00', '1'),
+(105, 'CTED-104', 'SP-70', '51', '1', '0000-00-00', '1'),
+(106, 'CTED-105', 'SP-71', '51', '1', '0000-00-00', '1'),
+(107, 'CTED-106', 'SP-72', '51', '1', '0000-00-00', '1'),
+(108, 'CTED-107', 'SP-73', '51', '1', '0000-00-00', '1'),
+(109, 'CTED-108', 'SP-74', '51', '1', '0000-00-00', '1'),
+(110, 'CTED-109', 'SP-75', '51', '1', '0000-00-00', '1'),
+(111, 'CTED-110', 'SP-76', '51', '1', '0000-00-00', '1'),
+(112, 'CTED-111', 'SP-77', '51', '1', '0000-00-00', '1'),
+(113, 'CTED-112', 'SP-78', '51', '1', '0000-00-00', '1'),
+(114, 'CTED-113', 'SP-79', '51', '1', '0000-00-00', '1'),
+(115, 'CTED-114', 'SP-80', '51', '1', '0000-00-00', '1'),
+(116, 'CTED-115', 'SP-81', '51', '1', '0000-00-00', '1'),
+(117, 'CTED-116', 'SP-82', '51', '1', '0000-00-00', '1'),
+(118, 'CTED-117', 'SP-83', '51', '1', '0000-00-00', '1'),
+(119, 'CTED-118', 'SP-84', '51', '1', '0000-00-00', '1'),
+(120, 'CTED-119', 'SP-85', '51', '1', '0000-00-00', '1'),
+(121, 'CTED-120', 'SP-86', '51', '1', '0000-00-00', '1'),
+(122, 'CTED-121', 'SP-87', '51', '1', '0000-00-00', '1'),
+(123, 'CTED-122', 'SP-88', '51', '1', '0000-00-00', '1'),
+(124, 'CTED-123', 'SP-89', '51', '1', '0000-00-00', '1'),
+(125, 'CTED-124', 'SP-90', '51', '1', '0000-00-00', '1'),
+(126, 'CTED-125', 'SP-91', '51', '1', '0000-00-00', '1'),
+(127, 'CTED-126', 'SP-92', '51', '1', '0000-00-00', '1'),
+(128, 'CTED-127', 'SP-93', '51', '1', '0000-00-00', '1'),
+(129, 'CTED-128', 'SP-94', '51', '1', '0000-00-00', '1'),
+(130, 'CTED-129', 'SP-95', '51', '1', '0000-00-00', '1'),
+(131, 'CTED-130', 'SP-96', '51', '1', '0000-00-00', '1'),
+(132, 'CTED-131', 'SP-97', '51', '1', '0000-00-00', '1'),
+(133, 'CTED-132', 'SP-98', '51', '1', '0000-00-00', '1'),
+(134, 'CTED-133', 'SP-99', '51', '1', '0000-00-00', '1'),
+(135, 'CTED-134', 'SP-100', '51', '1', '0000-00-00', '1'),
+(136, 'CTED-135', 'SP-101', '51', '1', '0000-00-00', '1'),
+(137, 'CTED-136', 'SP-102', '51', '1', '0000-00-00', '1'),
+(138, 'CTED-137', 'SP-103', '51', '1', '0000-00-00', '1'),
+(139, 'CTED-138', 'SP-104', '51', '1', '0000-00-00', '1'),
+(140, 'CTED-139', 'SP-139', '51', '1', '0000-00-00', '1'),
+(141, 'CTED-140', 'FLT-04', '49', '1', '0000-00-00', '1'),
+(142, 'CTED-141', 'FLT-06', '49', '1', '0000-00-00', '1'),
+(143, 'CTED-142', 'FLT-07', '49', '1', '0000-00-00', '1'),
+(144, 'CTED-143', 'FLT-08', '49', '1', '0000-00-00', '1'),
+(145, 'CTED-144', 'FLT-11', '49', '1', '0000-00-00', '1'),
+(146, 'CTED-145', 'FLT-12', '49', '1', '0000-00-00', '1'),
+(147, 'CTED-146', 'FLT-13', '49', '1', '0000-00-00', '1'),
+(148, 'CTED-147', 'FLT-15', '49', '1', '0000-00-00', '1'),
+(149, 'CTED-148', 'RST-17', '48', '1', '0000-00-00', '1'),
+(150, 'CTED-149', 'FLT-18', '49', '1', '0000-00-00', '1'),
+(151, 'CTED-150', 'FLT-19', '49', '1', '0000-00-00', '1'),
+(152, 'CTED-151', 'FLT-20', '49', '1', '0000-00-00', '1'),
+(153, 'CTED-152', 'FLT-21', '49', '1', '0000-00-00', '1'),
+(154, 'CTED-153', 'FLT-22', '49', '1', '0000-00-00', '1'),
+(155, 'CTED-154', 'FLT-23', '49', '1', '0000-00-00', '1'),
+(156, 'CTED-155', 'FLT-24', '49', '1', '0000-00-00', '1'),
+(157, 'CTED-156', 'FLT-25', '49', '1', '0000-00-00', '1'),
+(158, 'CTED-157', 'FLT-26', '49', '1', '0000-00-00', '1'),
+(159, 'CTED-158', 'FLT-27', '49', '1', '0000-00-00', '1'),
+(160, 'CTED-159', 'RST-28', '48', '1', '0000-00-00', '1'),
+(161, 'CTED-160', 'SP-105', '51', '1', '0000-00-00', '1'),
+(162, 'CTED-161', 'SP-106', '51', '1', '0000-00-00', '1'),
+(163, 'CTED-162', 'SP-107', '51', '1', '0000-00-00', '1'),
+(164, 'CTED-163', 'SP-108', '51', '1', '0000-00-00', '1'),
+(165, 'CTED-164', 'SP-109', '51', '1', '0000-00-00', '1'),
+(166, 'CTED-165', 'SP-110', '51', '1', '0000-00-00', '1'),
+(167, 'CTED-166', 'SP-111', '51', '1', '0000-00-00', '1'),
+(168, 'CTED-167', 'SP-112', '51', '1', '0000-00-00', '1'),
+(169, 'CTED-168', 'SP-113', '51', '1', '0000-00-00', '1'),
+(170, 'CTED-169', 'SP-114', '51', '1', '0000-00-00', '1'),
+(171, 'CTED-170', 'SP-115', '51', '1', '0000-00-00', '1'),
+(172, 'CTED-171', 'SP-116', '51', '1', '0000-00-00', '1'),
+(173, 'CTED-172', 'SP-117', '51', '1', '0000-00-00', '1'),
+(174, 'CTED-173', 'SP-118', '51', '1', '0000-00-00', '1'),
+(175, 'CTED-174', 'SP-119', '51', '1', '0000-00-00', '1'),
+(176, 'CTED-175', 'SP-120', '51', '1', '0000-00-00', '1'),
+(177, 'CTED-176', 'SP-121', '51', '1', '0000-00-00', '1'),
+(178, 'CTED-177', 'SP-122', '51', '1', '0000-00-00', '1'),
+(179, 'CTED-178', 'SP-123', '51', '1', '0000-00-00', '1'),
+(180, 'CTED-179', 'SP-124', '51', '1', '0000-00-00', '1'),
+(181, 'CTED-180', 'SP-125', '51', '1', '0000-00-00', '1'),
+(182, 'CTED-181', 'SP-126', '51', '1', '0000-00-00', '1'),
+(183, 'CTED-182', 'SP-127', '51', '1', '0000-00-00', '1'),
+(184, 'CTED-183', 'SP-128', '51', '1', '0000-00-00', '1'),
+(185, 'CTED-184', 'SP-129', '51', '1', '0000-00-00', '1'),
+(186, 'CTED-185', 'SP-130', '51', '1', '0000-00-00', '1'),
+(187, 'CTED-186', 'SP-131', '51', '1', '0000-00-00', '1'),
+(188, 'CTED-187', 'SP-132', '51', '1', '0000-00-00', '1'),
+(189, 'CTED-188', 'SP-133', '51', '1', '0000-00-00', '1'),
+(190, 'CTED-189', 'SP-134', '51', '1', '0000-00-00', '1'),
+(191, 'CTED-190', 'SP-135', '51', '1', '0000-00-00', '1'),
+(192, 'CTED-191', 'SP-136', '51', '1', '0000-00-00', '1'),
+(193, 'CTED-192', 'SP-137', '51', '1', '0000-00-00', '1'),
+(194, 'CTED-193', 'SP-138', '51', '1', '0000-00-00', '1');
 
 -- --------------------------------------------------------
 
@@ -279,6 +502,13 @@ CREATE TABLE `inv_issue` (
   `issue_image` varchar(1000) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+--
+-- Dumping data for table `inv_issue`
+--
+
+INSERT INTO `inv_issue` (`id`, `issue_id`, `issue_date`, `received_by`, `receiver_phone`, `remarks`, `project_id`, `warehouse_id`, `issued_by`, `approval_status`, `approved_by`, `approved_at`, `approval_remarks`, `issue_image`) VALUES
+(7, 'IS-CW-001', '2020-12-23', '', '', 'test', '1', '1', '', 0, '', NULL, '', '');
+
 -- --------------------------------------------------------
 
 --
@@ -291,6 +521,7 @@ CREATE TABLE `inv_issuedetail` (
   `issue_date` date NOT NULL,
   `material_id` varchar(9) CHARACTER SET utf8 NOT NULL,
   `material_name` varchar(100) NOT NULL,
+  `m_name` varchar(25) NOT NULL,
   `unit` varchar(100) NOT NULL,
   `issue_qty` float NOT NULL,
   `issue_price` float NOT NULL,
@@ -302,6 +533,14 @@ CREATE TABLE `inv_issuedetail` (
   `building_id` varchar(100) NOT NULL,
   `approval_status` tinyint(1) NOT NULL DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `inv_issuedetail`
+--
+
+INSERT INTO `inv_issuedetail` (`id`, `issue_id`, `issue_date`, `material_id`, `material_name`, `m_name`, `unit`, `issue_qty`, `issue_price`, `part_no`, `use_in`, `project_id`, `warehouse_id`, `package_id`, `building_id`, `approval_status`) VALUES
+(14, 'IS-CW-001', '2020-12-23', '10-01-01-', '277', '', '20', 2, 0, 'JO35501', 'FLT-04', '1', '1', '', '', 0),
+(15, 'IS-CW-001', '2020-12-23', '10-01-01-', '279', '', '20', 3, 0, '', 'FLT-06', '1', '1', '', '', 0);
 
 -- --------------------------------------------------------
 
@@ -390,11 +629,11 @@ CREATE TABLE `inv_material` (
 --
 
 INSERT INTO `inv_material` (`id`, `material_id_code`, `material_id`, `material_sub_id`, `material_level3_id`, `material_level4_id`, `material_description`, `spec`, `type`, `material_min_stock`, `avg_con_sump`, `lead_time`, `re_order_level`, `qty_unit`, `op_balance_qty`, `op_balance_val`, `chk_print`, `cur_qty`, `cur_price`, `cur_value`, `last_issue`, `last_receive`, `part_no`) VALUES
-(275, '02-02-01-01-001', '47', '119', 20, 12, 'Ethernet Switch', '--', '', 2, NULL, NULL, 0, '20', 0, 0, NULL, NULL, NULL, NULL, NULL, NULL, 'JP116606'),
+(275, '02-02-01-01-001', '47', '119', 20, 12, 'Ethernet Switch', '--', '', 5, NULL, NULL, 0, '20', 0, 0, NULL, NULL, NULL, NULL, NULL, NULL, 'JP116606'),
 (276, '02-02-04-04-001', '47', '119', 23, 15, 'Engine Control Unit', '--', '', 1, NULL, NULL, 0, '20', 0, 0, NULL, NULL, NULL, NULL, NULL, NULL, '21695319'),
-(277, '10-01-01-01-001', '55', '137', 70, 56, 'Air Filter', '--', '', 5, NULL, NULL, 0, '20', 0, 0, NULL, NULL, NULL, NULL, NULL, NULL, 'JO35501'),
-(278, '10-01-01-01-002', '55', '137', 70, 56, 'Air Filter', '--', '', 5, NULL, NULL, 0, '20', 0, 0, NULL, NULL, NULL, NULL, NULL, NULL, 'JO35502'),
-(279, '10-01-01-01-003', '55', '137', 70, 56, 'Air Filter', '--', '', 2, NULL, NULL, 0, '20', 0, 0, NULL, NULL, NULL, NULL, NULL, NULL, 'AF891M'),
+(277, '10-01-01-01-001', '55', '137', 70, 56, 'Air Filter', '---', '', 5, NULL, NULL, 0, '20', 0, 0, NULL, NULL, NULL, NULL, NULL, NULL, 'JP116606'),
+(278, '10-01-01-01-002', '55', '137', 0, 0, 'Air Filters', '', '', 5, NULL, NULL, 0, '20', 0, 0, NULL, NULL, NULL, NULL, NULL, NULL, ''),
+(279, '10-01-01-01-003', '55', '137', 0, 0, 'Air Filter', '', '', 2, NULL, NULL, 0, '20', 0, 0, NULL, NULL, NULL, NULL, NULL, NULL, ''),
 (280, '10-01-01-01-004', '55', '137', 70, 56, 'Air Filter', '--', '', 2, NULL, NULL, 0, '20', 0, 0, NULL, NULL, NULL, NULL, NULL, NULL, 'AF21702911'),
 (281, '10-01-01-01-005', '55', '137', 70, 56, 'Air Filter', '--', '', 2, NULL, NULL, 0, '20', 0, 0, NULL, NULL, NULL, NULL, NULL, NULL, 'A2418'),
 (282, '10-02-01-01-001', '55', '138', 71, 57, 'Fuel Pre Filter element', '--', '', 30, NULL, NULL, 0, '20', 0, 0, NULL, NULL, NULL, NULL, NULL, NULL, 'J036736'),
@@ -490,7 +729,145 @@ INSERT INTO `inv_material` (`id`, `material_id_code`, `material_id`, `material_s
 (372, '02-02-01-01-051', '47', '119', 20, 12, 'DC CONVERTER', '', '', 1, NULL, NULL, 0, '20', 0, 0, NULL, NULL, NULL, NULL, NULL, NULL, 'JP104448'),
 (373, '02-02-01-01-052', '47', '119', 20, 12, 'DC CONVERTER', '', '', 1, NULL, NULL, 0, '20', 0, 0, NULL, NULL, NULL, NULL, NULL, NULL, 'JP104828'),
 (374, '02-02-01-01-053', '47', '119', 20, 12, 'SAFETY RELAY', '', '', 1, NULL, NULL, 0, '20', 0, 0, NULL, NULL, NULL, NULL, NULL, NULL, 'JP104026'),
-(375, '02-02-01-01-054', '47', '119', 20, 12, 'PLC STOP RELAY', '', '', 1, NULL, NULL, 0, '20', 0, 0, NULL, NULL, NULL, NULL, NULL, NULL, 'J017427');
+(375, '02-02-01-01-054', '47', '119', 20, 12, 'PLC STOP RELAY', '', '', 1, NULL, NULL, 0, '20', 0, 0, NULL, NULL, NULL, NULL, NULL, NULL, 'J017427'),
+(376, '02-02-01-01-055', '47', '119', 20, 12, 'PULSE AMPLIFIER ', '', '', 1, NULL, NULL, 0, '20', 0, 0, NULL, NULL, NULL, NULL, NULL, NULL, '806109843'),
+(377, '02-02-01-01-056', '47', '119', 20, 12, 'DIODE', '', '', 1, NULL, NULL, 0, '20', 0, 0, NULL, NULL, NULL, NULL, NULL, NULL, 'JP106058'),
+(378, '02-02-01-01-057', '47', '119', 20, 12, 'ENCODER, MH MOTOR', '', '', 1, NULL, NULL, 0, '20', 0, 0, NULL, NULL, NULL, NULL, NULL, NULL, '806109442'),
+(379, '02-02-01-01-058', '47', '119', 20, 12, 'MICRO SWITCH ', '', '', 1, NULL, NULL, 0, '20', 0, 0, NULL, NULL, NULL, NULL, NULL, NULL, '801903896'),
+(380, '02-02-01-01-059', '47', '119', 20, 12, 'TT motor brake magnetic coupling', '', '', 1, NULL, NULL, 0, '20', 0, 0, NULL, NULL, NULL, NULL, NULL, NULL, '806109991'),
+(381, '02-02-01-01-060', '47', '119', 20, 12, 'LIMIT SWITCH ', '', '', 1, NULL, NULL, 0, '20', 0, 0, NULL, NULL, NULL, NULL, NULL, NULL, '65237124'),
+(382, '02-02-01-01-061', '47', '119', 20, 12, 'RELAY ', '', '', 1, NULL, NULL, 0, '20', 0, 0, NULL, NULL, NULL, NULL, NULL, NULL, 'OLD P/N : J019120, NEW P/N : 652381065'),
+(383, '02-02-01-01-062', '47', '119', 20, 12, 'CONTROL HANDLE , MH/GT', '', '', 1, NULL, NULL, 0, '20', 0, 0, NULL, NULL, NULL, NULL, NULL, NULL, 'OLD P/N : N5773900, NEW P/N : 65301702'),
+(384, '02-02-01-01-063', '47', '119', 20, 12, 'CONTROLLER, TROLLEY', '', '', 1, NULL, NULL, 0, '20', 0, 0, NULL, NULL, NULL, NULL, NULL, NULL, 'N5773840'),
+(385, '02-02-01-01-064', '47', '119', 20, 12, 'PLC(INPUT)', '', '', 1, NULL, NULL, 0, '20', 0, 0, NULL, NULL, NULL, NULL, NULL, NULL, '65267422'),
+(386, '02-02-01-01-065', '47', '119', 20, 12, 'Spreader anti-sway control unit, sensor', '', '', 1, NULL, NULL, 0, '20', 0, 0, NULL, NULL, NULL, NULL, NULL, NULL, '65302530'),
+(387, '02-02-01-01-066', '47', '119', 20, 12, 'CHAIN FASTERNER', '', '', 1, NULL, NULL, 0, '20', 0, 0, NULL, NULL, NULL, NULL, NULL, NULL, 'N4061070'),
+(388, '02-02-01-01-067', '47', '119', 20, 12, 'CONNECTING LINK', '', '', 1, NULL, NULL, 0, '20', 0, 0, NULL, NULL, NULL, NULL, NULL, NULL, '60611634'),
+(389, '02-02-01-01-068', '47', '119', 20, 12, 'TIME RELAY, BROMMA', '', '', 1, NULL, NULL, 0, '20', 0, 0, NULL, NULL, NULL, NULL, NULL, NULL, '1002028'),
+(390, '02-02-01-01-069', '47', '119', 20, 12, 'TIME RELAY, BROMMA', '', '', 1, NULL, NULL, 0, '20', 0, 0, NULL, NULL, NULL, NULL, NULL, NULL, '1029946'),
+(391, '02-02-01-01-070', '47', '119', 20, 12, 'TIME RELAY, BROMMA', '', '', 1, NULL, NULL, 0, '20', 0, 0, NULL, NULL, NULL, NULL, NULL, NULL, '1003363'),
+(392, '02-02-01-01-071', '47', '119', 20, 12, 'Spreader motor, Twist Lock', '', '', 1, NULL, NULL, 0, '20', 0, 0, NULL, NULL, NULL, NULL, NULL, NULL, '1031544'),
+(393, '02-02-01-01-072', '47', '119', 20, 12, 'Spreader Telescopic Motor', '', '', 1, NULL, NULL, 0, '20', 0, 0, NULL, NULL, NULL, NULL, NULL, NULL, '1031542'),
+(394, '02-02-01-01-073', '47', '119', 20, 12, 'PROXIMITY SWITCH', '', '', 1, NULL, NULL, 0, '20', 0, 0, NULL, NULL, NULL, NULL, NULL, NULL, '1034213'),
+(395, '02-02-01-01-074', '47', '119', 20, 12, 'SOLID STATE REV CONTRACTOR', '', '', 1, NULL, NULL, 0, '20', 0, 0, NULL, NULL, NULL, NULL, NULL, NULL, '1029649'),
+(396, '02-02-01-01-075', '47', '119', 20, 12, 'SOLID STATE REV CONTRACTOR', '', '', 1, NULL, NULL, 0, '20', 0, 0, NULL, NULL, NULL, NULL, NULL, NULL, '1029647'),
+(397, '02-02-01-01-076', '47', '119', 20, 12, 'SENSOR', '', '', 1, NULL, NULL, 0, '20', 0, 0, NULL, NULL, NULL, NULL, NULL, NULL, 'J031376'),
+(398, '02-02-01-01-077', '47', '119', 20, 12, 'PROXYMITY SWITCH', '', '', 1, NULL, NULL, 0, '20', 0, 0, NULL, NULL, NULL, NULL, NULL, NULL, ' J03508.0100'),
+(399, '02-02-01-01-078', '47', '119', 20, 12, 'SENSOR', '', '', 1, NULL, NULL, 0, '20', 0, 0, NULL, NULL, NULL, NULL, NULL, NULL, 'JP104231'),
+(400, '02-02-01-01-079', '47', '119', 20, 12, 'PLC', '', '', 1, NULL, NULL, 0, '20', 0, 0, NULL, NULL, NULL, NULL, NULL, NULL, 'JP105221'),
+(401, '02-02-01-01-080', '47', '119', 20, 12, 'GEAR', '', '', 1, NULL, NULL, 0, '20', 0, 0, NULL, NULL, NULL, NULL, NULL, NULL, 'JO31236'),
+(402, '02-02-02-02-001', '47', '119', 21, 13, 'GEAR', '', '', 1, NULL, NULL, 0, '20', 0, 0, NULL, NULL, NULL, NULL, NULL, NULL, 'JO31322'),
+(403, '02-02-02-02-002', '47', '119', 21, 13, 'GEAR', '', '', 1, NULL, NULL, 0, '20', 0, 0, NULL, NULL, NULL, NULL, NULL, NULL, 'JO33019'),
+(404, '02-02-01-01-081', '47', '119', 20, 12, 'RELAY ', '', '', 1, NULL, NULL, 0, '20', 0, 0, NULL, NULL, NULL, NULL, NULL, NULL, 'OLD P/N : J017427, NEW P/N : 65238128'),
+(405, '02-02-04-04-024', '47', '119', 23, 16, 'KEY', '', '', 1, NULL, NULL, 0, '20', 0, 0, NULL, NULL, NULL, NULL, NULL, NULL, '902455800'),
+(406, '02-02-04-04-025', '47', '119', 23, 16, 'VALVE LEVER', '', '', 1, NULL, NULL, 0, '20', 0, 0, NULL, NULL, NULL, NULL, NULL, NULL, 'J021481'),
+(407, '02-02-04-04-026', '47', '119', 23, 16, 'SHAFT', '', '', 1, NULL, NULL, 0, '20', 0, 0, NULL, NULL, NULL, NULL, NULL, NULL, 'J028490'),
+(408, '02-02-04-04-027', '47', '119', 23, 16, 'ROCKER ARM', '', '', 1, NULL, NULL, 0, '20', 0, 0, NULL, NULL, NULL, NULL, NULL, NULL, 'J028485'),
+(409, '02-02-04-04-028', '47', '119', 23, 16, 'ROCKER ARM', '', '', 1, NULL, NULL, 0, '20', 0, 0, NULL, NULL, NULL, NULL, NULL, NULL, 'J028487'),
+(410, '02-02-04-04-029', '47', '119', 23, 16, 'VALVE GUIDE', '', '', 1, NULL, NULL, 0, '20', 0, 0, NULL, NULL, NULL, NULL, NULL, NULL, 'J028527'),
+(411, '02-02-04-04-030', '47', '119', 23, 16, 'VALVE SEAT', '', '', 12, NULL, NULL, 0, '20', 0, 0, NULL, NULL, NULL, NULL, NULL, NULL, 'JO18741'),
+(412, '02-02-04-04-031', '47', '119', 23, 16, 'VALVE SEAT', '', '', 12, NULL, NULL, 0, '20', 0, 0, NULL, NULL, NULL, NULL, NULL, NULL, 'JO18742'),
+(413, '02-02-04-04-032', '47', '119', 23, 16, 'INDUCTION VALVE', '', '', 12, NULL, NULL, 0, '20', 0, 0, NULL, NULL, NULL, NULL, NULL, NULL, 'J028501'),
+(414, '02-02-04-04-033', '47', '119', 23, 16, 'SPRING PLATE', '', '', 12, NULL, NULL, 0, '20', 0, 0, NULL, NULL, NULL, NULL, NULL, NULL, 'J018727'),
+(415, '02-02-04-04-034', '47', '119', 23, 16, 'SPRING', '', '', 12, NULL, NULL, 0, '20', 0, 0, NULL, NULL, NULL, NULL, NULL, NULL, 'J018728'),
+(416, '02-02-01-01-082', '47', '119', 20, 12, 'Breaking unit', '', '', 12, NULL, NULL, 0, '20', 0, 0, NULL, NULL, NULL, NULL, NULL, NULL, 'J017888'),
+(417, '02-02-01-01-083', '47', '119', 20, 12, 'IGBT', 'SKM200GAL, 126D', '', 3, NULL, NULL, 0, '20', 0, 0, NULL, NULL, NULL, NULL, NULL, NULL, '--'),
+(418, '02-02-01-01-084', '47', '119', 20, 12, 'PLC', '--', '', 1, NULL, NULL, 0, '20', 0, 0, NULL, NULL, NULL, NULL, NULL, NULL, 'JP104399'),
+(419, '02-02-01-01-085', '47', '119', 20, 12, 'TEMPARATURE SENSOR', '--', '', 1, NULL, NULL, 0, '20', 0, 0, NULL, NULL, NULL, NULL, NULL, NULL, 'JP108758'),
+(420, '02-02-01-01-086', '47', '119', 20, 12, 'OIL PRESSURE SENSOR ', '--', '', 1, NULL, NULL, 0, '20', 0, 0, NULL, NULL, NULL, NULL, NULL, NULL, 'J018887'),
+(421, '02-02-01-01-087', '47', '119', 20, 12, 'SENSOR', '--', '', 1, NULL, NULL, 0, '20', 0, 0, NULL, NULL, NULL, NULL, NULL, NULL, 'J031375'),
+(422, '02-02-04-04-035', '47', '119', 23, 16, 'SENSOR', '--', '', 1, NULL, NULL, 0, '20', 0, 0, NULL, NULL, NULL, NULL, NULL, NULL, 'J018889'),
+(423, '02-02-04-04-036', '47', '119', 23, 16, 'SPEED SENSOR', '--', '', 1, NULL, NULL, 0, '20', 0, 0, NULL, NULL, NULL, NULL, NULL, NULL, 'J06205.0100'),
+(424, '02-02-04-04-037', '47', '119', 23, 16, 'SENSOR ', '--', '', 1, NULL, NULL, 0, '20', 0, 0, NULL, NULL, NULL, NULL, NULL, NULL, 'J031360'),
+(425, '02-02-04-04-038', '47', '119', 23, 16, 'SOLENOID', '--', '', 1, NULL, NULL, 0, '20', 0, 0, NULL, NULL, NULL, NULL, NULL, NULL, '924523.0172'),
+(426, '02-02-04-04-039', '47', '119', 23, 16, 'SENSOR', '--', '', 1, NULL, NULL, 0, '20', 0, 0, NULL, NULL, NULL, NULL, NULL, NULL, '924523.0328'),
+(427, '02-02-04-04-040', '47', '119', 23, 16, 'GEAR RIM', '--', '', 1, NULL, NULL, 0, '20', 0, 0, NULL, NULL, NULL, NULL, NULL, NULL, 'J028381'),
+(428, '02-02-04-04-041', '47', '119', 23, 16, 'COOLENT PUMP', '--', '', 1, NULL, NULL, 0, '20', 0, 0, NULL, NULL, NULL, NULL, NULL, NULL, 'J02548.0100'),
+(429, '02-02-04-04-042', '47', '119', 23, 16, 'WIRE', '--', '', 1, NULL, NULL, 0, '20', 0, 0, NULL, NULL, NULL, NULL, NULL, NULL, 'J018895'),
+(430, '02-02-04-04-043', '47', '119', 23, 16, 'NUT', '--', '', 1, NULL, NULL, 0, '20', 0, 0, NULL, NULL, NULL, NULL, NULL, NULL, 'J031379'),
+(431, '02-02-04-04-044', '47', '119', 23, 16, 'FUSE', '--', '', 1, NULL, NULL, 0, '20', 0, 0, NULL, NULL, NULL, NULL, NULL, NULL, 'J021745'),
+(432, '02-02-04-04-045', '47', '119', 23, 16, 'TRANSFORMER', '--', '', 1, NULL, NULL, 0, '20', 0, 0, NULL, NULL, NULL, NULL, NULL, NULL, '806109736'),
+(433, '02-02-04-04-046', '47', '119', 23, 16, 'WIRE HARNESS', '--', '', 1, NULL, NULL, 0, '20', 0, 0, NULL, NULL, NULL, NULL, NULL, NULL, 'J030605'),
+(434, '02-02-04-04-047', '47', '119', 23, 16, 'SENSOR, WATER SEPERATOR', '--', '', 1, NULL, NULL, 0, '20', 0, 0, NULL, NULL, NULL, NULL, NULL, NULL, 'J031360'),
+(435, '02-02-04-04-048', '47', '119', 23, 16, 'WIRE', '--', '', 1, NULL, NULL, 0, '20', 0, 0, NULL, NULL, NULL, NULL, NULL, NULL, '924523.0333'),
+(436, '02-02-04-04-049', '47', '119', 23, 16, 'RUBBER BEND', '--', '', 1, NULL, NULL, 0, '20', 0, 0, NULL, NULL, NULL, NULL, NULL, NULL, 'J029726'),
+(437, '02-02-04-04-050', '47', '119', 23, 16, 'PIPE', '--', '', 1, NULL, NULL, 0, '20', 0, 0, NULL, NULL, NULL, NULL, NULL, NULL, 'J035272'),
+(438, '02-02-04-04-051', '47', '119', 23, 16, 'JOIN FITTING', '--', '', 1, NULL, NULL, 0, '20', 0, 0, NULL, NULL, NULL, NULL, NULL, NULL, 'J035273'),
+(439, '02-02-04-04-052', '47', '119', 23, 16, 'CIRCUIT BREAKER', '--', '', 1, NULL, NULL, 0, '20', 0, 0, NULL, NULL, NULL, NULL, NULL, NULL, 'JP108176'),
+(440, '02-02-04-04-053', '47', '119', 23, 16, 'WIRING SET', '--', '', 1, NULL, NULL, 0, '20', 0, 0, NULL, NULL, NULL, NULL, NULL, NULL, 'J033111'),
+(441, '02-02-01-01-088', '47', '119', 20, 12, 'QUICK COUPLER', '--', '', 1, NULL, NULL, 0, '20', 0, 0, NULL, NULL, NULL, NULL, NULL, NULL, '924473.0042'),
+(442, '02-02-04-04-054', '47', '119', 23, 16, 'QUICK COUPLER', '--', '', 1, NULL, NULL, 0, '20', 0, 0, NULL, NULL, NULL, NULL, NULL, NULL, '924473.0041'),
+(443, '02-02-04-04-055', '47', '119', 23, 16, 'WASHER', '--', '', 1, NULL, NULL, 0, '20', 0, 0, NULL, NULL, NULL, NULL, NULL, NULL, '920058.019'),
+(444, '02-02-04-04-056', '47', '119', 23, 16, 'COOLING SYSTEM', '--', '', 1, NULL, NULL, 0, '20', 0, 0, NULL, NULL, NULL, NULL, NULL, NULL, 'RCJ0090130'),
+(445, '02-02-04-04-008', '47', '119', 23, 15, 'HEAD GASKET', '--', '', 1, NULL, NULL, 0, '20', 0, 0, NULL, NULL, NULL, NULL, NULL, NULL, '21575727'),
+(446, '02-02-01-01-089', '47', '119', 20, 12, 'SWITCH', '--', '', 1, NULL, NULL, 0, '20', 0, 0, NULL, NULL, NULL, NULL, NULL, NULL, '920971.0009'),
+(447, '02-02-04-04-057', '47', '119', 23, 16, 'GEAR', '--', '', 1, NULL, NULL, 0, '20', 0, 0, NULL, NULL, NULL, NULL, NULL, NULL, 'J033018'),
+(448, '02-02-04-04-058', '47', '119', 23, 16, 'GEAR', '--', '', 1, NULL, NULL, 0, '20', 0, 0, NULL, NULL, NULL, NULL, NULL, NULL, 'J033019'),
+(449, '02-02-04-04-059', '47', '119', 23, 16, 'PUSH ROD', '--', '', 1, NULL, NULL, 0, '20', 0, 0, NULL, NULL, NULL, NULL, NULL, NULL, 'J06456.0100'),
+(450, '02-02-04-04-060', '47', '119', 23, 16, 'GEAR', '--', '', 1, NULL, NULL, 0, '20', 0, 0, NULL, NULL, NULL, NULL, NULL, NULL, 'J033064'),
+(451, '02-02-01-01-090', '47', '119', 20, 12, 'SOLENOID', '--', '', 1, NULL, NULL, 0, '20', 0, 0, NULL, NULL, NULL, NULL, NULL, NULL, '924523.0362'),
+(452, '02-02-02-02-003', '47', '119', 21, 13, 'PLANETARY GEAR', '--', '', 1, NULL, NULL, 0, '20', 0, 0, NULL, NULL, NULL, NULL, NULL, NULL, 'RCJ0002020'),
+(453, '02-02-02-02-004', '47', '119', 21, 13, 'DRIVE GEAR', '--', '', 1, NULL, NULL, 0, '20', 0, 0, NULL, NULL, NULL, NULL, NULL, NULL, 'RCJ0002030'),
+(454, '02-02-01-01-091', '47', '119', 20, 12, 'SENSOR SPEED', '--', '', 1, NULL, NULL, 0, '20', 0, 0, NULL, NULL, NULL, NULL, NULL, NULL, 'JP110853'),
+(455, '02-02-01-01-092', '47', '119', 20, 12, 'RECTIFIER', '--', '', 1, NULL, NULL, 0, '20', 0, 0, NULL, NULL, NULL, NULL, NULL, NULL, 'RCJ0016860'),
+(456, '02-02-04-04-061', '47', '119', 23, 16, 'PISTON', '--', '', 1, NULL, NULL, 0, '20', 0, 0, NULL, NULL, NULL, NULL, NULL, NULL, 'J06672.0100'),
+(457, '02-02-01-01-093', '47', '119', 20, 12, 'TELEPHONE ', '--', '', 1, NULL, NULL, 0, '20', 0, 0, NULL, NULL, NULL, NULL, NULL, NULL, 'JP101111'),
+(458, '02-02-01-01-094', '47', '119', 20, 12, 'DISPLAY ', '--', '', 1, NULL, NULL, 0, '20', 0, 0, NULL, NULL, NULL, NULL, NULL, NULL, 'JP106418'),
+(459, '02-02-01-01-095', '47', '119', 20, 12, 'GT MOTOR', '--', '', 1, NULL, NULL, 0, '20', 0, 0, NULL, NULL, NULL, NULL, NULL, NULL, 'KS102237'),
+(460, '02-02-04-04-009', '47', '119', 23, 15, 'ENGINE CONTROL UNIT', '--', '', 1, NULL, NULL, 0, '20', 0, 0, NULL, NULL, NULL, NULL, NULL, NULL, '923944.1717'),
+(461, '02-02-01-01-096', '47', '119', 20, 12, 'RECTIFIER', '--', '', 1, NULL, NULL, 0, '20', 0, 0, NULL, NULL, NULL, NULL, NULL, NULL, 'RCJ0025250'),
+(462, '02-02-04-04-010', '47', '119', 23, 15, 'WATER PUMP', '--', '', 1, NULL, NULL, 0, '20', 0, 0, NULL, NULL, NULL, NULL, NULL, NULL, 'J04118.0100'),
+(463, '02-02-04-04-011', '47', '119', 23, 15, 'OIL PRESSURE SWITCH', '--', '', 1, NULL, NULL, 0, '20', 0, 0, NULL, NULL, NULL, NULL, NULL, NULL, '924523.0535'),
+(464, '02-02-04-04-012', '47', '119', 23, 15, 'OIL PRESSURE SENSOR', '--', '', 1, NULL, NULL, 0, '20', 0, 0, NULL, NULL, NULL, NULL, NULL, NULL, 'J04060.0100'),
+(465, '02-02-01-01-097', '47', '119', 20, 12, 'PLC', '--', '', 1, NULL, NULL, 0, '20', 0, 0, NULL, NULL, NULL, NULL, NULL, NULL, 'JP107217'),
+(466, '02-02-01-01-098', '47', '119', 20, 12, 'MEMORY CARD', '--', '', 1, NULL, NULL, 0, '20', 0, 0, NULL, NULL, NULL, NULL, NULL, NULL, 'JP110105'),
+(467, '02-02-04-04-013', '47', '119', 23, 15, 'AC PUMP HOUSING', '--', '', 1, NULL, NULL, 0, '20', 0, 0, NULL, NULL, NULL, NULL, NULL, NULL, '923829.1401'),
+(468, '02-02-04-04-014', '47', '119', 23, 15, 'THERMOSTAT', '--', '', 1, NULL, NULL, 0, '20', 0, 0, NULL, NULL, NULL, NULL, NULL, NULL, 'J08619.0100'),
+(469, '02-02-04-04-062', '47', '119', 23, 16, 'BELT', '--', '', 1, NULL, NULL, 0, '20', 0, 0, NULL, NULL, NULL, NULL, NULL, NULL, 'J035539'),
+(470, '02-02-04-04-063', '47', '119', 23, 16, 'BOLT', '--', '', 1, NULL, NULL, 0, '20', 0, 0, NULL, NULL, NULL, NULL, NULL, NULL, 'J028376'),
+(471, '02-02-04-04-064', '47', '119', 23, 16, 'TURBO CHARGER PIPE', '--', '', 1, NULL, NULL, 0, '20', 0, 0, NULL, NULL, NULL, NULL, NULL, NULL, 'RCJ0001980'),
+(472, '02-02-04-04-065', '47', '119', 23, 16, 'TURBO CHAEGER OIL PIPE', '--', '', 1, NULL, NULL, 0, '20', 0, 0, NULL, NULL, NULL, NULL, NULL, NULL, 'J028561'),
+(473, '02-02-01-01-099', '47', '119', 20, 12, 'PLC', '--', '', 1, NULL, NULL, 0, '20', 0, 0, NULL, NULL, NULL, NULL, NULL, NULL, 'JP115701'),
+(474, '02-02-01-01-100', '47', '119', 20, 12, 'PLC', '--', '', 1, NULL, NULL, 0, '20', 0, 0, NULL, NULL, NULL, NULL, NULL, NULL, 'JP115632'),
+(475, '02-02-01-01-101', '47', '119', 20, 12, 'PLC', '--', '', 1, NULL, NULL, 0, '20', 0, 0, NULL, NULL, NULL, NULL, NULL, NULL, 'RCJ0041210'),
+(476, '02-02-01-01-102', '47', '119', 20, 12, 'PLC', '--', '', 1, NULL, NULL, 0, '20', 0, 0, NULL, NULL, NULL, NULL, NULL, NULL, 'JP110316'),
+(477, '02-02-01-01-103', '47', '119', 20, 12, 'CONVERTER', '--', '', 1, NULL, NULL, 0, '20', 0, 0, NULL, NULL, NULL, NULL, NULL, NULL, 'JP116570'),
+(478, '02-02-01-01-104', '47', '119', 20, 12, 'INJECTOR HOLDER (CLAMP)', '--', '', 1, NULL, NULL, 0, '20', 0, 0, NULL, NULL, NULL, NULL, NULL, NULL, 'J032029'),
+(479, '02-02-04-04-015', '47', '119', 23, 15, 'BELT ADJUSTER', '--', '', 1, NULL, NULL, 0, '20', 0, 0, NULL, NULL, NULL, NULL, NULL, NULL, '923976.4523'),
+(480, '02-02-04-04-016', '47', '119', 23, 15, 'BELT ADJUSTER', '--', '', 1, NULL, NULL, 0, '20', 0, 0, NULL, NULL, NULL, NULL, NULL, NULL, '923976.0229'),
+(481, '02-02-04-04-017', '47', '119', 23, 15, 'SUPPORT WHEEL', '--', '', 1, NULL, NULL, 0, '20', 0, 0, NULL, NULL, NULL, NULL, NULL, NULL, 'JO18517'),
+(482, '09-01-01-01-001', '54', '135', 68, 54, 'GREASE', 'EP-2', '', 2, NULL, NULL, 0, '22', 0, 0, NULL, NULL, NULL, NULL, NULL, NULL, ''),
+(483, '09-01-01-01-002', '54', '135', 68, 54, 'ENGINE OIL', '15W-40', '', 2, NULL, NULL, 0, '22', 0, 0, NULL, NULL, NULL, NULL, NULL, NULL, ''),
+(484, '09-01-01-01-003', '54', '135', 68, 54, 'HYDRAULIC', 'DTE-25', '', 3, NULL, NULL, 0, '22', 0, 0, NULL, NULL, NULL, NULL, NULL, NULL, '--'),
+(485, '09-01-01-01-004', '54', '135', 68, 54, 'HYDRAULIC', 'DTE-26', '', 3, NULL, NULL, 0, '22', 0, 0, NULL, NULL, NULL, NULL, NULL, NULL, '--'),
+(486, '09-01-01-01-005', '54', '135', 68, 54, 'ENGINE OIL', '20W-50', '', 10, NULL, NULL, 0, '21', 0, 0, NULL, NULL, NULL, NULL, NULL, NULL, '--'),
+(487, '09-01-01-01-006', '54', '135', 68, 54, 'BRAKE OIL', 'DOT-4', '', 5, NULL, NULL, 0, '21', 0, 0, NULL, NULL, NULL, NULL, NULL, NULL, '--'),
+(488, '09-01-01-01-007', '54', '135', 68, 54, 'GEAR OIL', '80W-90', '', 1, NULL, NULL, 0, '22', 0, 0, NULL, NULL, NULL, NULL, NULL, NULL, '--'),
+(489, '09-01-01-01-008', '54', '135', 68, 54, 'GEAR OIL', '85W-140', '', 1, NULL, NULL, 0, '22', 0, 0, NULL, NULL, NULL, NULL, NULL, NULL, '--'),
+(490, '09-01-01-01-009', '54', '135', 68, 54, 'GEAR OIL', 'GEAR OIL-220', '', 1, NULL, NULL, 0, '22', 0, 0, NULL, NULL, NULL, NULL, NULL, NULL, '--'),
+(491, '09-01-01-01-010', '54', '135', 68, 54, 'GEAR OIL', 'GEAR OIL-320', '', 1, NULL, NULL, 0, '22', 0, 0, NULL, NULL, NULL, NULL, NULL, NULL, '--'),
+(492, '09-01-01-01-011', '54', '135', 68, 54, 'TRANSMISSION FLUID', 'ATF-220', '', 1, NULL, NULL, 0, '22', 0, 0, NULL, NULL, NULL, NULL, NULL, NULL, '--'),
+(493, '09-01-01-01-012', '54', '135', 68, 54, 'RADIATOR COOLANT', 'VELCOOL HIGH-TEC', '', 20, NULL, NULL, 0, '21', 0, 0, NULL, NULL, NULL, NULL, NULL, NULL, '--'),
+(494, '09-01-01-01-013', '54', '135', 68, 54, 'GREASE', 'XHP-222', '', 1, NULL, NULL, 0, '22', 0, 0, NULL, NULL, NULL, NULL, NULL, NULL, '--'),
+(495, '08-01-01-01-001', '53', '136', 69, 55, 'DIESEL', '---', '', 4000, NULL, NULL, 0, '21', 0, 0, NULL, NULL, NULL, NULL, NULL, NULL, '--'),
+(496, '04-02-04-04-001', '49', '126', 48, 39, 'ALTERNATOR ASSY', '---', '', 1, NULL, NULL, 0, '20', 0, 0, NULL, NULL, NULL, NULL, NULL, NULL, '134153'),
+(497, '07-01-01-01-001', '52', '134', 67, 53, 'TYRE TUBELESS', '18.00X25', '', 2, NULL, NULL, 0, '20', 0, 0, NULL, NULL, NULL, NULL, NULL, NULL, '--'),
+(498, '07-01-01-01-002', '52', '134', 67, 53, 'TYRE TUBELESS', '16.00X25', '', 2, NULL, NULL, 0, '20', 0, 0, NULL, NULL, NULL, NULL, NULL, NULL, '--'),
+(499, '07-01-01-01-003', '52', '134', 67, 53, 'TYRE TUBELESS', '14.00X24', '', 2, NULL, NULL, 0, '20', 0, 0, NULL, NULL, NULL, NULL, NULL, NULL, '--'),
+(500, '07-01-01-01-004', '52', '134', 67, 53, 'TUBE TYRE', '14.00X24', '', 2, NULL, NULL, 0, '20', 0, 0, NULL, NULL, NULL, NULL, NULL, NULL, '--'),
+(501, '07-01-01-01-005', '52', '134', 67, 53, 'TYRE', '12.00X24', '', 2, NULL, NULL, 0, '20', 0, 0, NULL, NULL, NULL, NULL, NULL, NULL, '--'),
+(502, '07-01-01-01-006', '52', '134', 67, 53, 'TYRE', '11.00X20', '', 8, NULL, NULL, 0, '20', 0, 0, NULL, NULL, NULL, NULL, NULL, NULL, '--'),
+(503, '07-01-01-01-007', '52', '134', 67, 53, 'TYRE (RECON) ', '10.00X20', '', 20, NULL, NULL, 0, '20', 0, 0, NULL, NULL, NULL, NULL, NULL, NULL, '--'),
+(504, '07-01-01-01-008', '52', '134', 67, 53, 'TYRE LUG', '10.00X20', '', 14, NULL, NULL, 0, '20', 0, 0, NULL, NULL, NULL, NULL, NULL, NULL, '--'),
+(505, '07-01-01-01-009', '52', '134', 67, 53, 'TYRE RIP', '10.00X20', '', 8, NULL, NULL, 0, '20', 0, 0, NULL, NULL, NULL, NULL, NULL, NULL, '--'),
+(506, '04-02-01-01-001', '49', '126', 45, 33, 'AC-DC CONVERTER', '', '', 1, NULL, NULL, 0, '20', 0, 0, NULL, NULL, NULL, NULL, NULL, NULL, 'A144037'),
+(507, '04-02-01-01-002', '49', '126', 46, 0, 'BRAKE PISTON SEAL(L)', '', '', 1, NULL, NULL, 0, '20', 0, 0, NULL, NULL, NULL, NULL, NULL, NULL, '401005-00033'),
+(508, '04-02-02-02-001', '49', '126', 46, 60, 'BRAKE PISTON SEAL(L)', '--', '', 8, NULL, NULL, 0, '20', 0, 0, NULL, NULL, NULL, NULL, NULL, NULL, '401005-00033'),
+(509, '04-02-02-02-002', '49', '126', 46, 60, 'BRAKE PISTON SEAL(S)', '--', '', 8, NULL, NULL, 0, '20', 0, 0, NULL, NULL, NULL, NULL, NULL, NULL, '401005-00034'),
+(510, '04-02-02-02-003', '49', '126', 46, 60, 'BOLT', '--', '', 8, NULL, NULL, 0, '20', 0, 0, NULL, NULL, NULL, NULL, NULL, NULL, '120106-00185'),
+(511, '04-02-02-02-004', '49', '126', 46, 60, 'BUSHING', '--', '', 12, NULL, NULL, 0, '20', 0, 0, NULL, NULL, NULL, NULL, NULL, NULL, '131002-00050'),
+(512, '04-02-02-02-005', '49', '126', 46, 60, 'BRAKE DISK', '--', '', 4, NULL, NULL, 0, '20', 0, 0, NULL, NULL, NULL, NULL, NULL, NULL, '130106-00004'),
+(513, '04-02-01-01-002', '49', '126', 45, 33, 'Test', 'ac5', '', 10, NULL, NULL, 0, '22', 0, 0, NULL, NULL, NULL, NULL, NULL, NULL, '123456');
 
 -- --------------------------------------------------------
 
@@ -520,6 +897,16 @@ CREATE TABLE `inv_materialbalance` (
   `building_id` varchar(100) NOT NULL,
   `approval_status` tinyint(1) NOT NULL DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `inv_materialbalance`
+--
+
+INSERT INTO `inv_materialbalance` (`id`, `mb_ref_id`, `mb_materialid`, `mb_date`, `mbin_qty`, `mbin_val`, `mbout_qty`, `mbout_val`, `mbprice`, `mbtype`, `mbserial`, `mbserial_id`, `mbunit_id`, `jvno`, `part_no`, `project_id`, `warehouse_id`, `package_id`, `building_id`, `approval_status`) VALUES
+(237, 'MRR001', '10-01-01-01-001', '2020-12-22', 10, 5000, 0, 0, 500, 'Receive', 1.1, '1', '20', 'MRR001', 'JO35501', '1', '1', '', '', 0),
+(238, 'MRR001', '10-01-01-01-003', '2020-12-22', 10, 4500, 0, 0, 450, 'Receive', 1.1, '1', '20', 'MRR001', '', '1', '1', '', '', 0),
+(239, 'IS-CW-001', '10-01-01-01-001', '2020-12-23', 0, 0, 2, 0, 0, 'Issue', 1.1, '1', '20', 'IS-CW-001', 'JO35501', '1', '1', '', '', 0),
+(240, 'IS-CW-001', '10-01-01-01-003', '2020-12-23', 0, 0, 3, 0, 0, 'Issue', 1.1, '1', '20', 'IS-CW-001', '', '1', '1', '', '', 0);
 
 -- --------------------------------------------------------
 
@@ -729,7 +1116,8 @@ INSERT INTO `inv_material_level4` (`id`, `material_level4_code`, `category_id`, 
 (56, '10-01-01-01-000', '55', '137', '70', 'AIR FILTER'),
 (57, '10-02-01-01-000', '55', '138', '71', 'FUEL FILTER'),
 (58, '10-03-01-01-000', '55', '139', '72', 'OIL FILTER'),
-(59, '10-04-01-01-000', '55', '140', '73', 'Coolant Filter');
+(59, '10-04-01-01-000', '55', '140', '73', 'Coolant Filter'),
+(60, '04-02-02-01-000', '49', '126', '46', 'Mechanical');
 
 -- --------------------------------------------------------
 
@@ -844,6 +1232,13 @@ CREATE TABLE `inv_receive` (
   `mrr_image` varchar(10000) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+--
+-- Dumping data for table `inv_receive`
+--
+
+INSERT INTO `inv_receive` (`id`, `mrr_no`, `mrr_date`, `purchase_id`, `receive_acct_id`, `supplier_id`, `postedtogl`, `vat_challan_no`, `remarks`, `receive_type`, `project_id`, `warehouse_id`, `receive_unit_id`, `chk_year_end`, `receive_total`, `no_of_material`, `challanno`, `challan_date`, `jv_no`, `part_no`, `requisitionno`, `requisition_date`, `received_by`, `approval_status`, `approved_by`, `approved_at`, `approval_remarks`, `mrr_image`) VALUES
+(7, 'MRR001', '2020-12-22', 'PID-001', '6-14-010', 'SID-001', 0, '', 'Test-MRR-001', 'Credit', '1', '1', '1', NULL, 9500, 20, 'SCN-001', '2020-12-22', NULL, '', 'RLP-001', '2020-12-22 00:00:00', '1', 0, '', '0000-00-00 00:00:00', '', '');
+
 -- --------------------------------------------------------
 
 --
@@ -866,6 +1261,14 @@ CREATE TABLE `inv_receivedetail` (
   `warehouse_id` varchar(1000) NOT NULL,
   `approval_status` tinyint(1) NOT NULL DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `inv_receivedetail`
+--
+
+INSERT INTO `inv_receivedetail` (`id`, `mrr_no`, `material_id`, `material_name`, `unit_id`, `receive_qty`, `unit_price`, `sl_no`, `total_receive`, `rd_serial_id`, `part_no`, `project_id`, `warehouse_id`, `approval_status`) VALUES
+(10, 'MRR001', '10-01-01-01-001', '277', 20, 10, 500, 1, 5000, '', 'JO35501', '1', '1', 0),
+(11, 'MRR001', '10-01-01-01-003', '279', 20, 10, 450, 1, 4500, '', '', '1', '1', 0);
 
 -- --------------------------------------------------------
 
@@ -994,7 +1397,7 @@ CREATE TABLE `inv_supplierbalance` (
 --
 
 INSERT INTO `inv_supplierbalance` (`id`, `sb_ref_id`, `warehouse_id`, `sb_date`, `sb_supplier_id`, `sb_dr_amount`, `sb_cr_amount`, `sb_remark`, `sb_partac_id`, `approval_status`) VALUES
-(1, 'OP', '', '2020-12-15', 'SID-001', 0, 0, 'Opening balance', 'OP', 0);
+(8, 'MRR001', '1', '2020-12-22', 'SID-001', 0, 9500, 'Test-MRR-001', 'MRR001', 0);
 
 -- --------------------------------------------------------
 
@@ -1816,6 +2219,12 @@ ALTER TABLE `complain_type`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `cted_daily_activities`
+--
+ALTER TABLE `cted_daily_activities`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `equipments`
 --
 ALTER TABLE `equipments`
@@ -2114,10 +2523,16 @@ ALTER TABLE `complain_type`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
+-- AUTO_INCREMENT for table `cted_daily_activities`
+--
+ALTER TABLE `cted_daily_activities`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
 -- AUTO_INCREMENT for table `equipments`
 --
 ALTER TABLE `equipments`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=195;
 
 --
 -- AUTO_INCREMENT for table `inv_challan`
@@ -2165,19 +2580,19 @@ ALTER TABLE `inv_invoice_details`
 -- AUTO_INCREMENT for table `inv_issue`
 --
 ALTER TABLE `inv_issue`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT for table `inv_issuedetail`
 --
 ALTER TABLE `inv_issuedetail`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 
 --
 -- AUTO_INCREMENT for table `inv_item_unit`
 --
 ALTER TABLE `inv_item_unit`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=27;
 
 --
 -- AUTO_INCREMENT for table `inv_job_card`
@@ -2195,13 +2610,13 @@ ALTER TABLE `inv_job_card_details`
 -- AUTO_INCREMENT for table `inv_material`
 --
 ALTER TABLE `inv_material`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=376;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=514;
 
 --
 -- AUTO_INCREMENT for table `inv_materialbalance`
 --
 ALTER TABLE `inv_materialbalance`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=241;
 
 --
 -- AUTO_INCREMENT for table `inv_materialcategory`
@@ -2225,7 +2640,7 @@ ALTER TABLE `inv_material_level3`
 -- AUTO_INCREMENT for table `inv_material_level4`
 --
 ALTER TABLE `inv_material_level4`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=60;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=61;
 
 --
 -- AUTO_INCREMENT for table `inv_particulars`
@@ -2255,13 +2670,13 @@ ALTER TABLE `inv_purchasedetail`
 -- AUTO_INCREMENT for table `inv_receive`
 --
 ALTER TABLE `inv_receive`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT for table `inv_receivedetail`
 --
 ALTER TABLE `inv_receivedetail`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- AUTO_INCREMENT for table `inv_return`
@@ -2291,7 +2706,7 @@ ALTER TABLE `inv_supplier`
 -- AUTO_INCREMENT for table `inv_supplierbalance`
 --
 ALTER TABLE `inv_supplierbalance`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT for table `inv_technicianinfo`
