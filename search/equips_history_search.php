@@ -91,7 +91,7 @@ if(isset($_GET['submit'])){
 					</center>
 				</div>
 			</div>
-				<table id="" class="table table-bordered">
+				<table id="" class="table table-bordered list-table-custom-style">
 					<thead>
 						<tr>
 							<th>Issue Date</th>
@@ -127,7 +127,7 @@ if(isset($_GET['submit'])){
 							
 							<td style="text-align:center"><?php 
 								$dataresult =   getDataRowByTableAndId('inv_material', $rowall['material_name']);
-								echo (isset($dataresult) && !empty($dataresult) ? $dataresult->material_description : '');
+								echo (isset($dataresult) && !empty($dataresult) ? $dataresult->spec : '');
 							?></td>
 							<td><?php echo getDataRowByTableAndId('inv_item_unit', $rowall['unit'])->unit_name; ?></td>
 							<td><?php echo $rowall['issue_qty']; ?></td>
