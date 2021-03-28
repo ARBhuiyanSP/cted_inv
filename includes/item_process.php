@@ -834,10 +834,10 @@ if(isset($_GET['process_type']) && $_GET['process_type'] == 'get_category_code')
 (
     [cat_type] => mat
     [data_type] => ajax
-    [parent_cat] => 42
-    [main_sub_item_id] => 109
-    [material_level3_id] => 3
-    [material_level4_id] => 1
+    [parent_cat] => 47
+    [main_sub_item_id] => 119
+    [material_level3_id] => 23
+    [material_level4_id] => 16
 )
 </pre>
 */
@@ -872,6 +872,8 @@ if(isset($_GET['process_type']) && $_GET['process_type'] == 'get_category_code')
             if(isset($where) && !empty($where)){
                 $sql.= $where;
             }
+            
+            //echo $sql; exit;
             $result = $conn->query($sql);
             if ($result->num_rows > 0) {
                 $l1Prefixcode   =  explode('-', $level1Data->category_id);
@@ -879,14 +881,14 @@ if(isset($_GET['process_type']) && $_GET['process_type'] == 'get_category_code')
                 $l3Prefixcode   =  explode('-', $level3Data->material_level3_code);
                 $l4Prefixcode   =  explode('-', $level4Data->material_level4_code);
                 $code           =  sprintf('%0' . 3 . 's', $result->num_rows + 1);
-                $defaultCode    =  $l1Prefixcode[0].'-'.$l2Prefixcode[1].'-'.$l3Prefixcode[2].'-'.$l4Prefixcode[2].'-'.$code;
+                $defaultCode    =  $l1Prefixcode[0].'-'.$l2Prefixcode[1].'-'.$l3Prefixcode[2].'-'.$l4Prefixcode[3].'-'.$code;
             }else{
                 $l1Prefixcode   =  explode('-', $level1Data->category_id);
                 $l2Prefixcode   =  explode('-', $level2Data->material_sub_id);
                 $l3Prefixcode   =  explode('-', $level3Data->material_level3_code);
                 $l4Prefixcode   =  explode('-', $level4Data->material_level4_code);
                 $code               =  '001';
-                $defaultCode        =  $l1Prefixcode[0].'-'.$l2Prefixcode[1].'-'.$l3Prefixcode[2].'-'.$l4Prefixcode[2].'-'.$code;
+                $defaultCode        =  $l1Prefixcode[0].'-'.$l2Prefixcode[1].'-'.$l3Prefixcode[2].'-'.$l4Prefixcode[3].'-'.$code;
             }
             break;
     }
