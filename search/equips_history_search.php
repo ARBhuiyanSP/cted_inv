@@ -91,7 +91,7 @@ if(isset($_GET['submit'])){
 					</center>
 				</div>
 			</div>
-				<table id="" class="table table-bordered">
+				<table id="" class="table table-bordered list-table-custom-style">
 					<thead>
 						<tr>
 							<th>Issue Date</th>
@@ -124,14 +124,11 @@ if(isset($_GET['submit'])){
 							?>
 							</td>
 							<td><?php echo $rowall['part_no']; ?></td>
-							<?php 
-							$material_id_code = $rowall['material_id'];
-								$sqlspec	=	"SELECT * FROM `inv_material` WHERE `material_id_code` = '$material_id_code' ";
-								$resultspec = mysqli_query($conn, $sqlspec);
-								$rowspec=mysqli_fetch_array($resultspec);
-								
-							?>
-							<td style="text-align:center"><?php echo $rowspec['spec']; ?></td>
+							
+							<td style="text-align:center"><?php 
+								$dataresult =   getDataRowByTableAndId('inv_material', $rowall['material_name']);
+								echo (isset($dataresult) && !empty($dataresult) ? $dataresult->spec : '');
+							?></td>
 							<td><?php echo getDataRowByTableAndId('inv_item_unit', $rowall['unit'])->unit_name; ?></td>
 							<td><?php echo $rowall['issue_qty']; ?></td>
 							<td></td>

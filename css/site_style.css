@@ -71,3 +71,32 @@ span.sub_menu_text_design{
     padding: 2% 5% !important;
 }
 
+
+
+
+
+
+
+
+
+
+
+table.list-table-custom-style {
+    background-color: white !important;
+}
+
+table.list-table-custom-style tr th {
+    font-size: 14px !important;
+    text-align: center !important;
+    background-color: lightgrey !important;
+    padding: 10px 2px !important;
+    word-break: keep-all;
+    word-wrap: normal;
+}
+
+table.list-table-custom-style tr td {
+    font-size: 14px !important;
+    padding: 5px !important;
+    vertical-align: top;
+}
+
