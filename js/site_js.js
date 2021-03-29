@@ -353,6 +353,8 @@ function getBuildingByPackage(package_id, selector = false) {
 
 function getSubCategoryByParent(parent_id, selector = false) {
     if (parent_id) {
+        $('#leve3_code').val('');
+        $('#leve3_name').val('');
         $.ajax({
             url: baseUrl + "includes/item_process.php?process_type=get_sub_by_parent",
             type: 'POST',
@@ -367,12 +369,17 @@ function getSubCategoryByParent(parent_id, selector = false) {
             }
         });
     } else {
-        $('#main_sub_item_id').html('');
+        $('#main_sub_item_id').val('');
+        $('#leve3_code').val('');
+        $('#leve3_name').val('');
     }
 }
 /*-----------level 4-----------*/
 function get2By1(level_1_id, selector = false) {
     if (level_1_id) {
+        $('#level3_id').val('');
+        $('#leve4_code').val('');
+        $('#leve4_name').val('');
         $.ajax({
             url: baseUrl + "includes/item_process.php?process_type=get_3_by_2",
             type: 'POST',
@@ -387,7 +394,10 @@ function get2By1(level_1_id, selector = false) {
             }
         });
     } else {
-        $('#level_2_id').html('');
+        $('#level_2_id').val('');
+        $('#level3_id').val('');
+        $('#leve4_code').val('');
+        $('#leve4_name').val('');
     }
 }
 
@@ -415,6 +425,14 @@ function getLevel3BySub(level_2_id, selector = false) {
 /*-----------level 5-----------*/
 function get5_2By1(level_1_id_l5, selector = false) {
     if (level_1_id_l5) {
+        $('#material_level3_id').val('');
+        $('#material_level4_id').val('');
+        $('#item_code').val('');
+        $('#item_name').val('');
+        $('#part_no').val('');
+        $('#spec').val('');
+        $('#qty_unit').val('');
+        $('#material_min_stock').val('');
         $.ajax({
             url: baseUrl + "includes/item_process.php?process_type=get5__3_by_2",
             type: 'POST',
@@ -429,7 +447,15 @@ function get5_2By1(level_1_id_l5, selector = false) {
             }
         });
     } else {
-        $('#level_2_id_l5').html('');
+        $('#level_2_id_l5').val('');
+        $('#material_level3_id').val('');
+        $('#material_level4_id').val('');
+        $('#item_code').val('');
+        $('#item_name').val('');
+        $('#part_no').val('');
+        $('#spec').val('');
+        $('#qty_unit').val('');
+        $('#material_min_stock').val('');
     }
 }
 
