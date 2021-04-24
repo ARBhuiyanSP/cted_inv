@@ -23,12 +23,14 @@ table td{
 				<table id="example" class="table table-condensed table-hover table-bordered site_custome_table">
                                     <thead>
                                         <tr>
-                                            <th>Equipment</th>
-                                            <th>Equipt.Brand</th>
+                                            <th>Parent Cat</th>
+                                            <th>Sub Cat</th>
+                                            <th>Level 3</th>
+                                            <th>Level 4</th>
                                             <th>Material Code</th>
                                             <th>Material</th>
                                             <th>Part no</th>
-                                            <th>Specification</th>
+                                            <th width="15%">Specification</th>
                                             <th>Action</th>
                                         </tr>
                                     </thead>
@@ -49,6 +51,18 @@ table td{
                                                         <?php
                                                         $dataresult =   getDataRowByTableAndId('inv_materialcategory', $item['material_sub_id']);
                                                         echo (isset($dataresult) && !empty($dataresult) ? $dataresult->material_sub_description : '');
+                                                        ?>
+                                                    </td>
+													<td>
+                                                        <?php
+                                                        $dataresult =   getDataRowByTableAndId('inv_material_level3', $item['material_level3_id']);
+                                                        echo (isset($dataresult) && !empty($dataresult) ? $dataresult->material_level3_description : '');
+                                                        ?>
+                                                    </td>
+													<td>
+                                                        <?php
+                                                        $dataresult =   getDataRowByTableAndId('inv_material_level4', $item['material_level4_id']);
+                                                        echo (isset($dataresult) && !empty($dataresult) ? $dataresult->material_level4_description : '');
                                                         ?>
                                                     </td>
                                                     <td><?php echo $item['material_id_code']; ?></td>
