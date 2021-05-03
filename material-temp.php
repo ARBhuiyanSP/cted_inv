@@ -36,7 +36,7 @@ table td{
                                     </thead>
                                     <tbody id="item_category_body">
                                         <?php
-                                        $item_details = getTableDataByTableName('inv_material_temp', '', 'material_description');
+                                        $item_details = getTableDataByTableName('inv_material_temp', '', 'material_id_code');
                                         if (isset($item_details) && !empty($item_details)) {
                                             foreach ($item_details as $item) {
                                                 ?>
