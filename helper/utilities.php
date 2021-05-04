@@ -557,3 +557,31 @@ function convertNumberToWords(float $number)
         }
         return $dataContainer;
     }
+    
+    function updateData($table, $dataParam, $where) {
+    global $conn;
+    $valueSets = array();
+    foreach($dataParam as $key => $value) {
+        if(isset($value) && !empty($value)){
+            $valueSets[] = $key . " = '" . $value . "'";
+        }
+    }
+
+    $conditionSets = array();
+    foreach($where as $key => $value) {
+       $conditionSets[] = $key . " = '" . $value . "'";
+    }
+    $sql = "UPDATE $table SET ". join(",",$valueSets) . " WHERE " . join(" AND ", $conditionSets);
+    if ($conn->query($sql) === TRUE) {
+        $feedbackData   =   [
+            'status'    =>  'success',
+            'message'   =>  'Data have been successfully Updated',
+        ];
+    } else {
+        $feedbackData   =   [
+            'status'    =>  'error',
+            'message'   =>  "Error: " . $sql . "<br>" . $conn->error,
+        ];        
+    }
+    return $feedbackData;
+}
