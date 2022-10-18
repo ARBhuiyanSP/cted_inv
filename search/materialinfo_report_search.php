@@ -45,11 +45,11 @@
 				<table id="" class="table table-bordered table-striped ">
 					<thead>
 						<tr>
-							<th>Parent category</th>
-							<th>Sub category</th>
-							<th>Material Code</th>
+							<th>EQUIPMENT NAME</th>
+							<th>EQUIPMENT BRAND</th>
+							<th>Part No</th>
+							<th>Specification</th>
 							<th>Material Name</th>
-							<th>Unit</th>
 							
 						</tr>
 					</thead>
@@ -96,9 +96,9 @@
 										<tr>
 											<td></td>
 											<td></td>
-											<td><?php echo $rowmat['material_id_code']; ?></td>
+											<td><?php echo $rowmat['part_no']; ?></td>
+											<td><?php echo $rowmat['spec']; ?></td>
 											<td><?php echo $rowmat['material_description']; ?></td>
-											<td><?php echo getDataRowByTableAndId('inv_item_unit', $rowmat['qty_unit'])->unit_name; ?></td>
 										
 
 											
