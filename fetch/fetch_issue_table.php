@@ -48,7 +48,6 @@ while($row = mysqli_fetch_array($result))
  $sub_array[] = $row["issue_id"];
  $sub_array[] = $row["issue_date"];
  $sub_array[] = $row["use_in"];
- $sub_array[] = $row["no_of_material"];
  $sub_array[] = $row["total_amount"];
  $sub_array[] = $actionData;
  $data[] = $sub_array;

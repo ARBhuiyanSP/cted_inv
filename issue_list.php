@@ -28,7 +28,6 @@
 									?>
 								</select>
 							</th>
-							<th>Total Qty</th>
 							<th>Total Amount</th>
 							<th>Action</th>
 						</tr>
