@@ -1,11 +1,9 @@
 <?php
 //fetch.php
 include('../connection/connect.php');
-$column = array("inv_issue.id", "inv_issue.issue_id", "inv_issue.issue_date", "equipments.equipment_no", "inv_issue.total_amount");
+$column = array("inv_issue.id", "inv_issue.issue_id", "inv_issue.issue_date", "inv_issue.use_in", "inv_issue.total_amount");
 $query = "
- SELECT * FROM inv_issue
- INNER JOIN equipments 
- ON equipments.equipment_no = inv_issue.use_in 
+ SELECT * FROM inv_issue 
 ";
 $query .= " WHERE ";
 if(isset($_POST["is_equipments"]))
@@ -17,7 +15,7 @@ if(isset($_POST["search"]["value"]))
  $query .= '(inv_issue.id LIKE "%'.$_POST["search"]["value"].'%" ';
  $query .= 'OR inv_issue.issue_id LIKE "%'.$_POST["search"]["value"].'%" ';
  $query .= 'OR inv_issue.issue_date LIKE "%'.$_POST["search"]["value"].'%" ';
- $query .= 'OR equipments.equipment_no LIKE "%'.$_POST["search"]["value"].'%" ';
+ $query .= 'OR inv_issue.use_in LIKE "%'.$_POST["search"]["value"].'%" ';
  $query .= 'OR inv_issue.total_amount LIKE "%'.$_POST["search"]["value"].'%") ';
 }
 
@@ -49,7 +47,7 @@ while($row = mysqli_fetch_array($result))
  $sub_array = array();
  $sub_array[] = $row["issue_id"];
  $sub_array[] = $row["issue_date"];
- $sub_array[] = $row["equipment_no"];
+ $sub_array[] = $row["use_in"];
  $sub_array[] = $row["no_of_material"];
  $sub_array[] = $row["total_amount"];
  $sub_array[] = $actionData;
@@ -57,7 +55,7 @@ while($row = mysqli_fetch_array($result))
 }
 
 function get_issue_list_action_data($row){
-    $edit_url = 'issue_edit.php?edit_id='.$row["issue_id"];
+    $edit_url = 'issue_edit.php?edit_id='.$row["id"];
     //$edit_url = '#';
     $view_url = 'issue-view.php?no='.$row["issue_id"];
     $action = "";

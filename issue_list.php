@@ -19,11 +19,11 @@
 								<span>Use In</span><select name="equipments" id="equipments" class="form-control">
 									<option value="">Use In Search</option>
 									<?php 
-									$query = "SELECT * FROM equipments ORDER BY equipment_no ASC";
+									$query = "SELECT * FROM inv_issue GROUP BY use_in ORDER BY use_in ASC";
 									$result = mysqli_query($conn, $query);
 									while($row = mysqli_fetch_array($result))
 									{
-										echo '<option value="'.$row["equipment_no"].'">'.$row["equipment_no"].'</option>';
+										echo '<option value="'.$row["use_in"].'">'.$row["use_in"].'</option>';
 									}
 									?>
 								</select>

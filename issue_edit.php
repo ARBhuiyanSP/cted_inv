@@ -104,12 +104,14 @@ if (isset($_GET['edit_id']) && !empty($_GET['edit_id'])) {
                                 
 								
 								<thead>
-                                <th width="25%">Material Name<span class="reqfield"> ***required</span></th>
-                                <th width="10%">Material ID</th>
+                                <th width="20%">Material Name<span class="reqfield"> ***required</span></th>
+                                <th width="15%">Material ID</th>
                                 <th width="10%">Part No</th>
                                 <th width="10%">Unit</th>
                                 <th width="10%">In Stock</th>
+                                <th width="10%">Unit Price</th>
                                 <th width="10%">Qty<span class="reqfield"> ***required</span></th>
+                                <th width="10%">Amount</th>
                                 <th width="5%"></th>
                                 </thead>
                                 <tbody>
@@ -121,7 +123,7 @@ if (isset($_GET['edit_id']) && !empty($_GET['edit_id'])) {
                                             ?>
                                             <tr id="row<?php echo $key; ?>">
                                                 <td>
-                                                    <select class="form-control select2" id="material_name<?php echo $key; ?>" name="material_name[]" required onchange="getItemCodeByParam(this.value, 'inv_material', 'material_id_code', 'material_id0', 'qty_unit');">
+                                                    <select class="form-control select2" id="material_name<?php echo $key; ?>" name="material_name[]" required onchange="getAppendItemCodeByParam('<?php echo $key; ?>', 'inv_material', 'material_id_code', 'material_id0', 'qty_unit');">
                                                         <option value="">Select</option>
                                                         <?php
                                                         $projectsData = get_product_with_category();
@@ -132,7 +134,7 @@ if (isset($_GET['edit_id']) && !empty($_GET['edit_id'])) {
                                                                 if (isset($editDatas->material_id) && $editDatas->material_id == $data['item_code']) {
                                                                     echo 'selected';
                                                                 }
-                                                                ?>><?php echo $data['material_name']; ?></option>
+                                                                ?>><?php echo $data['material_name']; ?> - <?php echo $data['part_no']; ?> - <?php echo $data['spec']; ?> - <?php echo $data['item_code']; ?></option>
                                                                         <?php
                                                                     }
                                                                 }
@@ -161,10 +163,14 @@ if (isset($_GET['edit_id']) && !empty($_GET['edit_id'])) {
                                                     </select>
                                                 </td>
 												<td><input type="text" name="material_total_stock[]" id="material_total_stock<?php echo $key; ?>" class="form-control" readonly ></td>
+												
+												<td><input type="text" name="unit_price[]" id="unit_price<?php echo $key; ?>" class="form-control"  value="<?php echo (isset($editDatas->issue_price) && !empty($editDatas->issue_price) ? $editDatas->issue_price : ''); ?>" readonly ></td>
                                             
 											
 											
-                                                <td><input type="text" name="quantity[]" id="quantity<?php echo $key; ?>" onchange="sum(<?php echo $key; ?>)" class="form-control" value="<?php echo (isset($editDatas->issue_qty) && !empty($editDatas->issue_qty) ? $editDatas->issue_qty : ''); ?>"></td>
+                                                <td><input type="text" name="quantity[]" id="quantity<?php echo $key; ?>" onkeyup="sum(<?php echo $key; ?>)" class="form-control common_issue_quantity" value="<?php echo (isset($editDatas->issue_qty) && !empty($editDatas->issue_qty) ? $editDatas->issue_qty : ''); ?>"></td>
+												
+												<td><input type="text" name="totalamount[]" id="sum<?php echo $key; ?>" class="form-control" value="<?php echo (isset($editDatas->issue_price) && !empty($editDatas->issue_price) ? $editDatas->issue_qty * $editDatas->issue_price : ''); ?>" class="form-control"></td>
                                           
 										  
 												
@@ -214,13 +220,22 @@ if (isset($_GET['edit_id']) && !empty($_GET['edit_id'])) {
                                             </select>
                                         </td>
                                         <td><input type="text" name="material_total_stock[]" id="material_total_stock0" class="form-control" readonly ></td>
-                                        <td><input type="text" name="quantity[]" id="quantity0" onchange="sum(0)" onkeyup="check_stock_quantity_validation(0)" class="form-control" required></td>
-                                        
+										<td><input type="text" name="unit_price[]" id="unit_price0" class="form-control" readonly ></td>
+                                        <td><input type="text" name="quantity[]" id="quantity0" onkeyup="sum(0)" class="form-control common_issue_quantity" required></td>
+                                        <td><input type="text" name="totalamount[]" id="sum0" class="form-control"></td>
                                             <td><button type="button" name="add" id="add" class="btn" style="background-color:#2e3192;color:#ffffff;">+</button></td>
                                         </tr>
 <?php } ?>
                                 </tbody>
                             </table>
+							
+							<table class="table table-bordered">
+								<tr>
+									<td width="80%" style="text-align:right;">Total Amount</td>
+									<td><input type="text" class="form-control" maxlength="30" name="sub_total_amount" id="allsum" value="<?php echo (isset($issueData->total_amount) && !empty($issueData->total_amount) ? $issueData->total_amount : ''); 
+									?>" readonly /></td>
+								</tr>
+							</table>
                         </div>
                     </div>
 					
@@ -277,24 +292,28 @@ if (isset($issueData->remarks)) {
 </div>
 <!-- /.container-fluid -->
 <script>
-    var i = <?php echo $productSerial; ?>;
+    var i = 0;
     $(document).ready(function () {
-        $('#add').click(function () {
+        $('#add').click(function () {            
             i++;
-            $('#dynamic_field').append('<tr id="row' + i + '"><td><select class="form-control select2" id="material_name' + i + '" name="material_name[]' + i + '" required onchange="getAppendItemCodeByParam(' + i + ",'inv_material'," + "'material_id_code'," + "'material_id'," + "'qty_unit'" + ')"><option value="">Select</option><?php
-                                                $projectsData = get_product_with_category();
-                                                if (isset($projectsData) && !empty($projectsData)) {
-                                                    foreach ($projectsData as $data) {
-                                                        ?><option value="<?php echo $data['id']; ?>"><?php echo $data['material_name']; ?></option><?php }
-                                                }
-                                                ?></select></td><td><input type="text" name="material_id[]" id="material_id' + i + '" class="form-control" required readonly></td><td><input type="text" name="part_no[]" id="part_no' + i + '" class="form-control" required readonly></td><td><select class="form-control select2" id="unit' + i + '" name="unit[]' + i + '" required onchange="getAppendItemCodeByParam(' + i + ",'inv_material'" + ",'material_id_code'" + ",'material_id''" + ",'qty_unit'" + ')"><option value="">Select</option><?php
-                                                $projectsData = getTableDataByTableName('inv_item_unit', '', 'unit_name');
-                                                if (isset($projectsData) && !empty($projectsData)) {
-                                                    foreach ($projectsData as $data) {
-                                                        ?><option value="<?php echo $data['id']; ?>"><?php echo $data['unit_name']; ?></option><?php }
-                                                }
-                                                ?></select></td><td><input type="text" name="material_total_stock[]" id="material_total_stock' + i + '" class="form-control" readonly></td><td><input type="text" name="quantity[]" id="quantity' + i + '" onchange="sum(0)"  onkeyup="check_stock_quantity_validation('+ i + ')" class="form-control" required></td><td><button type="button" name="remove" id="' + i + '" class="btn btn_remove" style="background-color:#f26522;color:#ffffff;">X</button></td></tr>');
-            $('#quantity' + i + ', #unit_price' + i).change(function () {
+            $('#dynamic_field').append('<tr id="row' + i + '"><td><select class="form-control material_select_2" id="material_name' + i + '" name="material_name[]' + i + '" required onchange="getAppendItemCodeByParam(' + i + ",'inv_material'," + "'material_id_code'," + "'material_id'," + "'qty_unit'" + ')"><option value="">Select</option><?php
+                                    $projectsData = get_product_with_category();
+                                    if (isset($projectsData) && !empty($projectsData)) {
+                                        foreach ($projectsData as $data) {
+                                            ?><option value="<?php echo $data['id']; ?>"><?php echo $data['material_name']; ?> - <?php echo $data['part_no']; ?> - <?php echo $data['spec']; ?></option><?php
+                                        }
+                                    }
+                                    ?></select></td><td><input type="text" name="material_id[]" id="material_id' + i + '" class="form-control" required readonly></td><td><input type="text" name="part_no[]" id="part_no' + i + '" class="form-control" required readonly></td><td><select class="form-control select2" id="unit' + i + '" name="unit[]' + i + '" required readonly onchange="getAppendItemCodeByParam(' + i + ",'inv_material'" + ",'material_id_code'" + ",'material_id''" + ",'qty_unit'" + ')"><option value="">Select</option><?php
+                                    $projectsData = getTableDataByTableName('inv_item_unit', '', 'unit_name');
+                                    if (isset($projectsData) && !empty($projectsData)) {
+                                        foreach ($projectsData as $data) {
+                                            ?><option value="<?php echo $data['id']; ?>"><?php echo $data['unit_name']; ?></option><?php
+                                        }
+                                    }
+                                    ?></select></td><td><input type="text" name="material_total_stock[]" id="material_total_stock' + i + '" class="form-control" readonly></td><td><input type="text" name="unit_price[]" id="unit_price' + i + '" class="form-control" readonly></td><td><input type="text" name="quantity[]" id="quantity' + i + '" onkeyup="sum(' + i + ')" class="form-control common_issue_quantity" required></td><td><input type="text" name="totalamount[]" id="sum' + i + '" class="form-control"></td><td><button type="button" name="remove" id="' + i + '" class="btn btn_remove" style="background-color:#f26522;color:#ffffff;">X</button></td></tr>');
+            
+           $(".material_select_2").select2();
+												$('#quantity' + i + ', #unit_price' + i).change(function () {
                 sum(i)
             });
         });
@@ -304,23 +323,33 @@ if (isset($issueData->remarks)) {
             $('#row' + button_id + '').remove();
             sum_total();
         });
-
-        $('#submit').click(function () {
-            $.ajax({
-                url: "name.php",
-                method: "POST",
-                data: $('#add_name').serialize(),
-                success: function (data)
-                {
-                    alert(data);
-                    $('#add_name')[0].reset();
-                }
-            });
-        });
-
     });
 
-   
+
+ $(document).ready(function () {
+        //this calculates values automatically 
+        sum(0);
+    });
+
+    function sum(i) {
+        var quantity1 = document.getElementById('quantity' + i).value;
+        var unit_price1 = document.getElementById('unit_price' + i).value;
+        var result = parseFloat(quantity1) * parseFloat(unit_price1);
+        if (!isNaN(result)) {
+            document.getElementById('sum' + i).value = result;
+        }
+        sum_total();
+    }
+    function sum_total() {
+        var newTot = 0;
+        for (var a = 0; a <= i; a++) {
+            aVal = $('#sum' + a);
+            if (aVal && aVal.length) {
+                newTot += aVal[0].value ? parseFloat(aVal[0].value) : 0;
+            }
+        }
+        document.getElementById('allsum').value = newTot.toFixed(2);
+    }
 </script>
 <script>
     $(function () {
