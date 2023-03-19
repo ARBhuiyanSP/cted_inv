@@ -636,9 +636,9 @@ if(isset($_GET['process_type']) && $_GET['process_type'] == 'material_edit'){
                 </div>
             </div> </br>
             <div class="form-group">
-                <label class="control-label col-sm-5" for="name">Material min stock:</label>
+                <label class="control-label col-sm-5" for="name" style="color:red;">Reorder Lebel:</label>
                 <div class="col-sm-7">
-                    <input type="text" class="form-control" id="material_min_stock" placeholder="Material min stock" name="material_min_stock" value="<?php if(isset($editData->material_min_stock)){ echo $editData->material_min_stock; } ?>">
+                    <input type="text" class="form-control" id="material_min_stock" placeholder="Reorder Lebel" name="material_min_stock" value="<?php if(isset($editData->material_min_stock)){ echo $editData->material_min_stock; } ?>">
                 </div>
             </div>
         </div>
