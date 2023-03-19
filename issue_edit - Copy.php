@@ -3,8 +3,8 @@ include 'header.php';
 if (isset($_GET['edit_id']) && !empty($_GET['edit_id'])) {
     $edit_id            = $_GET['edit_id'];
     $data               = getissueDataDetailsById($edit_id);
-    $issueData          = $data['issueData'];
-    $issueDetailsData   = $data['issueDetailsData'];
+    $issueData          = $data['receiveData'];
+    $issueDetailsData   = $data['receiveDetailsData'];
 }
 ?>
 <div class="container-fluid">

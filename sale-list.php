@@ -5,30 +5,29 @@
     <div class="card mb-3">
         <div class="card-header">
             <i class="fas fa-table"></i>
-            Material Receive List
-			<a href="receive_entry.php" style="float:right"><i class="fas fa-plus"></i> Receive Entry<a>
+            Material Sale List
+			<a href="issue_entry.php" style="float:right"><i class="fas fa-plus"></i> Sale Entry<a>
 		</div>
         <div class="card-body">
 			<div class="table-responsive data-table-wrapper">
-				<table id="receive_data_list" class="table table-bordered table-striped">
+				<table id="sale_data_list" class="table table-bordered table-striped">
 					<thead>
 						<tr>
-							<th>Voucher No</th>
-							<th>Voucher Date</th>
+							<th>Sale No</th>
+							<th>Sale Date</th>
 							<th>
-								<select name="suppliers" id="suppliers" class="form-control">
-									<option value="">Supplier Search</option>
+								<select name="partyname" id="partyname" class="form-control">
+									<option value="">Search By All Party</option>
 									<?php 
-									$query = "SELECT * FROM suppliers ORDER BY name ASC";
+									$query = "SELECT * FROM tb_party ORDER BY partyname ASC";
 									$result = mysqli_query($conn, $query);
 									while($row = mysqli_fetch_array($result))
 									{
-										echo '<option value="'.$row["code"].'">'.$row["name"].'</option>';
+										echo '<option value="'.$row["party_id"].'">'.$row["partyname"].'</option>';
 									}
 									?>
 								</select>
 							</th>
-							<th>Total Qty</th>
 							<th>Total Amount</th>
 							<th>Action</th>
 						</tr>
@@ -44,18 +43,18 @@
 <script type="text/javascript" language="javascript" >
 $(document).ready(function(){
  
- load_receive_data();
+ load_sale_data();
 
- function load_receive_data(is_suppliers)
+ function load_sale_data(is_partyname)
  {
-  var dataTable = $('#receive_data_list').DataTable({
+  var dataTable = $('#sale_data_list').DataTable({
    "processing":true,
    "serverSide":true,
    "order":[],
    "ajax":{
-    url:"fetch/fetch_receive_table.php",
+    url:"fetch/fetch_sale_table.php",
     type:"POST",
-    data:{is_suppliers:is_suppliers}
+    data:{is_partyname:is_partyname}
    },
    "columnDefs":[
     {
@@ -66,16 +65,16 @@ $(document).ready(function(){
   });
  }
 
- $(document).on('change', '#suppliers', function(){
-  var suppliers = $(this).val();
-  $('#receive_data_list').DataTable().destroy();
-  if(suppliers != '')
+ $(document).on('change', '#partyname', function(){
+  var partyname = $(this).val();
+  $('#sale_data_list').DataTable().destroy();
+  if(partyname != '')
   {
-   load_receive_data(suppliers);
+   load_sale_data(partyname);
   }
   else
   {
-   load_receive_data();
+   load_sale_data();
   }
  });
 });

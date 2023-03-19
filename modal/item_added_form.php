@@ -24,7 +24,7 @@
                                     } ?>
                                 </select>
                             </div>
-                        </div>
+                        </div> </br>
                         <div class="form-group">
                             <label class="control-label col-sm-5" for="parent_code">Sub Category:</label>
                             <div class="col-sm-7">
@@ -40,7 +40,7 @@
                                     } ?>
                                 </select>
                             </div>
-                        </div>
+                        </div> </br>
                         <div class="form-group">
                             <label class="control-label col-sm-5" for="parent_code">Level-3:</label>
                             <div class="col-sm-7">
@@ -56,7 +56,7 @@
                                     } ?>
                                 </select>
                             </div>
-                        </div>
+                        </div> </br>
                         <div class="form-group">
                             <label class="control-label col-sm-5" for="parent_code">Level-4:</label>
                             <div class="col-sm-7">
@@ -72,31 +72,31 @@
                                     } ?>
                                 </select>
                             </div>
-                        </div>
+                        </div> </br>
                         <div class="form-group">
                             <label class="control-label col-sm-5" for="parent_code">Material Code:</label>
                             <div class="col-sm-7">
                                 <input type="text" class="form-control" id="item_code" placeholder="Enter item code" name="item_code">
                             </div>
-                        </div>
+                        </div> </br>
                         <div class="form-group">
                             <label class="control-label col-sm-5" for="name">Name:</label>
                             <div class="col-sm-7">
                                 <input type="text" class="form-control" id="item_name" placeholder="name" name="name" required>
                             </div>
-                        </div>
+                        </div> </br>
                         <div class="form-group">
                             <label class="control-label col-sm-5" for="name">Part No:</label>
                             <div class="col-sm-7">
                                 <input type="text" class="form-control" id="part_no" placeholder="part_no" name="part_no">
                             </div>
-                        </div>
+                        </div> </br>
                         <div class="form-group">
                             <label class="control-label col-sm-5" for="name">Specification:</label>
                             <div class="col-sm-7">
                                 <input type="text" class="form-control" id="spec" placeholder="Specification" name="spec">
                             </div>
-                        </div>
+                        </div> </br>
                         <div class="form-group">
                             <label class="control-label col-sm-5" for="parent_code">Unit:</label>
                             <div class="col-sm-7">
@@ -112,7 +112,7 @@
                                     } ?>
                                 </select>
                             </div>
-                        </div>
+                        </div> </br>
                         <div class="form-group">
                             <label class="control-label col-sm-5" for="name">Material min stock:</label>
                             <div class="col-sm-7">

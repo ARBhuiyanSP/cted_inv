@@ -5,25 +5,25 @@
     <div class="card mb-3">
         <div class="card-header">
             <i class="fas fa-table"></i>
-            Material Receive List
-			<a href="receive_entry.php" style="float:right"><i class="fas fa-plus"></i> Receive Entry<a>
+            Material Issue List
+			<a href="issue_entry.php" style="float:right"><i class="fas fa-plus"></i> Issue Entry<a>
 		</div>
         <div class="card-body">
 			<div class="table-responsive data-table-wrapper">
-				<table id="receive_data_list" class="table table-bordered table-striped">
+				<table id="issue_data_list" class="table table-bordered table-striped">
 					<thead>
 						<tr>
-							<th>Voucher No</th>
-							<th>Voucher Date</th>
+							<th>Issue No</th>
+							<th>Issue Date</th>
 							<th>
-								<select name="suppliers" id="suppliers" class="form-control">
-									<option value="">Supplier Search</option>
+								<span>Use In</span><select name="equipments" id="equipments" class="form-control">
+									<option value="">Use In Search</option>
 									<?php 
-									$query = "SELECT * FROM suppliers ORDER BY name ASC";
+									$query = "SELECT * FROM equipments ORDER BY equipment_no ASC";
 									$result = mysqli_query($conn, $query);
 									while($row = mysqli_fetch_array($result))
 									{
-										echo '<option value="'.$row["code"].'">'.$row["name"].'</option>';
+										echo '<option value="'.$row["equipment_no"].'">'.$row["equipment_no"].'</option>';
 									}
 									?>
 								</select>
@@ -44,18 +44,18 @@
 <script type="text/javascript" language="javascript" >
 $(document).ready(function(){
  
- load_receive_data();
+ load_issue_data();
 
- function load_receive_data(is_suppliers)
+ function load_issue_data(is_equipments)
  {
-  var dataTable = $('#receive_data_list').DataTable({
+  var dataTable = $('#issue_data_list').DataTable({
    "processing":true,
    "serverSide":true,
    "order":[],
    "ajax":{
-    url:"fetch/fetch_receive_table.php",
+    url:"fetch/fetch_issue_table.php",
     type:"POST",
-    data:{is_suppliers:is_suppliers}
+    data:{is_equipments:is_equipments}
    },
    "columnDefs":[
     {
@@ -66,16 +66,16 @@ $(document).ready(function(){
   });
  }
 
- $(document).on('change', '#suppliers', function(){
-  var suppliers = $(this).val();
-  $('#receive_data_list').DataTable().destroy();
-  if(suppliers != '')
+ $(document).on('change', '#equipments', function(){
+  var equipments = $(this).val();
+  $('#issue_data_list').DataTable().destroy();
+  if(equipments != '')
   {
-   load_receive_data(suppliers);
+   load_issue_data(equipments);
   }
   else
   {
-   load_receive_data();
+   load_issue_data();
   }
  });
 });

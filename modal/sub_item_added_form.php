@@ -24,13 +24,13 @@
                                     } ?>
                                 </select>
                             </div>
-                        </div>
+                        </div> </br>
                         <div class="form-group">
                             <label class="control-label col-sm-5" for="sub_code">Sub Code:</label>
                             <div class="col-sm-7">
                                 <input type="text" class="form-control" id="sub_code" placeholder="Enter sub code" name="sub_code">
                             </div>
-                        </div>
+                        </div> </br>
                         <div class="form-group">
                             <label class="control-label col-sm-5" for="name">Name:</label>
                             <div class="col-sm-7">

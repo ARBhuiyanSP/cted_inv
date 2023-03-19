@@ -40,8 +40,10 @@ if (isset($_POST['issue_submit']) && !empty($_POST['issue_submit'])) {
 				$material_id        = $_POST['material_id'][$count];
 				$unit               = $_POST['unit'][$count];
 				$part_no            = $_POST['part_no'][$count];
+				$unit_price         = $_POST['unit_price'][$count];
 				$quantity           = $_POST['quantity'][$count];
-				$use_in          	= $_POST['use_in'][$count];
+				$use_in          	= $_POST['use_in'];
+				$total_amount          	= $_POST['sub_total_amount'];
 				$remarks            = $_POST['remarks'];     
 				
 				
@@ -52,7 +54,7 @@ if (isset($_POST['issue_submit']) && !empty($_POST['issue_submit'])) {
 					$q = move_uploaded_file($temp_file,"images/".$issue_image);
 				} 
         
-				$query = "INSERT INTO `inv_issuedetail` (`issue_id`,`issue_date`,`material_id`,`material_name`,`unit`,`issue_qty`,`issue_price`,`part_no`,`use_in`,`project_id`,`warehouse_id`,`approval_status`) VALUES ('$issue_id','$issue_date','$material_id','$material_name','$unit','$quantity','0','$part_no','$use_in','$project_id','$warehouse_id','0')";
+				$query = "INSERT INTO `inv_issuedetail` (`issue_id`,`issue_date`,`material_id`,`material_name`,`unit`,`issue_qty`,`issue_price`,`part_no`,`use_in`,`project_id`,`warehouse_id`,`approval_status`) VALUES ('$issue_id','$issue_date','$material_id','$material_name','$unit','$quantity','$unit_price','$part_no','$use_in','$project_id','$warehouse_id','0')";
 				$conn->query($query);
 				
 				/*
@@ -64,8 +66,8 @@ if (isset($_POST['issue_submit']) && !empty($_POST['issue_submit'])) {
 				$mbin_qty       = 0;
 				$mbin_val       = 0;
 				$mbout_qty      = $quantity;
-				$mbout_val      = 0;
-				$mbprice        = 0;
+				$mbout_val      = $mbout_qty * $unit_price;
+				$mbprice        = $unit_price;
 				$mbtype         = 'Issue';
 				$mbserial       = '1.1';
 				$mbunit_id      = $project_id;
@@ -78,7 +80,7 @@ if (isset($_POST['issue_submit']) && !empty($_POST['issue_submit'])) {
 			/*
 			*  Insert Data Into inv_issue Table:
 			*/
-			$query2 = "INSERT INTO `inv_issue` (`issue_id`,`issue_date`,`remarks`,`project_id`,`warehouse_id`,`issue_image`) VALUES ('$issue_id','$issue_date','$remarks','$project_id','$warehouse_id','$issue_image')";
+			$query2 = "INSERT INTO `inv_issue` (`issue_id`,`issue_date`,`use_in`,`total_amount`,`remarks`,`project_id`,`warehouse_id`,`issue_image`) VALUES ('$issue_id','$issue_date','$use_in','$total_amount','$remarks','$project_id','$warehouse_id','$issue_image')";
 			$result2 = $conn->query($query2);
 			
 			$_SESSION['success']    =   "Issue process have been successfully completed.";
@@ -90,28 +92,28 @@ if (isset($_POST['issue_submit']) && !empty($_POST['issue_submit'])) {
 
 function getissueDataDetailsById($id){
     global $conn;
-    $receieves      =   "";
-    $receiveDetails =   "";
+    $issues      =   "";
+    $issueDetails =   "";
     
     // get receive data
     $sql1           = "SELECT * FROM inv_issue where id=".$id;
     $result1        = $conn->query($sql1);
 
     if ($result1->num_rows > 0) {
-        $receieves = $result1->fetch_object();
+        $issues = $result1->fetch_object();
         // get receive details data
-        $table                  =   'inv_issuedetail where issue_id='."'$receieves->issue_id'";
+        $table                  =   'inv_issuedetail where issue_id='."'$issues->issue_id'";
         $order                  =   'DESC';
         $column                 =   'issue_qty';
         $dataType               =   'obj';
-        $receiveDetailsData     = getTableDataByTableName($table, $order, $column, $dataType);
-        if(isset($receiveDetailsData) && !empty($receiveDetailsData)){
-            $receiveDetails     =   $receiveDetailsData;
+        $issueDetailsData     = getTableDataByTableName($table, $order, $column, $dataType);
+        if(isset($issueDetailsData) && !empty($issueDetailsData)){
+            $issueDetails     =   $issueDetailsData;
         }
     }
     $feedbackData   =   [
-        'receiveData'           =>  $receieves,
-        'receiveDetailsData'    =>  $receiveDetails
+        'issueData'           =>  $issues,
+        'issueDetailsData'    =>  $issueDetails
     ];
     
     return $feedbackData;

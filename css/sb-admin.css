@@ -2010,8 +2010,8 @@ pre code {
 .form-control {
   display: block;
   width: 100%;
-  height: calc(2.25rem + 2px);
-  padding: 0.375rem 0.75rem;
+  height: 28px;
+  padding: 2px 5px;
   font-size: 1rem;
   font-weight: 400;
   line-height: 1.5;
@@ -2024,6 +2024,10 @@ pre code {
   transition: border-color 0.15s ease-in-out, -webkit-box-shadow 0.15s ease-in-out;
   transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
   transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out, -webkit-box-shadow 0.15s ease-in-out;
+}
+.form-control .material_select_2 {
+  height: 28px !important;
+  padding: 2px 5px !important;
 }
 
 @media screen and (prefers-reduced-motion: reduce) {

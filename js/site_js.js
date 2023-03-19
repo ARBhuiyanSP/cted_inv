@@ -628,6 +628,7 @@ function getItemCodeByParam(id, table, field, selector, qty_unit = '') {
     if (id) {
         $('#quantity0').val('');
         var materialTotalStockId = 'material_total_stock0';
+        var materialLastPrice = 'unit_price0';
         var paramDetails = {
             id: id,
             table: table,
@@ -642,6 +643,7 @@ function getItemCodeByParam(id, table, field, selector, qty_unit = '') {
             success: function(response) {
                 $('#' + selector).val(response.data);
                 $('#' + materialTotalStockId).val(response.totalStock);
+                $('#' + materialLastPrice).val(response.unitPrice);
                 if (qty_unit) {
                     $('#unit0').val(response.qty_unit);
                 }
@@ -664,6 +666,7 @@ function getAppendItemCodeByParam(id, table, field, selector, qty_unit = '') {
     var materialId = $('#material_name' + id).val();
     var fieldSelector = selector + id;
     var materialTotalStockId = 'material_total_stock' + id;
+	var materialLastPrice = 'unit_price' + id;
     if (id) {
         var paramDetails = {
             id: materialId,
@@ -679,6 +682,7 @@ function getAppendItemCodeByParam(id, table, field, selector, qty_unit = '') {
             success: function(response) {
                 $('#' + fieldSelector).val(response.data);
                 $('#' + materialTotalStockId).val(response.totalStock);
+				$('#' + materialLastPrice).val(response.unitPrice);
                 if (qty_unit) {
                     $('#unit' + id).val(response.qty_unit);
                 }

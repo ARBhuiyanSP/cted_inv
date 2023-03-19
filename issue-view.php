@@ -86,6 +86,8 @@ $issue_id=$_GET['no']; ?>
 									<th>Used in</th>
 									<th>Material Unit</th>
 									<th>Quantity</th>
+									<th>Unit Price</th>
+									<th>Total</th>
 								</tr>
 							</thead>
 							<tbody id="material_receive_list_body">
@@ -124,6 +126,8 @@ $issue_id=$_GET['no']; ?>
 										?>
 									</td>
 									<td><?php echo $row['issue_qty'] ?></td>
+									<td><?php echo $row['issue_price'] ?></td>
+									<td><?php echo $row['issue_price'] * $row['issue_qty'] ?></td>
 								</tr>
 								<?php } ?>
 								<tr>
@@ -139,9 +143,21 @@ $issue_id=$_GET['no']; ?>
 										}
 										?>
 									</td>
+									<td></td>
+									<td>
+										<?php 
+										
+										
+										echo $total = $rowd['total_amount'] ;
+										
+										?>
+									</td>
 								</tr>
 							</tbody>
 						</table>
+						<b>Total Amount in words: 
+							<span class="amountWords" style="text-decoration:underline;"><?php echo convertNumberToWords($total).' Only';?></span>
+						</b>
 						<div class="row" style="text-align:center">
 							<div class="col-sm-5"></br><?php echo $rowd['received_by'];?></br>--------------------</br>Receiver Signature</div>			
 							<div class="col-sm-2">

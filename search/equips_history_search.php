@@ -101,23 +101,26 @@ if(isset($_GET['submit'])){
 							<th>Specs</th>
 							<th>Unit</th>
 							<th>QTY</th>
-							<th>Remarks</th>
+							<th>Unit Price</th>
+							<th>Amount</th>
 
 						</tr>
 					</thead>
 					<tbody>
 						<?php
 							$totalQty = 0;
+							$totalAmount = 0;
 							$sqlall	=	"SELECT * FROM `inv_issuedetail` WHERE `use_in` = '$equipments' AND `issue_date` BETWEEN '$from_date' AND '$to_date';;";
 							$resultall = mysqli_query($conn, $sqlall);
 							while($rowall=mysqli_fetch_array($resultall))
 							{
 								$totalQty += $rowall['issue_qty'];
+								$totalAmount += $rowall['issue_qty'] * $rowall['issue_price'];
 								
 						?>
 						<tr>
 							<td><?php echo date("j M y", strtotime($rowall['issue_date']));?></td>
-							<td><?php echo $rowall['issue_id']; ?></td>
+							<td><a href="issue-view.php?no=<?php echo $rowall['issue_id']; ?>" target="blank"><?php echo $rowall['issue_id']; ?></a></td>
 							<td><?php 
 								$dataresult =   getDataRowByTableAndId('inv_material', $rowall['material_name']);
 								echo (isset($dataresult) && !empty($dataresult) ? $dataresult->material_description : '');
@@ -130,10 +133,20 @@ if(isset($_GET['submit'])){
 								echo (isset($dataresult) && !empty($dataresult) ? $dataresult->spec : '');
 							?></td>
 							<td><?php echo getDataRowByTableAndId('inv_item_unit', $rowall['unit'])->unit_name; ?></td>
-							<td><?php echo $rowall['issue_qty']; ?></td>
-							<td></td>
+							<td style="text-align:right;"><?php echo $rowall['issue_qty']; ?></td>
+							<td style="text-align:right;"><?php echo $rowall['issue_price']; ?></td>
+							<td style="text-align:right;"><?php echo $rowall['issue_qty'] * $rowall['issue_price'];?></td>
 						</tr>
 						<?php } ?>
+						<tr style="text-align:right;">
+							<td colspan="6"> <b>Total:</b></td>
+							<td><b><?php echo $totalQty; ?></b></td>
+							<td></td>
+							<td><b><?php echo $totalAmount; ?></b></td>
+						</tr>
+						<tr style="text-align:left;">
+							<td colspan="9"> <b>Total Amount in words: <span class="amountWords" style="text-decoration:underline;"><?php echo convertNumberToWords($totalAmount).' Only';?></span></b></td>
+						</tr>
 					</tbody>
 				</table>
 				<center><div class="row">

@@ -108,14 +108,12 @@
                         <div class="table-responsive">
                             <table class="table table-bordered" id="dynamic_field">
                                 <thead>
-                                <th width="20%">Material Name<span class="reqfield"> ***required</span></th>
-                                <th width="15%">Material ID</th>
+                                <th width="25%">Material Name<span class="reqfield"> ***required</span></th>
+                                <th width="10%">Material ID</th>
                                 <th width="10%">Part No</th>
                                 <th width="10%">Unit</th>
                                 <th width="10%">In Stock</th>
-                                <th width="10%">Unit Price</th>
                                 <th width="10%">Qty<span class="reqfield"> ***required</span></th>
-                                <th width="10%">Amount</th>
                                 <th width="5%"></th>
                                 </thead>
                                 <tbody>
@@ -128,7 +126,7 @@
                                                 if (isset($projectsData) && !empty($projectsData)) {
                                                     foreach ($projectsData as $data) {
                                                         ?>
-                                                        <option value="<?php echo $data['id']; ?>"><?php echo $data['material_name']; ?> - <?php echo $data['part_no']; ?> - <?php echo $data['spec']; ?> - <?php echo $data['item_code']; ?></option>
+                                                        <option value="<?php echo $data['id']; ?>"><?php echo $data['material_name']; ?> - <?php echo $data['part_no']; ?> - <?php echo $data['spec']; ?></option>
                                                         <?php
                                                     }
                                                 }
@@ -153,19 +151,11 @@
                                             </select>
                                         </td>
                                         <td><input type="text" name="material_total_stock[]" id="material_total_stock0" class="form-control" readonly ></td>
-										<td><input type="text" name="unit_price[]" id="unit_price0" class="form-control" readonly ></td>
-                                        <td><input type="text" name="quantity[]" id="quantity0" onkeyup="sum(0)" class="form-control common_issue_quantity" required></td>
-										<td><input type="text" name="totalamount[]" id="sum0" class="form-control"></td>
+                                        <td><input type="text" name="quantity[]" id="quantity0" onchange="sum(0)" onkeyup="check_stock_quantity_validation(0)" class="form-control common_issue_quantity" required></td>
                                         <td><button type="button" name="add" id="add" class="btn" style="background-color:#007BFF;color:#ffffff;">+</button></td>
                                     </tr>
                                 </tbody>
                             </table>
-							<table class="table table-bordered">
-								<tr>
-									<td width="80%" style="text-align:right;">Total Amount</td>
-									<td><input type="text" class="form-control" maxlength="30" name="sub_total_amount" id="allsum" readonly /></td>
-								</tr>
-							</table>
                         </div>
                     </div>
                     <div class="row" style="">
@@ -233,46 +223,19 @@
                                             ?><option value="<?php echo $data['id']; ?>"><?php echo $data['unit_name']; ?></option><?php
                                         }
                                     }
-                                    ?></select></td><td><input type="text" name="material_total_stock[]" id="material_total_stock' + i + '" class="form-control" readonly></td><td><input type="text" name="unit_price[]" id="unit_price' + i + '" class="form-control" readonly></td><td><input type="text" name="quantity[]" id="quantity' + i + '" onkeyup="sum(' + i + ')" class="form-control common_issue_quantity" required></td><td><input type="text" name="totalamount[]" id="sum' + i + '" class="form-control"></td><td><button type="button" name="remove" id="' + i + '" class="btn btn_remove" style="background-color:#f26522;color:#ffffff;">X</button></td></tr>');
+                                    ?></select></td><td><input type="text" name="material_total_stock[]" id="material_total_stock' + i + '" class="form-control" readonly></td><td><input type="text" name="quantity[]" id="quantity' + i + '" onchange="sum(0)"  onkeyup="check_stock_quantity_validation(' + i + ')" class="form-control common_issue_quantity" required></td><td><button type="button" name="remove" id="' + i + '" class="btn btn_remove" style="background-color:#f26522;color:#ffffff;">X</button></td></tr>');
             
-           $(".material_select_2").select2();
-												$('#quantity' + i + ', #unit_price' + i).change(function () {
-                sum(i)
-            });
+            $(".material_select_2").select2();
         });
 
         $(document).on('click', '.btn_remove', function () {
             var button_id = $(this).attr("id");
             $('#row' + button_id + '').remove();
-            sum_total();
         });
+
+        
+
     });
-
-
- $(document).ready(function () {
-        //this calculates values automatically 
-        sum(0);
-    });
-
-    function sum(i) {
-        var quantity1 = document.getElementById('quantity' + i).value;
-        var unit_price1 = document.getElementById('unit_price' + i).value;
-        var result = parseFloat(quantity1) * parseFloat(unit_price1);
-        if (!isNaN(result)) {
-            document.getElementById('sum' + i).value = result;
-        }
-        sum_total();
-    }
-    function sum_total() {
-        var newTot = 0;
-        for (var a = 0; a <= i; a++) {
-            aVal = $('#sum' + a);
-            if (aVal && aVal.length) {
-                newTot += aVal[0].value ? parseFloat(aVal[0].value) : 0;
-            }
-        }
-        document.getElementById('allsum').value = newTot.toFixed(2);
-    }
 </script>
 <script>
     $(function () {

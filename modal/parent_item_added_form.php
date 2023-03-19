@@ -14,7 +14,7 @@
                             <div class="col-sm-7">
                                 <input type="text" class="form-control" id="category_id" placeholder="Enter Category Id" name="category_id">
                             </div>
-                        </div>
+                        </div> </br>
                         <div class="form-group">
                             <label class="control-label col-sm-5" for="name">Name:</label>
                             <div class="col-sm-7">

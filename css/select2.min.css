@@ -9,7 +9,7 @@
     box-sizing: border-box;
     cursor: pointer;
     display: block;
-    height: calc(2.25rem + 2px);
+    height: 28px;
     user-select: none;
     -webkit-user-select: none;
 }

@@ -24,7 +24,7 @@
                                     } ?>
                                 </select>
                             </div>
-                        </div>
+                        </div> </br>
                         <div class="form-group">
                             <label class="control-label col-sm-5" for="parent_code">Level-2:</label>
                             <div class="col-sm-7">
@@ -40,7 +40,7 @@
                                     } ?>
                                 </select>
                             </div>
-                        </div>
+                        </div> </br>
                         <div class="form-group">
                             <label class="control-label col-sm-5" for="parent_code">Level-3:</label>
                             <div class="col-sm-7">
@@ -56,13 +56,13 @@
                                     } ?>
                                 </select>
                             </div>
-                        </div>
+                        </div> </br>
                         <div class="form-group">
                             <label class="control-label col-sm-5" for="sub_code">Level-4 Code:</label>
                             <div class="col-sm-7">
                                 <input type="text" class="form-control" id="leve4_code" placeholder="Enter leve3 code" name="material_level4_code">
                             </div>
-                        </div>
+                        </div> </br>
                         <div class="form-group">
                             <label class="control-label col-sm-5" for="name">Leve4 Name:</label>
                             <div class="col-sm-7">

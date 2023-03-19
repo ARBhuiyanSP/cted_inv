@@ -550,7 +550,7 @@ if(isset($_GET['process_type']) && $_GET['process_type'] == 'material_edit'){
 					<input type="hidden" class="form-control" id="edit_item_name" placeholder="name" name="parent_item_id" value="<?php if(isset($editData->material_id)){ echo $editData->material_id; } ?>">
 					 <input type="text" class="form-control" id="edit_item_name" placeholder="name" value="<?php if(isset($editData->material_id)){ $dataresult =   getDataRowByTableAndId('inv_materialcategorysub', $editData->material_id); echo (isset($dataresult) && !empty($dataresult) ? $dataresult->category_description : ''); } ?>"readonly> 
                 </div>
-            </div>
+            </div> </br>
 			<div class="form-group">
                 <label class="control-label col-sm-5" for="parent_code">Sub Category:</label>
                 <div class="col-sm-7">
@@ -558,7 +558,7 @@ if(isset($_GET['process_type']) && $_GET['process_type'] == 'material_edit'){
 					<input type="text" class="form-control" id="edit_item_name" placeholder="name" value="<?php if(isset($editData->material_sub_id)){ 
 					$dataresult =   getDataRowByTableAndId('inv_materialcategory', $editData->material_sub_id); echo (isset($dataresult) && !empty($dataresult) ? $dataresult->material_sub_description : ''); } ?>"readonly>
                 </div>
-            </div>
+            </div> </br>
 			<div class="form-group">
                 <label class="control-label col-sm-5" for="parent_code">Level-3:</label>
                 <div class="col-sm-7">
@@ -566,7 +566,7 @@ if(isset($_GET['process_type']) && $_GET['process_type'] == 'material_edit'){
 					<input type="text" class="form-control" id="edit_item_name" placeholder="name" value="<?php if(isset($editData->material_level3_id)){ 
 					$dataresult =   getDataRowByTableAndId('inv_material_level3', $editData->material_level3_id); echo (isset($dataresult) && !empty($dataresult) ? $dataresult->material_level3_description : ''); } ?>"readonly>
                 </div>
-            </div>
+            </div> </br>
 			<div class="form-group">
                 <label class="control-label col-sm-5" for="parent_code">Level-4:</label>
                 <div class="col-sm-7">
@@ -574,19 +574,19 @@ if(isset($_GET['process_type']) && $_GET['process_type'] == 'material_edit'){
 					<input type="text" class="form-control" id="edit_item_name" placeholder="name" value="<?php if(isset($editData->material_level4_id)){ 
 					$dataresult =   getDataRowByTableAndId('inv_material_level4', $editData->material_level4_id); echo (isset($dataresult) && !empty($dataresult) ? $dataresult->material_level4_description : ''); } ?>"readonly>
                 </div>
-            </div>
+            </div> </br>
             <div class="form-group">
                 <label class="control-label col-sm-5" for="parent_code">Material Code:</label>
                 <div class="col-sm-7">
                     <input type="text" class="form-control" id="item_edit_code" placeholder="Enter item code" name="item_code" value="<?php if(isset($editData->material_id_code)){ echo $editData->material_id_code; } ?>" readonly>
                 </div>
-            </div>
+            </div> </br>
             <div class="form-group">
                 <label class="control-label col-sm-5" for="name">Name:</label>
                 <div class="col-sm-7">
                     <input type="text" class="form-control" id="edit_item_name" placeholder="name" name="name" value="<?php if(isset($editData->material_description)){ echo $editData->material_description; } ?>">
                 </div>
-            </div>
+            </div> </br>
             <!-- <div class="form-group">
                 <label class="control-label col-sm-5" for="name">Brand Name:</label>
                 <div class="col-sm-7">
@@ -598,13 +598,13 @@ if(isset($_GET['process_type']) && $_GET['process_type'] == 'material_edit'){
                 <div class="col-sm-7">
                     <input type="text" class="form-control" id="edit_item_name" placeholder="brand name" name="part_no" value="<?php if(isset($editData->part_no)){ echo $editData->part_no; } ?>">
                 </div>
-            </div>
+            </div> </br>
             <div class="form-group">
                 <label class="control-label col-sm-5" for="name">Specifiaction:</label>
                 <div class="col-sm-7">
                     <input type="text" class="form-control" id="edit_item_name" placeholder="brand name" name="spec" value="<?php if(isset($editData->spec)){ echo $editData->spec; } ?>">
                 </div>
-            </div>
+            </div> </br>
 			<!-- <div class="form-group">
                 <label class="control-label col-sm-5" for="name">Type:</label>
                 <div class="col-sm-7">
@@ -634,7 +634,7 @@ if(isset($_GET['process_type']) && $_GET['process_type'] == 'material_edit'){
 ?>
                     </select>
                 </div>
-            </div>
+            </div> </br>
             <div class="form-group">
                 <label class="control-label col-sm-5" for="name">Material min stock:</label>
                 <div class="col-sm-7">
@@ -665,19 +665,19 @@ if(isset($_GET['process_type']) && $_GET['process_type'] == 'sub_material_edit')
                     } ?>
                 </select>
             </div>
-        </div>
+        </div> </br>
         <div class="form-group">
             <label class="control-label col-sm-5" for="sub_code">Sub Code:</label>
             <div class="col-sm-7">
                 <input type="text" class="form-control" id="edit_sub_code" placeholder="Enter sub code" name="sub_code" value="<?php if(isset($editData->material_sub_id)){ echo $editData->material_sub_id; } ?>">
             </div>
-        </div>
+        </div> </br>
         <div class="form-group">
             <label class="control-label col-sm-5" for="name">Name:</label>
             <div class="col-sm-7">
                 <input type="text" class="form-control" id="edit_sub_name" placeholder="name" name="name" value="<?php if(isset($editData->material_sub_description)){ echo $editData->material_sub_description; } ?>">
             </div>
-        </div>
+        </div> 
 <?php }
 
 if(isset($_GET['process_type']) && $_GET['process_type'] == 'parent_material_edit'){
@@ -692,7 +692,7 @@ if(isset($_GET['process_type']) && $_GET['process_type'] == 'parent_material_edi
             <div class="col-sm-7">
                 <input type="text" class="form-control" id="edit_category_id" placeholder="Enter Category Id" name="category_id" value="<?php if(isset($editData->category_id)){ echo $editData->category_id; } ?>">
             </div>
-        </div>
+        </div> </br>
         <div class="form-group">
             <label class="control-label col-sm-5" for="name">Name:</label>
             <div class="col-sm-7">
@@ -919,6 +919,7 @@ if(isset($_GET['process_type']) && $_GET['process_type'] == 'getItemCodeByParam'
     $param['warehouse_id']  =   $_SESSION['logged']['warehouse_id'];
     
     $totalStock     =   get_product_stock_by_material_id($param);
+    $unitPrice     =   get_unit_price_by_material_id($param);
     
     $feedback   =   [
         'status'    =>  'success',
@@ -926,6 +927,7 @@ if(isset($_GET['process_type']) && $_GET['process_type'] == 'getItemCodeByParam'
         'data'      =>  $code,
         'qty_unit'  =>  $qty_unit,
         'totalStock'  =>  $totalStock,
+        'unitPrice'  =>  $unitPrice,
         'brand_name'  =>  (isset($materialData->brand_name) && !empty($materialData->brand_name) ? $materialData->brand_name : ''),
         'part_no'  =>  (isset($materialData->part_no) && !empty($materialData->part_no) ? $materialData->part_no : ''),
     ];    
