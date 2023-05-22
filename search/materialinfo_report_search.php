@@ -4,40 +4,90 @@
 }
 </style>
 <link href="css/dataTables.bootstrap4.min.css" rel="stylesheet">
-<div class="card mb-3">
-    
-
-    <div class="card-body">
-        <form class="form-horizontal" action="" id="warehouse_stock_search_form" method="GET">
-            <div class="table-responsive">          
-                <table class="table table-borderless search-table">
-                    <tbody>
-                        <tr>  
-							
-							
-							<td>
-                                
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-        </form>
-    </div>
-</div>
-
-<center>
-	
 	<div class="row">
 		<div class="col-md-1"></div>
-		<div class="col-md-10" id="printableArea">
+		<div class="col-md-10">
 			<div class="row">
+				<div class="col-sm-12">
+					<center>
+						<form name="" action="" method="GET">
+							<div class="col-xs-3">
+								<div class="form-group">
+									<label for="id">Category</label><span class="reqfield"> ***required</span>
+									<select class="form-control material_select_2" id="level_1_id_l5" name="parent_item_id" onchange="get5_2By1(this.value);" required>
+										<option value="">Select</option>
+										<?php
+										$parentCats = getTableDataByTableName('inv_materialcategorysub', '', 'category_description');
+										if (isset($parentCats) && !empty($parentCats)) {
+											foreach ($parentCats as $pcat) {
+												if($_GET['parent_item_id'] == $pcat['id']){
+												$selected	= 'selected';
+												}else{
+												$selected	= '';
+												}
+												?>
+												<option value="<?php echo $pcat['id'] ?>"><?php echo $pcat['category_description'] ?></option>
+											<?php }
+										} ?>
+									</select>
+								</div>
+							</div>
+							<div class="col-xs-3">
+								<div class="form-group">
+									<label for="id">Sub Category</label><span class="reqfield"> ***required</span>
+									<select class="form-control js-example-basic-single material_select_2" id="level_2_id_l5" name="sub_item_id" onchange="get5_3By2(this.value);" required>
+										<option value="">Select</option>
+										<?php
+										$parentCats = getTableDataByTableName('inv_materialcategory','','material_sub_description');
+										if (isset($parentCats) && !empty($parentCats)) {
+											foreach ($parentCats as $pcat) {
+												if($_GET['sub_item_id'] == $pcat['id']){
+												$selected	= 'selected';
+												}else{
+												$selected	= '';
+												}
+												?>
+												<option value="<?php echo $pcat['id'] ?>"><?php echo $pcat['material_sub_description'] ?></option>
+											<?php }
+										} ?>
+									</select>
+								</div>
+							</div>
+							<div class="col-xs-2">
+								<div class="form-group">
+									<label for="id" style="color:#fff;">.</label>
+									<input type="submit" name="submit" id="submit" class="btn btn-sm btn-block" style="background-color:#007BFF;color:#ffffff;" value="SEARCH" />   				
+								</div>
+							</div>
+						</form>
+					</center>
+				</div>
+			</div>
+			
+						<?php
+							if(isset($_GET['submit'])){
+								$parent_item_id			=	$_GET['parent_item_id'];
+								$sub_item_id			=	$_GET['sub_item_id'];
+						?>
+			<div id="printableArea">
+			<div class="row" id="printableArea">
 				<div class="col-sm-12">	
 					<center>
 						<p>
-							<img src="images/Saif_Engineering_Logo_165X72.png" height="100px;"/><br>
-							<span>All Material Information Report</span><br>
-							
+							<img src="images/Saif_Engineering_Logo_165X72.png" height="50px;"/><br>
+							<h5>CTED CHATTOGRAM</h5> 
+							<span>Material List/Information Report</span>
+							<span>
+								<?php
+								$dataresult =   getDataRowByTableAndId('inv_materialcategorysub', $parent_item_id);
+								echo (isset($dataresult) && !empty($dataresult) ? $dataresult->category_description : '');
+								?>
+							</span> <i class="fas fa-arrow-right"></i> 
+							<span>
+								<?php
+								$dataresult =   getDataRowByTableAndId('inv_materialcategory', $sub_item_id);
+								echo (isset($dataresult) && !empty($dataresult) ? $dataresult->material_sub_description : '');
+								?>
 						</p>
 					</center>
 				</div>
@@ -45,68 +95,29 @@
 				<table id="" class="table table-bordered table-striped ">
 					<thead>
 						<tr>
-							<th>EQUIPMENT NAME</th>
-							<th>EQUIPMENT BRAND</th>
+							<th>SL No</th>
+							<th>Material Name</th>
 							<th>Part No</th>
 							<th>Specification</th>
-							<th>Material Name</th>
 							
 						</tr>
 					</thead>
 					<tbody>
-					<?php
-						$sql	=	"SELECT * FROM inv_material  GROUP BY `material_id`";
-						$result = mysqli_query($conn, $sql);
-						while($row=mysqli_fetch_array($result))
-						{
-					?>
+						<?php
+							$i=0;
+							$sql	=	"SELECT * FROM inv_material WHERE material_id = $parent_item_id AND material_sub_id = $sub_item_id ORDER BY `material_description` ASC";
+							$result = mysqli_query($conn, $sql);
+							while($row=mysqli_fetch_array($result))
+							{
+							$i++;
+						?>
 						<tr>
-							<td>
-								<?php 
-								$dataresult =   getDataRowByTableAndId('inv_materialcategorysub', $row['material_id']);
-								echo (isset($dataresult) && !empty($dataresult) ? $dataresult->category_description : '');
-								?>
-							</td>
-							<td colspan="4"></td>
+							<td><?php echo $i; ?></td>
+							<td><?php echo $row['material_description']; ?></td>
+							<td><?php echo $row['part_no']; ?></td>
+							<td><?php echo $row['spec']; ?></td>
 						</tr>
-								<?php 
-									$material_id = $row['material_id'];
-									$sqlall	=	"SELECT * FROM inv_material WHERE `material_id` = '$material_id' GROUP BY `material_sub_id`;";
-									$resultall = mysqli_query($conn, $sqlall);
-									while($rowall=mysqli_fetch_array($resultall))
-									{ ?>
-								
-								<tr>
-									<td></td>
-									<td>
-										<?php
-										$dataresult =   getDataRowByTableAndId('inv_materialcategory', $rowall['material_sub_id']);
-										echo (isset($dataresult) && !empty($dataresult) ? $dataresult->material_sub_description : '');
-										?>
-									</td>
-									<td colspan="3"></td>
-								</tr>
-										<?php 
-											$material_sub_id = $rowall['material_sub_id'];
-											$sqlmat	=	"SELECT * FROM inv_material WHERE `material_sub_id` = '$material_sub_id' GROUP BY `material_id_code`;";
-											$resultmat = mysqli_query($conn, $sqlmat);
-											while($rowmat=mysqli_fetch_array($resultmat))
-											{ ?>
-										
-										<tr>
-											<td></td>
-											<td></td>
-											<td><?php echo $rowmat['part_no']; ?></td>
-											<td><?php echo $rowmat['spec']; ?></td>
-											<td><?php echo $rowmat['material_description']; ?></td>
-										
-
-											
-										</tr>
-								<?php } 
-									} 
-								} 
-								?>
+					<?php } ?>
 					</tbody>
 				</table>
 				<center><div class="row">
@@ -119,10 +130,14 @@
 						
 					</div>
 				</div>
+			</div>
+				
+				
 			</div>			
 		</div>
 		<center><button class="btn btn-default" onclick="printDiv('printableArea')"><i class="fa fa-print" aria-hidden="true" style="    font-size: 17px;"> Print</i></button></center>
 		<div class="col-md-1"></div>
+		<?php } ?>
 </center>
 
 <script>
@@ -136,28 +151,6 @@ function printDiv(divName) {
 
 	 document.body.innerHTML = originalContents;
 }
-</script>
-<script>
-    $(function () {
-        $("#from_date").datepicker({
-            inline: true,
-            dateFormat: "yy-mm-dd",
-            yearRange: "-50:+10",
-            changeYear: true,
-            changeMonth: true
-        });
-    });
-</script>
-<script>
-    $(function () {
-        $("#to_date").datepicker({
-            inline: true,
-            dateFormat: "yy-mm-dd",
-            yearRange: "-50:+10",
-            changeYear: true,
-            changeMonth: true
-        });
-    });
 </script>
 
 

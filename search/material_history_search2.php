@@ -125,32 +125,6 @@ if(isset($_GET['submit'])){
 						</tr>
 					</thead>
 					<tbody>
-						<tr>
-							<th colspan="3" style="text-align:right;">Opening Quantity</th>
-							<th></th>
-							<th style="text-align:right;">
-									<?php 
-									if($_SESSION['logged']['user_type'] !== 'whm'){
-										$sqlpreinqty = "SELECT SUM(`mbin_qty`)- SUM(`mbout_qty`) AS totalpre FROM `inv_materialbalance` WHERE `mb_materialid` = '$material_id_code' AND `mb_date` < '$from_date'";
-									}else{
-										$sqlpreinqty = "SELECT SUM(`mbin_qty`)- SUM(`mbout_qty`) AS totalpre FROM `inv_materialbalance` WHERE `warehouse_id` = '$warehouse_id' AND `mb_materialid` = '$material_id_code' AND `mb_date` < '$from_date'";
-									}
-									
-									$resultpreinqty = mysqli_query($conn, $sqlpreinqty);
-									$rowpreinqty = mysqli_fetch_object($resultpreinqty);
-									
-									if($rowpreinqty->totalpre > 0){
-										$opening_stock = $rowpreinqty->totalpre;
-									}
-									else {
-											$opening_stock = 0;
-										}
-									echo $opening_stock;
-									//echo number_format((float)$opening_stock, 2, '.', '');
-								?>
-							</th>
-							<th colspan="3"></th>
-						</tr>
 						<?php
 							$totalin = 0;
 							$totalout = 0;
@@ -184,14 +158,14 @@ if(isset($_GET['submit'])){
 							
 							<td style="text-align:right;"><?php echo $rowall['mbin_qty']; ?></td>
 							<td style="text-align:right;"><?php echo $rowall['mbout_qty']; ?></td>
-							<td style="text-align:right;"><?php echo $opening_stock + $balance; ?></td>
+							<td style="text-align:right;"><?php echo $balance; ?></td>
 							
 							
 							<td></td>
 						</tr>
 						<?php } ?>
 						<tr style="text-align:right;font-weight:bold;">
-							<td colspan="4">Total:</td>
+							<td colspan="3">Total:</td>
 							<td>
 								<?php 
 									$sqlin = "SELECT sum(mbin_qty) FROM `inv_materialbalance` WHERE `mb_materialid` = '$material_name' AND `mb_date` BETWEEN '$from_date' AND '$to_date'";
@@ -199,7 +173,7 @@ if(isset($_GET['submit'])){
 									for($i=0; $rowin = mysqli_fetch_array($resultin); $i++){
 									$totalIn=number_format((float)$rowin['sum(mbin_qty)'], 2, '.', '');
 									
-									echo $totalIn = $totalIn + $opening_stock ;
+									echo $totalIn ;
 									}
 								?>
 							</td>

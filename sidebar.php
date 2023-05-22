@@ -162,6 +162,11 @@
             <i class="fa fa-key" aria-hidden="true" style="color: #007BFF;"></i>
             <span>Opening Stock Entry</span></a>
     </li>
+	<li class="nav-item">
+        <a class="nav-link" href="edit_part_spec.php">
+            <i class="fa fa-key" aria-hidden="true" style="color: #007BFF;"></i>
+            <span>Edit Part No</span></a>
+    </li>
 	 <!-- <li class="nav-item">
         <a class="nav-link" href="payment_entry.php">
             <i class="fa fa-money-bill" aria-hidden="true" style="color: #007BFF;"></i>
@@ -234,9 +239,19 @@
             <span>Receive details</span></a>
     </li>
 	<li class="nav-item">
+        <a class="nav-link" href="receive_report_by_category.php">
+            <i class="fa fa-registered" aria-hidden="true" style="color: #007BFF;"></i>
+            <span>Categorywise Receive details</span></a>
+    </li>
+	<li class="nav-item">
         <a class="nav-link" href="issue_report.php">
             <i class="fa fa-registered" aria-hidden="true" style="color: #007BFF;"></i>
             <span>Issue details</span></a>
+    </li>
+	<li class="nav-item">
+        <a class="nav-link" href="issue_report_by_category.php">
+            <i class="fa fa-registered" aria-hidden="true" style="color: #007BFF;"></i>
+            <span>Categorywise Issue details</span></a>
     </li>
 	<!-- <li class="nav-item">
         <a class="nav-link" href="warhousetransfer_report.php">
