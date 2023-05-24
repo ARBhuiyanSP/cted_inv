@@ -38,6 +38,7 @@ if (isset($_POST['issue_submit']) && !empty($_POST['issue_submit'])) {
 				$warehouse_id   	= $_POST['warehouse_id'];
 				$material_name      = $_POST['material_name'][$count];
 				$material_id        = $_POST['material_id'][$count];
+				$product_price_id   = $_POST['product_price_id'][$count];
 				$unit               = $_POST['unit'][$count];
 				$part_no            = $_POST['part_no'][$count];
 				$unit_price         = $_POST['unit_price'][$count];
@@ -53,6 +54,19 @@ if (isset($_POST['issue_submit']) && !empty($_POST['issue_submit'])) {
 					$issue_image=time().$_FILES['file']['name'];
 					$q = move_uploaded_file($temp_file,"images/".$issue_image);
 				} 
+
+				
+				/* Update Qty in inv_product_price table*/
+
+				$sqlGetPrice = "select * from `inv_product_price` where `id`='$product_price_id'";
+				$resultGetPrice = mysqli_query($conn, $sqlGetPrice);
+				$rowGetPrice = mysqli_fetch_array($resultGetPrice);
+
+				$oldQty = $rowGetPrice['qty'];
+				$newQty = $oldQty - $quantity;
+
+				$queryUpdateQty    = "UPDATE `inv_product_price` SET `qty`='$newQty' WHERE `id`='$product_price_id'";
+    			$conn->query($queryUpdateQty);
         
 				$query = "INSERT INTO `inv_issuedetail` (`issue_id`,`issue_date`,`material_id`,`material_name`,`unit`,`issue_qty`,`issue_price`,`part_no`,`use_in`,`project_id`,`warehouse_id`,`approval_status`) VALUES ('$issue_id','$issue_date','$material_id','$material_name','$unit','$quantity','$unit_price','$part_no','$use_in','$project_id','$warehouse_id','0')";
 				$conn->query($query);

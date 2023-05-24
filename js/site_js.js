@@ -624,11 +624,15 @@ function getMatCodeBySubId(material_level4_id, selector = false) {
     }
 }
 
-function getItemCodeByParam(id, table, field, selector, qty_unit = '') {
+function getItemCodeByParam(id, table, field, selector, qty_unit = '',this_row_this='') {
+	var this_row_this= this_row_this;
+    console.log(this_row_this)
     if (id) {
         $('#quantity0').val('');
         var materialTotalStockId = 'material_total_stock0';
         var materialLastPrice = 'unit_price0';
+		var product_price_id = 'product_price_id0';
+		
         var paramDetails = {
             id: id,
             table: table,
@@ -640,10 +644,16 @@ function getItemCodeByParam(id, table, field, selector, qty_unit = '') {
             type: 'POST',
             dataType: 'json',
             data: paramDetails,
+            async:true,
             success: function(response) {
+                
+
+				console.log('after row');
                 $('#' + selector).val(response.data);
-                $('#' + materialTotalStockId).val(response.totalStock);
-                $('#' + materialLastPrice).val(response.unitPrice);
+				$('#' + product_price_id).html(response.priceDetails);
+				
+               // $('#' + materialTotalStockId).val(response.totalStock);
+               // $('#' + materialLastPrice).val(response.unitPrice);
                 if (qty_unit) {
                     $('#unit0').val(response.qty_unit);
                 }
@@ -653,6 +663,8 @@ function getItemCodeByParam(id, table, field, selector, qty_unit = '') {
                 if (response.part_no) {
                     $('#part_no0').val(response.part_no);
                 }
+               
+               
             }
         });
     } else {
@@ -667,6 +679,7 @@ function getAppendItemCodeByParam(id, table, field, selector, qty_unit = '') {
     var fieldSelector = selector + id;
     var materialTotalStockId = 'material_total_stock' + id;
 	var materialLastPrice = 'unit_price' + id;
+    var product_price_id = 'product_price_id'+id;
     if (id) {
         var paramDetails = {
             id: materialId,
@@ -681,8 +694,9 @@ function getAppendItemCodeByParam(id, table, field, selector, qty_unit = '') {
             data: paramDetails,
             success: function(response) {
                 $('#' + fieldSelector).val(response.data);
-                $('#' + materialTotalStockId).val(response.totalStock);
-				$('#' + materialLastPrice).val(response.unitPrice);
+                $('#' + product_price_id).html(response.priceDetails);
+               // $('#' + materialTotalStockId).val(response.totalStock);
+				//$('#' + materialLastPrice).val(response.unitPrice);
                 if (qty_unit) {
                     $('#unit' + id).val(response.qty_unit);
                 }
@@ -734,21 +748,53 @@ function getWarehouseSearchTableData(formSelector, tableBodySelector, fieldCheck
 }
 
 function check_stock_quantity_validation(selector_id) {
-    console.log('Bu');
+    //console.log('Bu');
     var stockValue = 0;
     var quantityValue = 0;
     stockValue = parseFloat($('#material_total_stock' + selector_id).val());
     quantityValue = parseFloat($('#quantity' + selector_id).val());
+    var lot_item_wise_qty=[];
+    var uniqie_item_id=[];
+
+    $(".common_issue_quantity").each(function(){
+        var material_name_id = $(this).closest("tr").find("select[name='material_name[]']").val();
+        var product_price_id = $(this).closest("tr").find("select[name='product_price_id[]']").val();
+        var material_total_stock = $(this).closest("tr").find("input[name='material_total_stock[]']").val();
+        var quantity = $(this).closest("tr").find("input[name='quantity[]']").val();
+        var item_lot =material_name_id+"__"+product_price_id;
+        
+        if(!uniqie_item_id.includes(item_lot)){
+            uniqie_item_id.push(item_lot);
+            lot_item_wise_qty.push({item_lot,material_total_stock:material_total_stock,quantity:quantity});
+        }else{
+            for (var i = 0; i < lot_item_wise_qty.length; i++) {
+                if(lot_item_wise_qty[i].item_lot ==item_lot){
+                    lot_item_wise_qty[i].quantity = (parseFloat(lot_item_wise_qty[i].quantity)+parseFloat(quantity));
+                    if(parseFloat(lot_item_wise_qty[i].quantity) > parseFloat(lot_item_wise_qty[i].material_total_stock)){
+                        $('#quantity' + selector_id).val('');
+                    }
+                }
+            } 
+        }
+    });
+
+
+
+
+
 
     var commonIssueQuantityTotalValue   =   get_common_issue_quantity_total_value();
-    console.log('commonIssueQuantityTotalValue');
-    console.log(commonIssueQuantityTotalValue);
+  //  console.log('stockValue'+stockValue);
+ //   console.log("quantityValue"+quantityValue);
     if (stockValue < quantityValue) {
         $('#quantity' + selector_id).val('');
     }
-    if(stockValue < commonIssueQuantityTotalValue){
-        $('#quantity' + selector_id).val('');
-    }
+
+
+
+    // if(stockValue < commonIssueQuantityTotalValue){
+    //     $('#quantity' + selector_id).val('');
+    // }
 }
 
 function get_common_issue_quantity_total_value(){
@@ -771,4 +817,37 @@ function showFormIsProcessing(formId) {
             showConfirmButton: false
         })
     }
+}
+
+
+$(document).on("change",".product_price_id",function(){
+    var this_row_this=$(this);
+    var price_row_id = $(this).closest("tr").find(".product_price_id").val();
+    price_details_show(price_row_id,this_row_this);
+   
+})
+
+function price_details_show(price_row_id,this_row_this){
+    console.log(this_row_this)
+     $.ajax({
+            url: baseUrl + "includes/item_process.php?process_type=getDetailByPriceId",
+            type: 'POST',
+            dataType: 'json',
+            data: {price_row_id},
+            success: function(response) {
+                var data = response?.data;
+                var part_no = data?.part_no;
+                var price = data?.price;
+                var qty = data?.qty;
+                var receive_details_id = data?.receive_details_id;
+                var mrr_no = data?.mrr_no;
+                var material_id = data?.material_id;
+               
+                this_row_this.closest("tr").find("input[name='part_no[]']").val(part_no);
+                this_row_this.closest("tr").find("input[name='material_total_stock[]']").val(qty);
+                this_row_this.closest("tr").find("input[name='unit_price[]']").val(price);
+              
+               
+            }
+        });
 }

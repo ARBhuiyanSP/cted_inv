@@ -83,9 +83,12 @@ if (isset($_POST['receive_submit']) && !empty($_POST['receive_submit'])) {
         $query = "INSERT INTO `inv_receivedetail` (`mrr_no`,`material_id`,`material_name`,`unit_id`,`receive_qty`,`unit_price`,`sl_no`,`total_receive`,`part_no`,`project_id`,`warehouse_id`,`approval_status`) VALUES ('$mrr_no','$material_id','$material_name','$unit','$quantity','$unit_price','1','$totalamount','$part_no','$project_id','$warehouse_id','$approval_status')";
         $conn->query($query);
 		
+		$lastinsertedId =  mysqli_insert_id($conn);
 		
-
-        
+		
+		/* print_r($lastinsertedId);
+		exit;
+         */
         /*
          *  Insert Data Into inv_materialbalance Table:
         */
@@ -101,11 +104,27 @@ if (isset($_POST['receive_submit']) && !empty($_POST['receive_submit'])) {
         $mbserial       = '1.1';
         $mbunit_id      = $project_id;
         $mbserial_id    = 0;
-        $jvno           = $mrr_no;       
+        $jvno           = $mrr_no;  
+//$created_at = date();		
         
         $query_inmb = "INSERT INTO `inv_materialbalance` (`mb_ref_id`,`mb_materialid`,`mb_date`,`mbin_qty`,`mbin_val`,`mbout_qty`,`mbout_val`,`mbprice`,`mbtype`,`mbserial`,`mbserial_id`,`mbunit_id`,`jvno`,`part_no`,`project_id`,`warehouse_id`,`approval_status`) VALUES ('$mb_ref_id','$mb_materialid','$mb_date','$mbin_qty','$mbin_val','$mbout_qty','$mbout_val','$mbprice','$mbtype','$mbserial','$mbunit_id','$unit','$jvno','$part_no','$project_id','$warehouse_id','$approval_status')";
         $conn->query($query_inmb);
-    }
+		
+		
+		 $queryPro = "INSERT INTO `inv_product_price`(`mrr_no`,`material_id`, `receive_details_id`, `qty`, `price`,`part_no`, `status`) VALUES ('$mb_ref_id','$mb_materialid','$lastinsertedId','$mbin_qty','$mbprice','$part_no','1')";
+         $conn->query($queryPro);
+		
+		
+		$query_inmb = "INSERT INTO `inv_materialbalance` (`mb_ref_id`,`mb_materialid`,`mb_date`,`mbin_qty`,`mbin_val`,`mbout_qty`,`mbout_val`,`mbprice`,`mbtype`,`mbserial`,`mbserial_id`,`mbunit_id`,`jvno`,`part_no`,`project_id`,`warehouse_id`,`approval_status`) VALUES ('$mb_ref_id','$mb_materialid','$mb_date','$mbin_qty','$mbin_val','$mbout_qty','$mbout_val','$mbprice','$mbtype','$mbserial','$mbunit_id','$unit','$jvno','$part_no','$project_id','$warehouse_id','$approval_status')";
+        $conn->query($query_inmb);
+		
+		
+		/*
+		*  update inv_material current_balance:
+		*/
+		$queryBal = "UPDATE `inv_material` SET `current_balance`=current_balance + $mbin_qty WHERE `material_id_code` = '$mb_materialid'";
+		$conn->query($queryBal);
+		}
     /*
     *  Insert Data Into inv_receive Table:
     */
@@ -116,6 +135,8 @@ if (isset($_POST['receive_submit']) && !empty($_POST['receive_submit'])) {
     */
     $query3 = "INSERT INTO `inv_supplierbalance` (`sb_ref_id`,`warehouse_id`,`sb_date`,`sb_supplier_id`,`sb_dr_amount`,`sb_cr_amount`,`sb_remark`,`sb_partac_id`,`approval_status`) VALUES ('$mrr_no','$warehouse_id','$mrr_date','$supplier_id','0','$receive_total','$remarks','$mrr_no','$approval_status')";
     $result2 = $conn->query($query3);
+	
+	
     
     $_SESSION['success']    =   "Receive process have been successfully completed.";
     header("location: receive_entry.php");

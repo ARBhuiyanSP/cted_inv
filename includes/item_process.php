@@ -898,7 +898,26 @@ if(isset($_GET['process_type']) && $_GET['process_type'] == 'get_category_code')
     echo json_encode($feedback);
 }
 
-if(isset($_GET['process_type']) && $_GET['process_type'] == 'getItemCodeByParam'){
+if(isset($_GET['process_type']) && $_GET['process_type'] == 'getDetailByPriceId'){
+    session_start();
+    include '../connection/connect.php';
+    include '../helper/utilities.php';
+    $price_row_id = $_POST['price_row_id'];
+
+   $result_data= getDetailByPriceId("inv_product_price",$price_row_id);
+
+    $feedback   =   [
+        'status'    =>  'success',
+        'data'   =>  $result_data,
+    ];    
+    echo json_encode($feedback);
+
+
+
+
+}
+
+    if(isset($_GET['process_type']) && $_GET['process_type'] == 'getItemCodeByParam'){
     session_start();
     include '../connection/connect.php';
     include '../helper/utilities.php';
@@ -918,13 +937,15 @@ if(isset($_GET['process_type']) && $_GET['process_type'] == 'getItemCodeByParam'
     $param['mb_materialid'] =   $code;
     $param['warehouse_id']  =   $_SESSION['logged']['warehouse_id'];
     
-    $totalStock     =   get_product_stock_by_material_id($param);
-    $unitPrice     =   get_unit_price_by_material_id($param);
+    $totalStock		=   get_product_stock_by_material_id($param);
+    $unitPrice     	=	get_unit_price_by_material_id($param);
+	$priceDetails  	=  	get_lot_price_by_material_id($code);
     
     $feedback   =   [
         'status'    =>  'success',
         'message'   =>  'Found Code',
         'data'      =>  $code,
+		'priceDetails'      =>  $priceDetails,
         'qty_unit'  =>  $qty_unit,
         'totalStock'  =>  $totalStock,
         'unitPrice'  =>  $unitPrice,

@@ -19,7 +19,7 @@
 								<select name="partyname" id="partyname" class="form-control">
 									<option value="">Search By All Party</option>
 									<?php 
-									$query = "SELECT * FROM tb_party ORDER BY partyname ASC";
+									$query = "SELECT * FROM `tb_party` ORDER BY `partyname` ASC";
 									$result = mysqli_query($conn, $query);
 									while($row = mysqli_fetch_array($result))
 									{

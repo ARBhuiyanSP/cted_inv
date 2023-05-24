@@ -191,6 +191,21 @@ function getDataRowByTableAndId($table, $id)
         return false;
     }
 }
+
+function getDetailByPriceId($table, $id)
+{
+    global $conn;
+    $sql    = "SELECT * FROM $table where id=$id"  ;
+    $result = $conn->query($sql);
+    $name   =   '';
+    if ($result->num_rows > 0) {
+        return $result->fetch_object();
+    } else {
+        return false;
+    }
+}
+
+
 function getDefaultCategoryCode($table, $fieldName, $modifier, $defaultCode, $prefix)
 {
     global $conn;
@@ -229,7 +244,7 @@ function getDefaultCategoryCodeByWarehouseT($table, $fieldName, $modifier, $defa
     return $defaultCode;
 }
 
-function get_product_with_category()
+function get_product_with_category($graterThanZero=0)
 {
     $final_array = [];
     global $conn;
@@ -246,8 +261,16 @@ function get_product_with_category()
                 while ($scat = $sresult->fetch_object()) {
                     $sub_item_id    = $scat->id;
                     $sub_item_name  = $scat->material_sub_description;
-                    $msql           = "SELECT * FROM inv_material where material_id=$parent_id and material_sub_id=$sub_item_id order by material_description asc";
+                    $msql           = " SELECT * FROM inv_material where 1=1 AND material_id=$parent_id and material_sub_id=$sub_item_id ";
+					
+					if($graterThanZero > 0){
+						$msql           .=" AND current_balance > 0 ";
+					}
+
+					$msql           .=" order by material_description asc ";
+					
                     $mresult = $conn->query($msql);
+					
                     if ($mresult->num_rows > 0) {
                         while ($material    = $mresult->fetch_object()) {
                             $final_array[]  = [
@@ -331,6 +354,22 @@ function get_unit_price_by_material_id($param)
 
     $unitPrice     =   $lastPricea;
     return $unitPrice;
+}
+
+
+function get_lot_price_by_material_id($code)
+{
+    global $conn;
+	$sql = "SELECT `id`, `mrr_no`, `material_id`, `receive_details_id`, `qty`, `price`, `status`
+	FROM `inv_product_price` WHERE material_id = '$code' ";
+    $result = $conn->query($sql);
+	$dataContainer ="<option value=''>-Select-</option>";
+	 if ($result->num_rows > 0) {
+        while ($row = $result->fetch_assoc()) {
+                $dataContainer .="<option value='".$row["id"]."'>".$row["material_id"]."|".$row["qty"]."|".$row["price"]."</option>";
+            }
+    }
+    return $dataContainer;
 }
 function get_material_last_price($param)
 {

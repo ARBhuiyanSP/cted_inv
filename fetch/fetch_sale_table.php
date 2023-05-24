@@ -23,7 +23,7 @@ $column = array("inv_issue.id", "inv_issue.issue_id", "inv_issue.issue_date", "t
 	}
 	else
 	{
-		$query .= 'ORDER BY inv_issue.id DESC ';
+		$query .= 'ORDER BY inv_issue.issue_id DESC ';
 	}
 
 		$query1 = '';
@@ -43,10 +43,10 @@ $column = array("inv_issue.id", "inv_issue.issue_id", "inv_issue.issue_date", "t
 	{
 		$actionData     =   get_sale_list_action_data($row);
 		$sub_array = array();
-		$sub_array[] = $row["issue_id"];
-		$sub_array[] = $row["issue_date"];
-		$sub_array[] = $row["partyname"];
-		$sub_array[] = $row["netsale_amount"];
+		$sub_array[] = $row["inv_issue.issue_id"];
+		$sub_array[] = $row["inv_issue.issue_date"];
+		$sub_array[] = $row["tb_party.partyname"];
+		$sub_array[] = $row["inv_issue.netsale_amount"];
 		$sub_array[] = $actionData;
 		$data[] = $sub_array;
 	}
