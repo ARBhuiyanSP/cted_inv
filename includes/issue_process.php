@@ -44,7 +44,7 @@ if (isset($_POST['issue_submit']) && !empty($_POST['issue_submit'])) {
 				$unit_price         = $_POST['unit_price'][$count];
 				$quantity           = $_POST['quantity'][$count];
 				$use_in          	= $_POST['use_in'];
-				$total_amount          	= $_POST['sub_total_amount'];
+				$total_amount       = $_POST['sub_total_amount'];
 				$remarks            = $_POST['remarks'];     
 				
 				
@@ -58,15 +58,32 @@ if (isset($_POST['issue_submit']) && !empty($_POST['issue_submit'])) {
 				
 				/* Update Qty in inv_product_price table*/
 
-				$sqlGetPrice = "select * from `inv_product_price` where `id`='$product_price_id'";
-				$resultGetPrice = mysqli_query($conn, $sqlGetPrice);
-				$rowGetPrice = mysqli_fetch_array($resultGetPrice);
+					$sqlGetPrice = "select * from `inv_product_price` where `id`='$product_price_id'";
+					$resultGetPrice = mysqli_query($conn, $sqlGetPrice);
+					$rowGetPrice = mysqli_fetch_array($resultGetPrice);
 
-				$oldQty = $rowGetPrice['qty'];
-				$newQty = $oldQty - $quantity;
+					$oldQty = $rowGetPrice['qty'];
+					$newQty = $oldQty - $quantity;
 
-				$queryUpdateQty    = "UPDATE `inv_product_price` SET `qty`='$newQty' WHERE `id`='$product_price_id'";
-    			$conn->query($queryUpdateQty);
+					$queryUpdateQty    = "UPDATE `inv_product_price` SET `qty`='$newQty' WHERE `id`='$product_price_id'";
+	    			$conn->query($queryUpdateQty);
+
+    			/* Update Qty in inv_product_price table*/
+    			/* Update Qty in inv_material table*/
+
+	    			$sqlGetqty = "select * from `inv_material` where `material_id_code`='$material_id'";
+					$resultGetqty = mysqli_query($conn, $sqlGetqty);
+					$rowGetqty = mysqli_fetch_array($resultGetqty);
+
+					$old_Qty = $rowGetqty['current_balance'];
+					$new_Qty = $old_Qty - $quantity;
+
+	    			$queryUpdateQty    = "UPDATE `inv_material` SET `current_balance`='$new_Qty' WHERE `material_id_code`='$material_id'";
+	    			$conn->query($queryUpdateQty); 
+
+    			/* Update Qty in inv_material table*/
+
+    			/* insert in inv_issuedetail table*/
         
 				$query = "INSERT INTO `inv_issuedetail` (`issue_id`,`issue_date`,`material_id`,`material_name`,`unit`,`issue_qty`,`issue_price`,`part_no`,`use_in`,`project_id`,`warehouse_id`,`approval_status`) VALUES ('$issue_id','$issue_date','$material_id','$material_name','$unit','$quantity','$unit_price','$part_no','$use_in','$project_id','$warehouse_id','0')";
 				$conn->query($query);

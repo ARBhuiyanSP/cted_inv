@@ -329,7 +329,27 @@ function processItems(form_id) {
     }
 }
 
+function partNoUpdate(form_id) {
 
+    
+    
+        $.ajax({
+            url: baseUrl + "includes/item_process.php?process_type=part_number_update",
+            type: 'POST',
+            dataType: 'json',
+            data: $("#" + form_id).serialize(),
+            success: function(response) {
+                if (response.status == 'success') {
+                    
+                    swal("Success", response.message, "success");
+                } else {
+                    swal("Failed", response.message, "error");
+                }
+            }
+        });
+    
+    
+}
 
 function getBuildingByPackage(package_id, selector = false) {
     if (package_id) {
@@ -512,6 +532,21 @@ function openMaterialEditForm(edit_id) {
         success: function(response) {
             $('#item_edit_form').modal('show');
             $('#material_edit_data_section').html(response);
+        }
+    });
+}
+
+
+function addNewPartNumberModal(edit_id) {
+    $.ajax({
+        url: baseUrl + "includes/item_process.php?process_type=add_new_part_number",
+        type: 'POST',
+        dataType: 'html',
+        data: 'edit_id=' + edit_id,
+        async:false,
+        success: function(response) {
+            $('#partnoAddedModal').modal('show');
+            $('#material_part_no_edit_data_section').html(response);
         }
     });
 }

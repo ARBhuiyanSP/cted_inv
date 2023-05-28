@@ -206,6 +206,62 @@ if(isset($_GET['process_type']) && $_GET['process_type'] == 'item'){
     echo json_encode($data);
 }
 
+
+if(isset($_GET['process_type']) && $_GET['process_type'] == 'part_number_update'){
+    include '../connection/connect.php';
+    include '../helper/utilities.php';
+    $status     =   'success';
+    $message    =   'Current operation was successfully completed';
+    $feedback   =   '';
+    // echo "<pre>";
+    // print_r($_POST);
+    // echo "</pre>";
+    $new_part_no = $_POST["new_part_no"];
+    $material_update_id = $_POST["material_update_id"];
+    $item_code = $_POST["item_code"];
+    $part_no = $_POST["part_no"];
+    $item_code = $_POST["item_code"];
+
+    $date = date('Y-m-d');
+    $user_id   =   1;
+
+    if($new_part_no !=""){
+
+        // Update inv_material_partno_detail update
+
+        $inv_material_partno_detail_sql = "UPDATE inv_material_partno_detail SET status=0  WHERE inv_material_id=$material_update_id ";
+        $conn->query($inv_material_partno_detail_sql);
+
+        // Insert inv_material_partno_detail
+
+       $insert_sql=" INSERT INTO `inv_material_partno_detail`( `inv_material_id`, `material_id_code`, `part_no`, `status`, `created_by`, `updated_by`, `created_at`, `updated_at`) VALUES ('$material_update_id','$item_code','$new_part_no','1','$user_id','$user_id','$date','$date') ";
+       $conn->query($insert_sql);
+
+
+        $sql = "UPDATE inv_material SET part_no='$new_part_no' WHERE id=$material_update_id ";
+            if ($conn->query($sql) === TRUE) {
+                $feedbackData   =   [
+                    'status'    =>  'success',
+                    'message'   =>  'Data have been successfully Updated '.$material_update_id,
+                ];
+            } else {
+                $feedbackData   =   [
+                    'status'    =>  'error',
+                    'message'   =>  "Error: " . $sql . "<br>" . $conn->error,
+                ];        
+            }
+        }else{
+           $feedbackData   =   [
+                    'status'    =>  'error',
+                    'message'   =>  "Part No is required" . $conn->error,
+                ]; 
+        }
+
+    
+
+   echo json_encode($feedbackData);
+}
+
 /*
 ****************************************************************************************
 ############################## MATERIAL LEVEL 3 DATA ADD ###############################
@@ -596,7 +652,7 @@ if(isset($_GET['process_type']) && $_GET['process_type'] == 'material_edit'){
             <div class="form-group">
                 <label class="control-label col-sm-5" for="name">Part No:</label>
                 <div class="col-sm-7">
-                    <input type="text" class="form-control" id="edit_item_name" placeholder="brand name" name="part_no" value="<?php if(isset($editData->part_no)){ echo $editData->part_no; } ?>">
+                    <input readonly type="text" class="form-control" id="edit_item_name" placeholder="brand name" name="part_no" value="<?php if(isset($editData->part_no)){ echo $editData->part_no; } ?>">
                 </div>
             </div> </br>
             <div class="form-group">
@@ -947,11 +1003,110 @@ if(isset($_GET['process_type']) && $_GET['process_type'] == 'getDetailByPriceId'
         'data'      =>  $code,
 		'priceDetails'      =>  $priceDetails,
         'qty_unit'  =>  $qty_unit,
-        'totalStock'  =>  $totalStock,
-        'unitPrice'  =>  $unitPrice,
+       // 'totalStock'  =>  $totalStock,
+       // 'unitPrice'  =>  $unitPrice,
         'brand_name'  =>  (isset($materialData->brand_name) && !empty($materialData->brand_name) ? $materialData->brand_name : ''),
         'part_no'  =>  (isset($materialData->part_no) && !empty($materialData->part_no) ? $materialData->part_no : ''),
     ];    
     echo json_encode($feedback);
 }
 ?>
+
+<?php
+
+if(isset($_GET['process_type']) && $_GET['process_type'] == 'add_new_part_number'){
+    include '../connection/connect.php';
+    include '../helper/utilities.php';
+    $edit_id    =   $_POST['edit_id'];
+    $editData   =   getDataRowByTableAndId('inv_material',$edit_id);
+
+     global $conn;
+   $sql_partno = "SELECT * FROM inv_material_partno_detail WHERE status=0 AND inv_material_id=$edit_id ";
+    $partno_result = $conn->query($sql_partno);
+    
+    $material_key_array=[];
+     while ($part_row = $partno_result->fetch_assoc()) {
+        $material_key_array[]=$part_row["part_no"];
+     }
+
+?> 
+        <div class="modal_body_centerize"> 
+            <table style="width:100%;" >
+                <tr>
+                    <td class="col-sm-5">ID:</td>
+                    <td class="col-sm-7">
+                        <input type="hidden" name="material_update_id" value="<?php echo $editData->id; ?>">
+                        <input type="text" id="_id" readonly class="form-control"  value="<?php echo $editData->id; ?>">
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-sm-5">Parent Category:</td>
+                    <td class="col-sm-7">
+                        <input type="hidden" class="form-control"  placeholder="name" name="parent_item_id" value="<?php if(isset($editData->material_id)){ echo $editData->material_id; } ?>">
+                     <input type="text" class="form-control"  placeholder="name" value="<?php if(isset($editData->material_id)){ $dataresult =   getDataRowByTableAndId('inv_materialcategorysub', $editData->material_id); echo (isset($dataresult) && !empty($dataresult) ? $dataresult->category_description : ''); } ?>"readonly> 
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-sm-5">Sub Category:</td>
+                    <td class="col-sm-7">
+                        <input type="hidden" class="form-control"  placeholder="name" name="sub_item_id" value="<?php if(isset($editData->material_sub_id)){ echo $editData->material_sub_id; } ?>">
+                    <input type="text" class="form-control"  placeholder="name" value="<?php if(isset($editData->material_sub_id)){ 
+                    $dataresult =   getDataRowByTableAndId('inv_materialcategory', $editData->material_sub_id); echo (isset($dataresult) && !empty($dataresult) ? $dataresult->material_sub_description : ''); } ?>"readonly>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-sm-5">Level-3:</td>
+                    <td class="col-sm-7">
+                       <input type="hidden" class="form-control"  placeholder="name" name="material_level3_id" value="<?php if(isset($editData->material_level3_id)){ echo $editData->material_level3_id; } ?>">
+                    <input type="text" class="form-control"  placeholder="name" value="<?php if(isset($editData->material_level3_id)){ 
+                    $dataresult =   getDataRowByTableAndId('inv_material_level3', $editData->material_level3_id); echo (isset($dataresult) && !empty($dataresult) ? $dataresult->material_level3_description : ''); } ?>"readonly>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-sm-5">Level-4:</td>
+                    <td class="col-sm-7">
+                        <input type="hidden" class="form-control"  placeholder="name" name="material_level4_id" value="<?php if(isset($editData->material_level4_id)){ echo $editData->material_level4_id; } ?>">
+                    <input type="text" class="form-control"  placeholder="name" value="<?php if(isset($editData->material_level4_id)){ 
+                    $dataresult =   getDataRowByTableAndId('inv_material_level4', $editData->material_level4_id); echo (isset($dataresult) && !empty($dataresult) ? $dataresult->material_level4_description : ''); } ?>"readonly>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-sm-5">Material Code:</td>
+                    <td class="col-sm-7">
+                        <input type="text" class="form-control" id="item_edit_code" placeholder="Enter item code" name="item_code" value="<?php if(isset($editData->material_id_code)){ echo $editData->material_id_code; } ?>" readonly>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-sm-5">Name:</td>
+                    <td class="col-sm-7">
+                        <input type="text" readonly class="form-control"  placeholder="name" name="name" value="<?php if(isset($editData->material_description)){ echo $editData->material_description; } ?>">
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-sm-5">Current Part No:</td>
+                    <td class="col-sm-7">
+                        <input readonly type="text" class="form-control"  placeholder="Current Part No" name="part_no" value="<?php if(isset($editData->part_no)){ echo $editData->part_no; } ?>">
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-sm-5">Previous Part No:</td>
+                    <td class="col-sm-7">
+                         <?php
+                            echo  implode(",", $material_key_array);
+                            ?>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-sm-5">New Part No:</td>
+                    <td class="col-sm-7">
+                       <input id="new_part_no" type="text" class="form-control"  placeholder="New Part No" name="new_part_no" value="">
+                    </td>
+                </tr>
+            </table>
+            
+            
+            
+           
+            
+        </div>
+<?php } ?>
