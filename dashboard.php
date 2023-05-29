@@ -126,7 +126,7 @@ $(document).ready(function() {
 														$selected	= '';
 														}
 													?>
-													<option value="<?php echo $data['item_code']; ?>" <?php echo $selected; ?>><?php echo $data['material_name']; ?>-<?php echo $data['part_no']; ?>-<?php echo $data['spec']; ?></option>
+													<option value="<?php echo $data['item_code']; ?>" <?php echo $selected; ?>><?php echo $data['material_name']; ?>-<?php echo $data['item_code']; ?>-<?php echo $data['part_no']; ?>-<?php echo $data['spec']; ?></option>
 													<?php
 												}
 											}
