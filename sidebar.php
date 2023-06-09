@@ -90,6 +90,16 @@
             </a> -->
         </div>
     </li>
+	<li class="nav-item">
+        <a class="nav-link" href="opening_balance.php">
+            <i class="fa fa-key" aria-hidden="true" style="color: #007BFF;"></i>
+            <span>Opening Stock Entry</span></a>
+    </li>
+	<li class="nav-item">
+        <a class="nav-link" href="edit_part_spec.php">
+            <i class="fa fa-key" aria-hidden="true" style="color: #007BFF;"></i>
+            <span>Edit Part No</span></a>
+    </li>
 	
 	<li class="nav-item" style="background-color:#007BFF;">
         <span class="nav-link" href="#">
@@ -161,16 +171,7 @@
             <span>Return To Vendor</span></a>
     </li>-->
 	
-    <li class="nav-item">
-        <a class="nav-link" href="opening_balance.php">
-            <i class="fa fa-key" aria-hidden="true" style="color: #007BFF;"></i>
-            <span>Opening Stock Entry</span></a>
-    </li>
-	<li class="nav-item">
-        <a class="nav-link" href="edit_part_spec.php">
-            <i class="fa fa-key" aria-hidden="true" style="color: #007BFF;"></i>
-            <span>Edit Part No</span></a>
-    </li>
+    
 	 <!-- <li class="nav-item">
         <a class="nav-link" href="payment_entry.php">
             <i class="fa fa-money-bill" aria-hidden="true" style="color: #007BFF;"></i>
