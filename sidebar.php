@@ -125,7 +125,7 @@
      <?php if(check_permission('role-list')){ ?>
         <li class="nav-item">
             <a class="nav-link" href="role-list.php">
-                <i class="fa fa-key" aria-hidden="true" style="color: #007BFF;"></i>
+                <i class="fa fa-id-badge" aria-hidden="true" style="color: #007BFF;"></i>
                 <span>Role</span></a>
         </li>
     <?php } ?>
@@ -133,7 +133,7 @@
     <?php if(check_permission('user-list')){ ?>
         <li class="nav-item">
             <a class="nav-link" href="user-list.php">
-                <i class="fa fa-key" aria-hidden="true" style="color: #007BFF;"></i>
+                <i class="fa fa-users" aria-hidden="true" style="color: #007BFF;"></i>
                 <span>Users</span></a>
         </li>
     <?php } ?>
@@ -141,7 +141,7 @@
     <?php if(check_permission('data-backup')){ ?>
         <li class="nav-item">
             <a class="nav-link" href="data_backup.php">
-                <i class="fa fa-key" aria-hidden="true" style="color: #007BFF;"></i>
+                <i class="fa fa-database" aria-hidden="true" style="color: #007BFF;"></i>
                 <span>Data Backup</span></a>
         </li>
     <?php } ?>
