@@ -5,6 +5,9 @@ function getTableDataByTableName($table, $order = 'DESC', $column='id', $dataTyp
     $sql = "SELECT * FROM $table order by $column $order";
     $result = $conn->query($sql);
 
+    // print_r($table);
+    //            exit();
+
     //Part Number Detail table data fetch
     $sql_partno = "SELECT * FROM inv_material_partno_detail WHERE status=0 AND part_no !='' ";
     $partno_result = $conn->query($sql_partno);
@@ -20,15 +23,22 @@ function getTableDataByTableName($table, $order = 'DESC', $column='id', $dataTyp
         // output data of each row
         if (isset($dataType) && $dataType == 'obj') {
             while ($row = $result->fetch_object()) {
-                $inv_material_id = $row["id"];
-                $row["old_part_no"] = oldPartNumberString($material_key_array,$inv_material_id);
+               // print_r($row);
+               // exit();
+                if($row->id ){
+                     $inv_material_id = $row->id;
+                    $row->old_part_no = oldPartNumberString($material_key_array,$inv_material_id);
+                }
+               
                 $dataContainer[] = $row;
             }
         } else {
             while ($row = $result->fetch_assoc()) {
-                $inv_material_id = $row["id"];
-                
-                $row["old_part_no"] = oldPartNumberString($material_key_array,$inv_material_id);
+                 if($row["id"]){
+                    $inv_material_id = $row["id"];
+                    $row["old_part_no"] = oldPartNumberString($material_key_array,$inv_material_id);
+                 }
+
                 $dataContainer[] = $row;
             }
         }

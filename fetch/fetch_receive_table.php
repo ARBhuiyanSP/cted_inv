@@ -6,7 +6,7 @@ include('../connection/connect.php');
 include('../helper/utilities.php');
 $column = array("inv_receive.id", "inv_receive.mrr_no", "inv_receive.mrr_date", "suppliers.name", "inv_receive.receive_total");
 $query = "
- SELECT * FROM inv_receive 
+ SELECT *,inv_receive.id as voucher_id FROM inv_receive 
  INNER JOIN suppliers 
  ON suppliers.code = inv_receive.supplier_id 
 ";
@@ -48,8 +48,10 @@ $data = array();
 
 while($row = mysqli_fetch_array($result))
 {
+
 	$actionData     =   get_receive_list_action_data($row);
  $sub_array = array();
+
  $sub_array[] = $row["mrr_no"];
  $sub_array[] = $row["mrr_date"];
  $sub_array[] = $row["name"];
@@ -62,7 +64,7 @@ while($row = mysqli_fetch_array($result))
 function get_receive_list_action_data($row){
 	//$edit_url = 'receive_edit.php?edit_id='.$row["mrr_no"];
     
-		  $edit_url = 'receive_edit.php?edit_id='.$row["mrr_no"];
+		  $edit_url = 'receive_edit.php?edit_id='.$row["voucher_id"];
 	   
     $view_url = 'receive-view.php?no='.$row["mrr_no"];
     $action = "";
