@@ -36,6 +36,20 @@ function getTableDataByTableName($table, $order = 'DESC', $column='id', $dataTyp
     return $dataContainer;
 }
 
+
+function check_permission($url){
+    $permissin_urls = $_SESSION['logged']['permissin_urls'];
+    if(in_array($url, $permissin_urls)){
+        return true;
+    }else{
+        return false;
+    }
+
+    
+
+    
+}
+
 function oldPartNumberString($material_key_array,$inv_material_id){
         $part_no_string='';
         foreach ($material_key_array as $key => $value) {
@@ -819,11 +833,15 @@ function show_issue_details_data($item_details)
                     </td>
                     <td>
                         <span><a class="action-icons c-approve" href="issue-view.php?no=<?php echo $item['issue_id']; ?>" title="View"><i class="fas fa-eye text-success"></i></a></span>
+                        <?php if(check_permission('material-issue-edit')){ ?>
                         <span><a class="action-icons c-delete" href="issue_edit.php?edit_id=<?php echo $item['id']; ?>" title="edit"><i class="fa fa-edit text-info mborder"></i></a></span>
-                        <?php if ($_SESSION['logged']['user_type'] == 'superAdmin') { ?>
+                        <?php } ?>
+                       <?php if(check_permission('material-issue-approve')){ ?>
                             <span><a class="action-icons c-delete" href="issue_approve.php?issue=<?php echo $item['issue_id']; ?>" title="approve"><i class="fa fa-check text-info mborder"></i></a></span>
                         <?php } ?>
+                         <?php if(check_permission('material-issue-delete')){ ?>
                         <span><a class="action-icons c-delete" href="#" title="delete"><i class="fa fa-trash text-danger"></i></a></span>
+                        <?php } ?>
                     </td>
                     </tr>
                 <?php } ?>

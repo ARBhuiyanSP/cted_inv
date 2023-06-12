@@ -1,6 +1,10 @@
 <?php 
 include 'header.php';
 ?>
+<?php if(!check_permission('user-add')){ 
+        include("404.php");
+        exit();
+ } ?>
 <!-- Left Sidebar End -->
 <!--<script src="https://code.jquery.com/jquery-1.12.4.js"></script>-->
 <!--<link href="css/form-entry.css" rel="stylesheet">-->
@@ -17,44 +21,49 @@ include 'header.php';
     <div class="card mb-3">
         <div class="card-header">
             <i class="fas fa-table"></i>
-            User Entry</div>
+            User Entry
+            <a href="user-list.php" style="float:right"><i class="fas fa-list"></i> User List<a></div>
         <div class="card-body">
             <!--here your code will go-->
             <div class="form-group">
-                <form action="" method="post" name="add_name" id="add_name">
+                <form action="" method="post">
                     <div class="row" id="div1" style="">
                         <div class="col-xs-3">
                             <div class="form-group">
                                 <label>First Name</label>
-                                <input type="text" name="purchase_id" id="purchase_id" class="form-control">
+                                <input type="text" name="first_name" id="first_name" class="form-control" required >
+                                <!-- <input type="hidden" name="user_add" value="user_add"> -->
                             </div>
                         </div>
 						<div class="col-xs-3">
                             <div class="form-group">
                                 <label>Last Name</label>
-                                <input type="text" name="purchase_id" id="purchase_id" class="form-control">
-                            </div>
-                        </div>
-						<div class="col-xs-3">
-                            <div class="form-group">
-                                <label>Employee ID</label>
-                                <input type="text" name="purchase_id" id="purchase_id" class="form-control">
+                                <input type="text" name="last_name" id="last_name" class="form-control" required >
                             </div>
                         </div>
 						<div class="col-xs-3">
                             <div class="form-group">
                                 <label>Email</label>
-                                <input type="text" name="purchase_id" id="purchase_id" class="form-control">
+                                <input type="text" name="email" id="email" class="form-control" required >
                             </div>
                         </div>
 						
 						<div class="col-xs-3">
                             <div class="form-group">
-                                <label>User Type</label>
-                                <select class="form-control" id="warehouse_id" name="warehouse_id" required>
+                                <label>User Role</label>
+                                <select class="form-control" id="role_id" name="role_id" required>
                                     <option value="">Select</option>
-                                    <option value="">Admin</option>
-                                    <option value="">Incharge</option>
+                                    <?php
+                                    $roleData = getTableDataByTableName('roles');
+                                    ;
+                                    if (isset($roleData) && !empty($roleData)) {
+                                        foreach ($roleData as $data) {
+                                            ?>
+                                            <option value="<?php echo $data['id']; ?>"><?php echo $data['name']; ?></option>
+                                            <?php
+                                        }
+                                    }
+                                    ?>
                                 </select>
                             </div>
                         </div>
@@ -80,13 +89,7 @@ include 'header.php';
 						<div class="col-xs-3">
                             <div class="form-group">
                                 <label>Password</label>
-                                <input type="text" name="purchase_id" id="purchase_id" class="form-control">
-                            </div>
-                        </div>
-						<div class="col-xs-3">
-                            <div class="form-group">
-                                <label>Confirm Password</label>
-                                <input type="text" name="purchase_id" id="purchase_id" class="form-control">
+                                <input type="text" name="password" id="password" class="form-control" required >
                             </div>
                         </div>
                     </div>

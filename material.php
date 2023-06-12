@@ -1,3 +1,8 @@
+
+
+
+
+
 <?php include 'header.php' ?>
 <link href="https://cdn.datatables.net/1.10.20/css/dataTables.bootstrap4.min.css" rel="stylesheet">
 <style>
@@ -6,6 +11,13 @@
 
 }
 </style>
+<?php
+//Start of permission
+if(!check_permission('material-list')){  
+    include('404.php');
+    exit();
+ }  ?>
+
 <div class="container-fluid">
     <!-- DataTables Example -->
     <div class="card mb-3">
@@ -50,9 +62,12 @@
                                                         <?php echo $item['id']; ?>
                                                     </td>
                                                         <td>
+                                                            <?php
+                if(check_permission('material-edit')){ ?>
                                                         <button title="Item Edit" type="button" class="btn btn-sm btn-default" onclick="openMaterialEditForm('<?php echo $item['id']; ?>');">
                                                             <i class="fa fa-edit" aria-hidden="true"></i>
                                                         </button>
+                <?php } ?>
 
                                                         <button title="Add New Part No" type="button" class="btn btn-sm btn-info" onclick="addNewPartNumberModal('<?php echo $item['id']; ?>');">
                                                            <i class="fa fa-plus" aria-hidden="true"></i>
@@ -99,6 +114,7 @@
         </div>
     </div>
 </div>
+
 <!-- /.container-fluid -->
 <?php include 'footer.php' ?>
 <script>

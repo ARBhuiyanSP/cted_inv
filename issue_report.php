@@ -1,4 +1,8 @@
 <?php include 'header.php' ?>
+<?php if(!check_permission('material-issue-details')){ 
+        include("404.php");
+        exit();
+ } ?>
 <div class="container-fluid">
     <!-- Breadcrumbs-->
     <ol class="breadcrumb">

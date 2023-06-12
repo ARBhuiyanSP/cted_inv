@@ -1,6 +1,10 @@
 <?php 
 include 'header.php';
-?>
+
+ if(!check_permission('equipment-list')){ 
+        include("404.php");
+        exit();
+ } ?>
 <!-- Left Sidebar End -->
 <div class="container-fluid">
     <!-- Breadcrumbs-->
@@ -102,8 +106,12 @@ include 'header.php';
 										echo (isset($dataresult) && !empty($dataresult) ? $dataresult->name : '');
 										?></td>
 										<td>
-											<a href="#"><i class="fas fa-edit text-success"></i></a>
+											<?php if(check_permission('equipment-edit')){  ?>
+                                            <a href="#"><i class="fas fa-edit text-success"></i></a>
+                                        <?php } ?>
+                                        <?php if(check_permission('equipment-delete')){  ?>
 											<a href="#"><i class="fa fa-trash text-danger"></i></a>
+                                            <?php } ?>
 										</td>
 									</tr>
 									<?php

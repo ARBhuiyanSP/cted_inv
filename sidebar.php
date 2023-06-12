@@ -32,15 +32,21 @@
 	font-style:italic;
 }
 </style>
+
+
 <ul class="sidebar navbar-nav">
 	<li class="nav-item active">
         <a class="nav-link" href="dashboard.php">
             <i class="fas fa-fw fa-tachometer-alt" style="color: #007BFF;"></i>
             <span>Dashboard</span>
+            <?php 
+
+
+
+?>
         </a>
     </li>
-	<?php if($_SESSION['logged']['user_type'] !== 'whm') {?>
-	<?php if($_SESSION['logged']['user_type'] !== 'superAdmin') {?>
+	
     <li class="nav-item" style="background-color:#007BFF;">
         <span class="nav-link" href="#">
             <i class="fa fa-bars" aria-hidden="true" style="color: #FFF;"></i>
@@ -52,74 +58,125 @@
             <span>Master Setup</span>
         </a>
         <div class="dropdown-menu" aria-labelledby="pagesDropdown">
-            <a class="dropdown-item" href="material.php">
+            <?php
+            
+                if(check_permission('material-list')){ ?>
+                    <a class="dropdown-item" href="material.php">
                 <i class="fa fa-bullseye" aria-hidden="true" style="color: #007BFF;"></i>
                 <span class="sub_menu_text_design"> Material</span>
             </a>
-			<a class="dropdown-item" href="category_setup.php">
+             <?php    } ?>
+
+
+            <?php
+            
+                if(check_permission('category-list')){ ?>
+                    <a class="dropdown-item" href="category_setup.php">
                 <i class="fa fa-bullseye" aria-hidden="true" style="color: #007BFF;"></i>
                 <span class="sub_menu_text_design"> Material Category</span>
             </a>
-            <a class="dropdown-item" href="unit_entry.php">
+             <?php    } ?>
+            
+             <?php
+            
+                if(check_permission('unit-list')){ ?>
+                    <a class="dropdown-item" href="unit_entry.php">
                 <i class="fa fa-bullseye" aria-hidden="true" style="color: #007BFF;"></i>
                 <span class="sub_menu_text_design"> UOM</span>
             </a>
-            <!-- <a class="dropdown-item" href="supplier_entry.php">
-                <i class="fa fa-bullseye" aria-hidden="true" style="color: #007BFF;"></i>
-                <span class="sub_menu_text_design"> Supplier Add</span>
-            </a>
-			<a class="dropdown-item" href="supplier_info.php">
-                <i class="fa fa-bullseye" aria-hidden="true" style="color: #007BFF;"></i>
-                <span class="sub_menu_text_design"> Supplier Report</span>
-            </a> -->
-            <a class="dropdown-item" href="project_entry.php">
+             <?php    } ?>
+			
+        <?php
+            
+                if(check_permission('project-list')){ ?>
+                    <a class="dropdown-item" href="project_entry.php">
                 <i class="fa fa-bullseye" aria-hidden="true" style="color: #007BFF;"></i>
                 <span class="sub_menu_text_design"> Projects</span>
             </a>
-            <a class="dropdown-item" href="warehouse_entry.php">
+             <?php    } ?>
+            
+            <?php
+            
+                if(check_permission('warehouse-list')){ ?>
+                    <a class="dropdown-item" href="warehouse_entry.php">
                 <i class="fa fa-bullseye" aria-hidden="true" style="color: #007BFF;"></i>
                 <span class="sub_menu_text_design"> Warehouse</span>
             </a>
-            <a class="dropdown-item" href="equipment_entry.php">
+             <?php    } ?>
+           
+        
+            <?php
+            
+                if(check_permission('equipment-list')){ ?>
+                    <a class="dropdown-item" href="equipment_entry.php">
                 <i class="fa fa-bullseye" aria-hidden="true" style="color: #007BFF;"></i>
                 <span class="sub_menu_text_design"> Euipments</span>
             </a>
-            <!-- <a class="dropdown-item" href="user_entry.php">
-                <i class="fa fa-bullseye" aria-hidden="true" style="color: #007BFF;"></i>
-                <span class="sub_menu_text_design"> Users</span>
-            </a> -->
+             <?php    } ?>
+
+            
+         
+
+
+           
         </div>
     </li>
-	<li class="nav-item">
-        <a class="nav-link" href="opening_balance.php">
-            <i class="fa fa-key" aria-hidden="true" style="color: #007BFF;"></i>
-            <span>Opening Stock Entry</span></a>
-    </li>
-	<li class="nav-item">
-        <a class="nav-link" href="edit_part_spec.php">
-            <i class="fa fa-key" aria-hidden="true" style="color: #007BFF;"></i>
-            <span>Edit Part No</span></a>
-    </li>
+
+     <?php if(check_permission('role-list')){ ?>
+        <li class="nav-item">
+            <a class="nav-link" href="role-list.php">
+                <i class="fa fa-key" aria-hidden="true" style="color: #007BFF;"></i>
+                <span>Role</span></a>
+        </li>
+    <?php } ?>
+
+    <?php if(check_permission('user-list')){ ?>
+        <li class="nav-item">
+            <a class="nav-link" href="user-list.php">
+                <i class="fa fa-key" aria-hidden="true" style="color: #007BFF;"></i>
+                <span>Users</span></a>
+        </li>
+    <?php } ?>
+
+    <?php if(check_permission('data-backup')){ ?>
+        <li class="nav-item">
+            <a class="nav-link" href="data_backup.php">
+                <i class="fa fa-key" aria-hidden="true" style="color: #007BFF;"></i>
+                <span>Data Backup</span></a>
+        </li>
+    <?php } ?>
+
+    <?php if(check_permission('log-history')){ ?>
+        <li class="nav-item">
+            <a class="nav-link" href="log-history.php">
+                <i class="fa fa-key" aria-hidden="true" style="color: #007BFF;"></i>
+                <span>Log History</span></a>
+        </li>
+    <?php } ?>
+     
+    <?php if(check_permission('opening-stock-list')){ ?>
+    	<li class="nav-item">
+            <a class="nav-link" href="opening_balance.php">
+                <i class="fa fa-key" aria-hidden="true" style="color: #007BFF;"></i>
+                <span>Opening Stock Entry</span></a>
+        </li>
+    <?php } ?>
+
+    <!-- <?php if(check_permission('opening-stock-list')){ ?>
+        <li class="nav-item">
+            <a class="nav-link" href="edit_part_spec.php">
+                <i class="fa fa-key" aria-hidden="true" style="color: #007BFF;"></i>
+                <span>Edit Part No</span></a>
+        </li>
+    <?php } ?> -->
+	
 	
 	<li class="nav-item" style="background-color:#007BFF;">
         <span class="nav-link" href="#">
             <i class="fa fa-users" aria-hidden="true" style="color: #FFF;"></i>
             <span style="color: #FFF;">User Page</span></span>
     </li>
-    <!-- <li class="nav-item dropdown">
-        <a class="nav-link dropdown-toggle" href="#" id="pagesDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            <i class="fas fa-fw fa-shopping-bag" aria-hidden="true" style="color: #007BFF;"></i>
-            <span>Material Purchase</span>
-        </a>
-        <div class="dropdown-menu" aria-labelledby="pagesDropdown">
-            <a class="dropdown-item" href="purchase_entry.php"><i class="fa fa-plus" aria-hidden="true" style="color: #007BFF;"></i><span class="sub_menu_text_design">Purchase Entry</span></a>
-            <a class="dropdown-item" href="Purchase_list.php"><i class="fa fa-list" aria-hidden="true" style="color: red;"></i><span class="sub_menu_text_design">Purchase  List</span></a>
-        </div>
-    </li> -->
-    
-	<?php } ?>
-	<?php } ?>
-	<?php if($_SESSION['logged']['user_type'] !== 'superAdmin') {?>
+    <?php if(check_permission('material-receive-list')){ ?>
     <li class="nav-item dropdown">
         <a class="nav-link dropdown-toggle" href="#" id="pagesDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             <i class="fas fa-fw fa-truck" aria-hidden="true" style="color: #007BFF;"></i>
@@ -130,148 +187,112 @@
             <a class="dropdown-item" href="receive-list.php"><i class="fa fa-list" aria-hidden="true" style="color: #007BFF;"></i><span class="sub_menu_text_design">Receive List</span></a>
         </div>
     </li>
-	<li class="nav-item dropdown">
+    <?php } ?>
+     <?php if(check_permission('material-issue-list')){ ?>
+    <li class="nav-item dropdown">
         <a class="nav-link dropdown-toggle" href="#" id="pagesDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             <i class="fas fa-fw fa-server" aria-hidden="true" style="color: #007BFF;"></i>
             <span>Material issue</span>
         </a>
         <div class="dropdown-menu" aria-labelledby="pagesDropdown">
             <a class="dropdown-item" href="issue_entry.php"><i class="fa fa-plus" aria-hidden="true" style="color: #007BFF;"></i><span class="sub_menu_text_design">Material issue</span></a>
-            <a class="dropdown-item" href="issue_list.php"><i class="fa fa-list" aria-hidden="true" style="color: #007BFF;"></i><span class="sub_menu_text_design">Issue List</span></a>
+            <a class="dropdown-item" href="issue-list.php"><i class="fa fa-list" aria-hidden="true" style="color: #007BFF;"></i><span class="sub_menu_text_design">Issue List</span></a>
         </div>
     </li>
-	<li class="nav-item">
-        <a class="nav-link " href="daily-activities.php">
-            <i class="fas fa-fw fa-server" aria-hidden="true" style="color: #007BFF;"></i>
-            <span>Daily Activities</span></a>
-    </li>
-    <!--<li class="nav-item dropdown">
-        <a class="nav-link dropdown-toggle" href="#" id="pagesDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            <i class="fas fa-fw fa-text-width " aria-hidden="true" style="color: #007BFF;"></i>
-            <span>Warehouse Transfer</span>
-        </a>
-        <div class="dropdown-menu" aria-labelledby="pagesDropdown">
-            <a class="dropdown-item" href="warehousetransfer_entry.php"><i class="fa fa-plus" aria-hidden="true" style="color: #007BFF;"></i><span class="sub_menu_text_design">Warehouse Transfer</span></a>
-            <a class="dropdown-item" href="transfer-list.php"><i class="fa fa-list" aria-hidden="true" style="color: #007BFF;"></i><span class="sub_menu_text_design">W.Transfer List</span></a>
-        </div>
-    </li>
-	<li class="nav-item dropdown">
-        <a class="nav-link dropdown-toggle" href="#" id="pagesDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            <i class="fas fa-fw fa-undo" aria-hidden="true" style="color: #007BFF;"></i>
-            <span>Material return</span>
-        </a>
-        <div class="dropdown-menu" aria-labelledby="pagesDropdown">
-            <a class="dropdown-item" href="return_entry.php"><i class="fa fa-plus" aria-hidden="true" style="color: #007BFF;"></i><span class="sub_menu_text_design">Material return</span></a>
-            <a class="dropdown-item" href="return-list.php"><i class="fa fa-list" aria-hidden="true" style="color: #007BFF;"></i><span class="sub_menu_text_design">Return List</span></a>
-        </div>
-    </li>
-    <li class="nav-item">
-        <a class="nav-link" href="returntovendor_entry.php">
-            <i class="fa fa-history" aria-hidden="true" style="color: red;"></i>
-            <span>Return To Vendor</span></a>
-    </li>-->
-	
-    
-	 <!-- <li class="nav-item">
-        <a class="nav-link" href="payment_entry.php">
-            <i class="fa fa-money-bill" aria-hidden="true" style="color: #007BFF;"></i>
-            <span>Payment Entry</span></a>
-    </li> -->
-
-	<?php } ?>
+    <?php } ?>
 	<li class="nav-item" style="background-color:#007BFF;">
         <span class="nav-link" href="#">
             <i class="fa fa-bars" aria-hidden="true" style="color: #FFF;"></i>
             <span style="color: #FFF;">Reports</span></span>
     </li>
 
+	 <?php if(check_permission('category-wise-material-list')){ ?>
+        <li class="nav-item">
+            <a class="nav-link" href="materialinfo_report.php">
+                <i class="fa fa-key" aria-hidden="true" style="color: #007BFF;"></i>
+                <span>Material List</span></a>
+        </li>
+    <?php } ?>
+
+    
 	
-	<li class="nav-item">
-        <a class="nav-link" href="materialinfo_report.php">
-            <i class="fa fa-registered" aria-hidden="true" style="color: #007BFF;"></i>
-            <span>Material List</span></a>
-    </li>
+
 	<!-- <li class="nav-item">
         <a class="nav-link" href="materialtype_info.php">
             <i class="fa fa-registered" aria-hidden="true" style="color: #007BFF;"></i>
             <span>TypeWise Material List</span></a>
     </li> -->
-	<li class="nav-item">
-        <a class="nav-link" href="stock_report.php">
-            <i class="fa fa-registered" aria-hidden="true" style="color: #007BFF;"></i>
-            <span>Stock Reports</span></a>
-    </li>
-	<li class="nav-item">
-        <a class="nav-link" href="movement_report.php">
-            <i class="fa fa-registered" aria-hidden="true" style="color: #007BFF;"></i>
-            <span>Movement Reports</span></a>
-    </li>
+
+     <?php if(check_permission('material-stock-report')){ ?>
+        <li class="nav-item">
+            <a class="nav-link" href="stock_report.php">
+                <i class="fa fa-registered" aria-hidden="true" style="color: #007BFF;"></i>
+                <span>Stock Reports</span></a>
+        </li>
+    <?php } ?>
+
+	<?php if(check_permission('material-movement-report')){ ?>
+    	<li class="nav-item">
+            <a class="nav-link" href="movement_report.php">
+                <i class="fa fa-registered" aria-hidden="true" style="color: #007BFF;"></i>
+                <span>Movement Reports</span></a>
+        </li>
+    <?php } ?>
+<?php if(check_permission('equipment-history')){ ?>
 	<li class="nav-item">
         <a class="nav-link" href="equipments-history.php">
             <i class="fa fa-registered" aria-hidden="true" style="color: #007BFF;"></i>
             <span>Equips.History Report</span></a>
     </li>
+<?php } ?>
+<?php if(check_permission('material-history')){ ?>
 	<li class="nav-item">
         <a class="nav-link" href="material-history.php">
             <i class="fa fa-registered" aria-hidden="true" style="color: #007BFF;"></i>
             <span>Material History Report</span></a>
     </li>
-	
+<?php } ?>
+<?php if(check_permission('material-receive-history')){ ?>
 		<li class="nav-item">
         <a class="nav-link" href="material-historyreceive.php">
             <i class="fa fa-registered" aria-hidden="true" style="color: #007BFF;"></i>
             <span>Material History(Receive) Report</span></a>
     </li>
-	
+<?php } ?>
+<?php if(check_permission('material-issue-history')){ ?>
 	<li class="nav-item">
         <a class="nav-link" href="material-historyissue.php">
             <i class="fa fa-registered" aria-hidden="true" style="color: #007BFF;"></i>
             <span>Material History(Issue) Report</span></a>
     </li>
-	<!-- <li class="nav-item">
-        <a class="nav-link" href="consumption_report.php">
-            <i class="fa fa-registered" aria-hidden="true" style="color: #007BFF;"></i>
-            <span>Consumption Reports</span></a>
-    </li>
-	<li class="nav-item">
-        <a class="nav-link" href="supplier_ledger.php">
-            <i class="fa fa-registered" aria-hidden="true" style="color: #007BFF;"></i>
-            <span>Supplier Ledger</span></a>
-    </li> -->
+<?php } ?>
+<?php if(check_permission('material-receive-details')){ ?>
 	<li class="nav-item">
         <a class="nav-link" href="receive_report.php">
             <i class="fa fa-registered" aria-hidden="true" style="color: #007BFF;"></i>
             <span>Receive details</span></a>
     </li>
+<?php } ?>
+<?php if(check_permission('categorywise-material-receive-details')){ ?>
 	<li class="nav-item">
         <a class="nav-link" href="receive_report_by_category.php">
             <i class="fa fa-registered" aria-hidden="true" style="color: #007BFF;"></i>
             <span>Categorywise Receive details</span></a>
     </li>
+<?php } ?>
+<?php if(check_permission('material-issue-details')){ ?>
 	<li class="nav-item">
         <a class="nav-link" href="issue_report.php">
             <i class="fa fa-registered" aria-hidden="true" style="color: #007BFF;"></i>
             <span>Issue details</span></a>
     </li>
+<?php } ?>
+<?php if(check_permission('categorywise-material-issue-details')){ ?>
 	<li class="nav-item">
         <a class="nav-link" href="issue_report_by_category.php">
             <i class="fa fa-registered" aria-hidden="true" style="color: #007BFF;"></i>
             <span>Categorywise Issue details</span></a>
     </li>
-	<!-- <li class="nav-item">
-        <a class="nav-link" href="warhousetransfer_report.php">
-            <i class="fa fa-registered" aria-hidden="true" style="color: #007BFF;"></i>
-            <span>Transfer details</span></a>
-    </li>
-	<li class="nav-item">
-        <a class="nav-link" href="return_report.php">
-            <i class="fa fa-registered" aria-hidden="true" style="color: #007BFF;"></i>
-            <span>Return details</span></a>
-    </li>
-	<li class="nav-item">
-        <a class="nav-link" href="inventory_sheet.php"> 
-            <i class="fa fa-registered" aria-hidden="true" style="color: #007BFF;"></i>
-            <span>Inventory Sheet</span></a>
-    </li> -->
+<?php } ?>
 	
 </ul>

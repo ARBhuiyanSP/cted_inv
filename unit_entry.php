@@ -1,6 +1,10 @@
 <?php 
 include 'header.php';
-?>
+
+ if(!check_permission('unit-list')){ 
+        include("404.php");
+        exit();
+ } ?>
 <!-- Left Sidebar End -->
 <div class="container-fluid">
     <!-- Breadcrumbs-->
@@ -52,8 +56,11 @@ include 'header.php';
 									<tr>
 										<td><?php echo $data['unit_name']; ?></td>
 										<td>
-											<a href="#"><i class="fas fa-edit text-success"></i></a>
+											 <?php if(check_permission('unit-edit')){ ?>
+                                            <a href="#"><i class="fas fa-edit text-success"></i></a>
+                                        <?php } if(check_permission('unit-delete')){ ?>
 											<a href="#"><i class="fa fa-trash text-danger"></i></a>
+                                        <?php } ?>
 										</td>
 									</tr>
 									<?php

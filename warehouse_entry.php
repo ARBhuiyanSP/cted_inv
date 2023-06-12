@@ -1,6 +1,10 @@
 <?php 
 include 'header.php';
-?>
+
+ if(!check_permission('warehouse-list')){ 
+        include("404.php");
+        exit();
+ } ?>
 <!-- Left Sidebar End -->
 <div class="container-fluid">
     <!-- Breadcrumbs-->
@@ -94,8 +98,12 @@ include 'header.php';
 										<td><?php echo $data['address']; ?></td>
 										<td><?php echo $data['project_id']; ?></td>
 										<td>
-											<a href="#"><i class="fas fa-edit text-success"></i></a>
+											<?php  if(check_permission('warehouse-edit')){ ?>
+                                            <a href="#"><i class="fas fa-edit text-success"></i></a>
+                                        <?php } ?>
+                                        <?php  if(check_permission('warehouse-delete')){ ?>
 											<a href="#"><i class="fa fa-trash text-danger"></i></a>
+                                            <?php } ?>
 										</td>
 									</tr>
 									<?php

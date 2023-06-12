@@ -2,6 +2,10 @@
 include 'header.php';
 
 ?>
+<?php if(!check_permission('material-issue-list')){ 
+        include("404.php");
+        exit();
+ } ?>
 <link href="css/dataTables.bootstrap4.min.css" rel="stylesheet">
 <style>
 	table th {

@@ -22,6 +22,8 @@ include 'includes/format_process.php';
 include 'includes/return_process.php';
 include 'includes/payment_process.php';
 include 'includes/equipment_process.php';
+include 'includes/role_process.php';
+include 'includes/user_process.php';
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -81,7 +83,7 @@ include 'includes/equipment_process.php';
     </button>
 
 
-<div class="d-none d-md-inline-block form-inline ml-auto mr-0 mr-md-3 my-2 my-md-0" style="color: white;"><?php echo $_SESSION['logged']['user_name']; ?>-[<?php echo $_SESSION['logged']['user_type']; ?>]</div>
+<div class="d-none d-md-inline-block form-inline ml-auto mr-0 mr-md-3 my-2 my-md-0" style="color: white;"><?php echo $_SESSION['logged']['user_name']; ?>-[<?php echo $_SESSION['logged']['user_name']; ?>]</div>
 
     <!-- Navbar -->
     <ul class="navbar-nav ml-auto ml-md-0">

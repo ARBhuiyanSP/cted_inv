@@ -1,5 +1,9 @@
 <?php include 'header.php';
 include 'includes/opening_stock_process.php'; ?>
+<?php if(!check_permission('opening-stock-list')){ 
+        include("404.php");
+        exit();
+ } ?>
 <style>
 .comment {
 

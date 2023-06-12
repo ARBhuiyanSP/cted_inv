@@ -1,4 +1,8 @@
 <?php include 'header.php' ?>
+<?php if(!check_permission('category-list')){ 
+        include("404.php");
+        exit();
+ } ?>
 <link href="https://cdn.datatables.net/1.10.20/css/dataTables.bootstrap4.min.css" rel="stylesheet">
 <style>
 .ui-widget-content {
@@ -44,9 +48,11 @@
                                                     <td><?php echo $pcat['category_id']; ?></td>
                                                     <td><?php echo $pcat['category_description']; ?></td>
                                                     <td>
+                                                        <?php if(check_permission('category-edit')){ ?>
                                                         <button type="button" class="btn btn-sm" onclick="openParentEditForm('<?php echo $pcat['id']; ?>');">
                                                             <i class="fa fa-edit" aria-hidden="true"></i>
                                                         </button>
+                                                    <?php } ?>
                                                     </td>
                                                 </tr>
                                                 <?php

@@ -1,4 +1,8 @@
 <?php include 'header.php' ?>
+<?php if(!check_permission('material-issue-add')){ 
+        include("404.php");
+        exit();
+ } ?>
 <!-- Left Sidebar End -->
 
 <div class="container-fluid">

@@ -1,6 +1,10 @@
 <?php 
 include 'header.php';
-?>
+
+ if(!check_permission('project-list')){ 
+        include("404.php");
+        exit();
+ } ?>
 <!-- Left Sidebar End -->
 <div class="container-fluid">
     <!-- Breadcrumbs-->
@@ -73,8 +77,12 @@ include 'header.php';
 										<td><?php echo $data['name']; ?></td>
 										<td><?php echo $data['address']; ?></td>
 										<td>
-											<a href="#"><i class="fas fa-edit text-success"></i></a>
+											<?php if(check_permission('project-edit')){ ?>
+                                            <a href="#"><i class="fas fa-edit text-success"></i></a>
+                                             <?php } ?>
+                                             <?php if(check_permission('project-delete')){ ?>
 											<a href="#"><i class="fa fa-trash text-danger"></i></a>
+                                        <?php } ?>
 										</td>
 									</tr>
 									<?php

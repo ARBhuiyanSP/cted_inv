@@ -1,4 +1,8 @@
 <?php include 'header.php' ?>
+<?php if(!check_permission('material-receive-list')){ 
+        include("404.php");
+        exit();
+ } ?>
 <link href="css/dataTables.bootstrap4.min.css" rel="stylesheet">
 <div class="container-fluid">
     <!-- DataTables Example -->
