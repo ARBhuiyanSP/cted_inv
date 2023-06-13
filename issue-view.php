@@ -41,7 +41,7 @@ $issue_id=$_GET['no']; ?>
 							<div class="col-sm-6">	
 								<p>
 								<img src="images/Saif_Engineering_Logo_165X72.png" height="50px;"/>
-								<h5>CTED</h5><span>Chattogram Port</span></br></p></div>
+								<h5>Container Terminal Engineering Department<br>Chattogram Port</h5></p></div>
 							<div class="col-sm-6">
 								<table class="table table-bordered">
 									<tr>
@@ -159,7 +159,10 @@ $issue_id=$_GET['no']; ?>
 							<span class="amountWords" style="text-decoration:underline;"><?php echo convertNumberToWords($total).' Only';?></span>
 						</b>
 						<div class="row" style="text-align:center">
-							<div class="col-sm-5"></br><?php echo $rowd['received_by'];?></br>--------------------</br>Receiver Signature</div>			
+							<div class="col-sm-5"></br><?php 
+										$dataresult =   getDataRowByTableAndId('users', $rowd['issued_by']);
+										echo (isset($dataresult) && !empty($dataresult) ? $dataresult->first_name . ' ' .$dataresult->last_name : '');
+										?></br>--------------------</br>Issuer Signature</div>			
 							<div class="col-sm-2">
 								<?php $queryedit	= "SELECT `approval_status` FROM `inv_issue` WHERE `issue_id`='$issue_id'";
 								$result		=	$conn->query($queryedit);

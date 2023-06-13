@@ -1,5 +1,13 @@
 <?php include 'header.php';
-$mrr_no=$_GET['mrr']; ?>
+
+if(!check_permission('material-receive-approve')){  
+    include('404.php');
+    exit();
+ }  
+
+
+$mrr_no=$_GET['no']; ?>
+
 <style>
 .table-bordered {
 	border: 1px solid #000000;
@@ -34,8 +42,8 @@ $mrr_no=$_GET['mrr']; ?>
 						<div class="row">
 							<div class="col-sm-6">	
 								<p>
-								<img src="images/Saif_Engineering_Logo_165X72.png" height="100px;"/>
-								<h5>E-engineering Ltd</h5></p></div>
+								<img src="images/Saif_Engineering_Logo_165X72.png" height="50px;"/>
+								<h5>Container Terminal Engineering Department<br>Chattogram Port</h5></p></div>
 							<div class="col-sm-6">
 								<table class="table table-bordered">
 									<tr>
@@ -73,10 +81,10 @@ $mrr_no=$_GET['mrr']; ?>
 										<td>
 											<?php 
 											$supplier_id = $rowd['supplier_id'];
-											$sqlunit	=	"SELECT * FROM `inv_supplier` WHERE `supplier_id` = '$supplier_id' ";
+											$sqlunit	=	"SELECT * FROM `suppliers` WHERE `code` = '$supplier_id' ";
 											$resultunit = mysqli_query($conn, $sqlunit);
 											$rowunit=mysqli_fetch_array($resultunit);
-											echo $rowunit['supplier_company'];
+											echo $rowunit['name'];
 											?>
 										</td>
 									</tr>
@@ -97,7 +105,7 @@ $mrr_no=$_GET['mrr']; ?>
 							</thead>
 							<tbody id="material_receive_list_body">
 								<?php
-								$transfer_id=$_GET['mrr'];
+								$mrr_no=$_GET['no'];
 								$sql = "select * from `inv_receivedetail` where `mrr_no`='$mrr_no'";
 								$result = mysqli_query($conn, $sql);
 									for($i=1; $row = mysqli_fetch_array($result); $i++){
@@ -144,53 +152,60 @@ $mrr_no=$_GET['mrr']; ?>
 						</table>
 						<b>Total Amount in words: 
 							<span class="amountWords"><?php echo convertNumberToWords($totalAmount).' BDT Only';?></span>
-						</b> 
-						<div class="row">
-							<div class="col-sm-6">
-								<div class="row" style="text-align:center">
-									<div class="col-sm-8"></br><?php 
+						</b>
+						<div class="row" style="padding-top:20px;">
+							<div class="col-sm-4" style="text-align:center">
+								<?php 
 										$dataresult =   getDataRowByTableAndId('users', $rowd['received_by']);
 										echo (isset($dataresult) && !empty($dataresult) ? $dataresult->first_name . ' ' .$dataresult->last_name : '');
-										?></br>--------------------</br>Receiver Signature</div>
-									<div class="col-sm-4">
-										<?php $queryedit	= "SELECT `approval_status` FROM `inv_receive` WHERE `mrr_no`='$mrr_no'";
-										$result		=	$conn->query($queryedit);
-										$row		=	mysqli_fetch_assoc($result);
-										if($row['approval_status'] == 0){?>
-										<img src="images/pending.png" height="100px;" />
-										<?php } else{?>
-										<img src="images/approved.png" height="100px;" />
-										<?php }?>
-									</div>
-								</div>
+										?></br>--------------------</br>Receiver Signature
+									
+								
 							</div>
-							<div class="col-sm-6" style="">
+							<div class="col-sm-4" style="text-align:center">
+								<?php $queryStatus	= "SELECT `approval_status`,`approval_remarks` FROM `inv_receive` WHERE `mrr_no`='$mrr_no'";
+								$resultStatus		=	$conn->query($queryStatus);
+								$rowStatus		=	mysqli_fetch_assoc($resultStatus);
+								if($rowStatus['approval_status'] == 0){?>
+								<img src="images/pending.png" height="100px;" />
+								<?php } else{?>
+								<img src="images/approved.png" height="100px;" />
+								<?php }?>
+							</div>
+							<div class="col-sm-4" style="text-align:center">
+								<?php if($rowStatus['approval_status'] == 0){ ?>
 								<form action="" method="post" name="add_name" id="add_name">
-								<div class="row">
+								<div class="row" style="text-align:left">
 									<input type="hidden" name="mrr_no" value="<?php echo $mrr_no; ?>" />
 									<input type="hidden" name="approved_at" value="<?php echo date('Y-m-d'); ?>" />
-									<div class="col-sm-4">
+									<div class="col-sm-12">
 										<div class="form-group">
-											<label for="id">Approval Status</label>
+											<label for="id">Status</label>
 											<select class="form-control" id="approval_status" name="approval_status" required>
-												<option value="0">Pending</option>
-												<option value="1">Approve</option>
+												<option value="0" <?php if($rowStatus['approval_status'] == 0){echo 'selected';}?>>Pending</option>
+												<option value="1" <?php if($rowStatus['approval_status'] == 1){echo 'selected';}?>>Approve</option>
 											</select>
-										</div>
-									</div>
-									<div class="col-sm-8">
-										<div class="form-group">
-											<label for="id">Remarks</label>
-											<textarea rows="1" class="form-control" name="approval_remarks"></textarea>
 										</div>
 									</div>
 									<div class="col-sm-12">
 										<div class="form-group">
-											<input type="submit" name="approve_submit" id="submit" class="btn btn-block" style="background-color:#007BFF;color:#ffffff;" value="Approve MRR" />   
+											<label for="id">Remarks</label>
+											<textarea rows="1" class="form-control" name="approval_remarks"><?php if(isset($rowStatus['approval_remarks'])){echo $rowStatus['approval_remarks'];} ?></textarea>
+										</div>
+									</div>
+									<div class="col-sm-12">
+										<div class="form-group">
+											<input type="<?php if($rowStatus['approval_status'] == 1){echo 'hidden';}else{echo 'submit';}?>" name="receive_approve_submit" id="submit" class="btn btn-block" style="background-color:#007BFF;color:#ffffff;" value="Approve MRR" />   
 										</div>
 									</div>
 								</div>
 								</form>
+							<?php }else{ ?>
+								<?php 
+										$dataresult =   getDataRowByTableAndId('users', $rowd['approved_by']);
+										echo (isset($dataresult) && !empty($dataresult) ? $dataresult->first_name . ' ' .$dataresult->last_name : '');
+										?></br>--------------------</br>Authorized Signature
+							<?php } ?>
 							</div>
 						</div></br>
 						<div class="row">

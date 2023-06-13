@@ -1,4 +1,10 @@
 <?php include 'header.php';
+
+if(!check_permission('material-issue-approve')){  
+    include('404.php');
+    exit();
+ }  
+
 $issue_id=$_GET['issue']; ?>
 <style>
 .table-bordered {
@@ -40,8 +46,8 @@ $issue_id=$_GET['issue']; ?>
 						<div class="row">
 							<div class="col-sm-6">	
 								<p>
-								<img src="images/Saif_Engineering_Logo_165X72.png" height="100px;"/>
-								<h5>E-engineering Ltd</h5></p></div>
+								<img src="images/Saif_Engineering_Logo_165X72.png" height="50px;"/>
+								<h5>Container Terminal Engineering Department<br>Chattogram Port</h5></p></div>
 							<div class="col-sm-6">
 								<table class="table table-bordered">
 									<tr>
@@ -128,48 +134,56 @@ $issue_id=$_GET['issue']; ?>
 							</tbody>
 						</table>
 						<div class="row">
-							<div class="col-sm-6">
-								<div class="row" style="text-align:center">
-									<div class="col-sm-8"></br><?php echo $rowd['received_by'];?></br>--------------------</br>Receiver Signature</div>
-									<div class="col-sm-4">
-										<?php $queryedit	= "SELECT `approval_status` FROM `inv_issue` WHERE `issue_id`='$issue_id'";
-										$result		=	$conn->query($queryedit);
-										$row		=	mysqli_fetch_assoc($result);
-										if($row['approval_status'] == 0){?>
-										<img src="images/pending.png" height="100px;" />
-										<?php } else{?>
-										<img src="images/approved.png" height="100px;" />
-										<?php }?>
-									</div>
-								</div>
+							<div class="col-sm-4" style="text-align:center">
+								<?php 
+										$dataresult =   getDataRowByTableAndId('users', $rowd['issued_by']);
+										echo (isset($dataresult) && !empty($dataresult) ? $dataresult->first_name . ' ' .$dataresult->last_name : '');
+										?></br>--------------------</br>Receiver Signature
 							</div>
-							<div class="col-sm-6" style="">
+							<div class="col-sm-4" style="text-align:center">
+								<?php $queryStatus	= "SELECT `approval_status` FROM `inv_issue` WHERE `issue_id`='$issue_id'";
+								$resultStatus		=	$conn->query($queryStatus);
+								$rowStatus		=	mysqli_fetch_assoc($resultStatus);
+								if($rowStatus['approval_status'] == 0){?>
+								<img src="images/pending.png" height="100px;" />
+								<?php } else{?>
+								<img src="images/approved.png" height="100px;" />
+								<?php }?>
+							</div>
+							<div class="col-sm-4" style="text-align:center">
+								<?php if($rowStatus['approval_status'] == 0){ ?>
 								<form action="" method="post" name="add_name" id="add_name">
-								<div class="row">
+								<div class="row" style="text-align:left">
 									<input type="hidden" name="issue_id" value="<?php echo $issue_id; ?>" />
 									<input type="hidden" name="approved_at" value="<?php echo date('Y-m-d'); ?>" />
-									<div class="col-sm-4">
+									<div class="col-sm-12">
 										<div class="form-group">
-											<label for="id">Approval Status</label>
+											<label for="id">Status</label>
 											<select class="form-control" id="approval_status" name="approval_status" required>
-												<option value="0">Pending</option>
-												<option value="1">Approve</option>
+												<option value="0" <?php if($rowStatus['approval_status'] == 0){echo 'selected';}?>>Pending</option>
+												<option value="1" <?php if($rowStatus['approval_status'] == 1){echo 'selected';}?>>Approve</option>
 											</select>
-										</div>
-									</div>
-									<div class="col-sm-8">
-										<div class="form-group">
-											<label for="id">Remarks</label>
-											<textarea rows="1" class="form-control" name="approval_remarks"></textarea>
 										</div>
 									</div>
 									<div class="col-sm-12">
 										<div class="form-group">
-											<input type="submit" name="issue_approve_submit" id="submit" class="btn btn-block" style="background-color:#007BFF;color:#ffffff;" value="Approve ISSUE" />   
+											<label for="id">Remarks</label>
+											<textarea rows="1" class="form-control" name="approval_remarks"><?php if(isset($rowStatus['approval_remarks'])){echo $rowStatus['approval_remarks'];} ?></textarea>
+										</div>
+									</div>
+									<div class="col-sm-12">
+										<div class="form-group">
+											<input type="<?php if($rowStatus['approval_status'] == 1){echo 'hidden';}else{echo 'submit';}?>" name="issue_approve_submit" id="submit" class="btn btn-block" style="background-color:#007BFF;color:#ffffff;" value="Approve MRR" />   
 										</div>
 									</div>
 								</div>
 								</form>
+							<?php }else{ ?>
+								<?php 
+										$dataresult =   getDataRowByTableAndId('users', $rowd['approved_by']);
+										echo (isset($dataresult) && !empty($dataresult) ? $dataresult->first_name . ' ' .$dataresult->last_name : '');
+										?></br>--------------------</br>Authorized Signature
+							<?php } ?>
 							</div>
 						</div></br>
 						<div class="row">

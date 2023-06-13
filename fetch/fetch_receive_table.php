@@ -67,16 +67,19 @@ function get_receive_list_action_data($row){
 		  $edit_url = 'receive_edit.php?edit_id='.$row["voucher_id"];
 	   
     $view_url = 'receive-view.php?no='.$row["mrr_no"];
+    $approve_url = 'receive_approve.php?no='.$row["mrr_no"];
     $action = "";
 	
 if(check_permission('material-receive-edit')){
     $action.='<span><a class="action-icons c-delete" href="'.$edit_url.'" title="edit"><i class="fa fa-edit text-info mborder"></i></a></span>';
 }
-    
-					
-					
-							
-	 $action.='<span><a class="action-icons c-approve" href="'.$view_url.'" title="View"><i class="fas fa-eye text-success mborder"></i></a></span>';
+
+						
+	$action.='<span><a class="action-icons c-approve" href="'.$view_url.'" title="View"><i class="fas fa-eye text-success mborder"></i></a></span>';
+
+if(check_permission('material-receive-approve')){
+    $action.='<span><a class="action-icons c-delete" href="'.$approve_url.'" title="edit"><i class="fa fa-check text-info mborder"></i></a></span>';
+}
 							
 							
 	

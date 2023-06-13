@@ -295,7 +295,7 @@ if(isset($_POST['receive_update_submit']) && !empty($_POST['receive_update_submi
 }
 
 
-if (isset($_POST['approve_submit']) && !empty($_POST['approve_submit'])) {
+if (isset($_POST['receive_approve_submit']) && !empty($_POST['receive_approve_submit'])) {
  
         /*
          *  Update Data Into inv_receive Table:
@@ -332,7 +332,7 @@ if (isset($_POST['approve_submit']) && !empty($_POST['approve_submit'])) {
 		
 
     $_SESSION['success']    =   "MRR Approve have been successfully completed.";
-    header("location: receive-list.php");
+    header("location: receive_approve.php?no=$mrr_no");
     exit();
 }
 
