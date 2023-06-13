@@ -160,8 +160,9 @@ $issue_id=$_GET['no']; ?>
 						</b>
 						<div class="row" style="text-align:center">
 							<div class="col-sm-5"></br><?php 
+										if($rowd['approved_by']){
 										$dataresult =   getDataRowByTableAndId('users', $rowd['issued_by']);
-										echo (isset($dataresult) && !empty($dataresult) ? $dataresult->first_name . ' ' .$dataresult->last_name : '');
+										echo (isset($dataresult) && !empty($dataresult) ? $dataresult->first_name . ' ' .$dataresult->last_name : '');}
 										?></br>--------------------</br>Issuer Signature</div>			
 							<div class="col-sm-2">
 								<?php $queryedit	= "SELECT `approval_status` FROM `inv_issue` WHERE `issue_id`='$issue_id'";
