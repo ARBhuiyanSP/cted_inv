@@ -222,7 +222,7 @@ if(isset($_GET['submit'])){
 					</thead>
 					<tbody>
 					<?php
-						$sql	=	"SELECT * FROM `inv_material` WHERE `current_balance` > 0  GROUP BY `material_id`";
+						$sql	=	"SELECT * FROM `inv_material` WHERE `current_balance` < 0  GROUP BY `material_id`";
 						$result = mysqli_query($conn, $sql);
 						while($row=mysqli_fetch_array($result))
 						{
@@ -238,7 +238,7 @@ if(isset($_GET['submit'])){
 						</tr>
 								<?php 
 									$material_id = $row['material_id'];
-									$sqlall	=	"SELECT * FROM inv_material WHERE `current_balance` > 0 AND `material_id` = '$material_id' GROUP BY `material_sub_id`;";
+									$sqlall	=	"SELECT * FROM inv_material WHERE `current_balance` < 0 AND `material_id` = '$material_id' GROUP BY `material_sub_id`;";
 									$resultall = mysqli_query($conn, $sqlall);
 									while($rowall=mysqli_fetch_array($resultall))
 									{ ?>
@@ -255,7 +255,7 @@ if(isset($_GET['submit'])){
 								</tr>
 										<?php 
 											$material_sub_id = $rowall['material_sub_id'];
-											$sqlmat	=	"SELECT * FROM inv_material WHERE `current_balance` > 0 AND `material_sub_id` = '$material_sub_id' GROUP BY `material_id_code`;";
+											$sqlmat	=	"SELECT * FROM inv_material WHERE `current_balance` < 0 AND `material_sub_id` = '$material_sub_id' GROUP BY `material_id_code`;";
 											$resultmat = mysqli_query($conn, $sqlmat);
 											while($rowmat=mysqli_fetch_array($resultmat))
 											{ ?>
