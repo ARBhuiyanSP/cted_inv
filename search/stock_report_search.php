@@ -81,6 +81,7 @@ if(isset($_GET['submit'])){
 					<thead>
 						<tr>
 							<th colspan="3">Material Name</th>
+							<th>Code</th>
 							<th>Part No</th>
 							<th>Specification</th>
 							<th>Unit</th>
@@ -126,16 +127,7 @@ if(isset($_GET['submit'])){
 											$resultmat = mysqli_query($conn, $sqlmat);
 											while($rowmat=mysqli_fetch_array($resultmat))
 											{ ?>
-										
-										<tr>
-											<td></td>
-											<td></td>
-											<td><?php echo $rowmat['material_description']; ?></td>
-											<td><?php echo $rowmat['part_no']; ?></td>
-											<td style=""><?php echo $rowmat['spec']; ?></td>
-											<td><?php echo getDataRowByTableAndId('inv_item_unit', $rowmat['qty_unit'])->unit_name; ?></td>
-											<td style="text-align:right;">
-												<?php 
+										<?php 
 													$mb_materialid = $rowmat['material_id_code'];
 													
 													if($_SESSION['logged']['user_type'] !== 'whm'){
@@ -162,8 +154,21 @@ if(isset($_GET['submit'])){
 												
 												
 													$minStock = $rowmat['material_min_stock'];
+													if($instock > 0){
+														$status = 'hidden';
+													}
 													if($minStock >= $instock){
 											?>
+										<tr <?php echo $status; ?>>
+											<td></td>
+											<td></td>
+											<td><?php echo $rowmat['material_description']; ?></td>
+											<td><?php echo $rowmat['material_id_code']; ?></td>
+											<td><?php echo $rowmat['part_no']; ?></td>
+											<td style=""><?php echo $rowmat['spec']; ?></td>
+											<td><?php echo getDataRowByTableAndId('inv_item_unit', $rowmat['qty_unit'])->unit_name; ?></td>
+											<td style="text-align:right;">
+												
 												<span><img src="images/alert.gif" height="15px"/></span>
 											<?php }echo number_format((float)$instock, 2, '.', ''); ?>
 												
@@ -222,7 +227,7 @@ if(isset($_GET['submit'])){
 					</thead>
 					<tbody>
 					<?php
-						$sql	=	"SELECT * FROM `inv_material` WHERE `current_balance` < 0  GROUP BY `material_id`";
+						$sql	=	"SELECT * FROM `inv_material` WHERE `current_balance` > 0  GROUP BY `material_id`";
 						$result = mysqli_query($conn, $sql);
 						while($row=mysqli_fetch_array($result))
 						{
@@ -238,7 +243,7 @@ if(isset($_GET['submit'])){
 						</tr>
 								<?php 
 									$material_id = $row['material_id'];
-									$sqlall	=	"SELECT * FROM inv_material WHERE `current_balance` < 0 AND `material_id` = '$material_id' GROUP BY `material_sub_id`;";
+									$sqlall	=	"SELECT * FROM inv_material WHERE `current_balance` > 0 AND `material_id` = '$material_id' GROUP BY `material_sub_id`;";
 									$resultall = mysqli_query($conn, $sqlall);
 									while($rowall=mysqli_fetch_array($resultall))
 									{ ?>
@@ -255,7 +260,7 @@ if(isset($_GET['submit'])){
 								</tr>
 										<?php 
 											$material_sub_id = $rowall['material_sub_id'];
-											$sqlmat	=	"SELECT * FROM inv_material WHERE `current_balance` < 0 AND `material_sub_id` = '$material_sub_id' GROUP BY `material_id_code`;";
+											$sqlmat	=	"SELECT * FROM inv_material WHERE `current_balance` > 0 AND `material_sub_id` = '$material_sub_id' GROUP BY `material_id_code`;";
 											$resultmat = mysqli_query($conn, $sqlmat);
 											while($rowmat=mysqli_fetch_array($resultmat))
 											{ ?>
