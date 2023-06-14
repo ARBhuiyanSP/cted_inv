@@ -191,7 +191,7 @@ if(isset($_GET['submit'])){
 						</tr>
 						<?php } ?>
 						<tr style="text-align:right;font-weight:bold;">
-							<td colspan="4">Total:</td>
+							<td colspan="3">Total:</td>
 							<td>
 								<?php 
 									$sqlin = "SELECT sum(mbin_qty) FROM `inv_materialbalance` WHERE `mb_materialid` = '$material_name' AND `mb_date` BETWEEN '$from_date' AND '$to_date'";
