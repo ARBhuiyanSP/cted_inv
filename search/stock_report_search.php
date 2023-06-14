@@ -152,14 +152,15 @@ if(isset($_GET['submit'])){
 													$instock = $rowinqty->totalin -$rowoutqty->totalout;
 													
 												
-												
-													$minStock = $rowmat['material_min_stock'];
-													if($instock > 0){
-														$status = 'hidden';
+													$minStock = $rowmat['material_min_stock']; 
+													if($instock > 0 ){
+														$Pstatus = 'hidden';
+													}else
+													{
+														$Pstatus = '';
 													}
-													if($minStock >= $instock){
-											?>
-										<tr <?php echo $status; ?>>
+													?>
+										<tr <?php echo $Pstatus; ?>>
 											<td></td>
 											<td></td>
 											<td><?php echo $rowmat['material_description']; ?></td>
@@ -168,7 +169,9 @@ if(isset($_GET['submit'])){
 											<td style=""><?php echo $rowmat['spec']; ?></td>
 											<td><?php echo getDataRowByTableAndId('inv_item_unit', $rowmat['qty_unit'])->unit_name; ?></td>
 											<td style="text-align:right;">
-												
+												<?php 
+													if($minStock >= $instock){
+											?>
 												<span><img src="images/alert.gif" height="15px"/></span>
 											<?php }echo number_format((float)$instock, 2, '.', ''); ?>
 												
