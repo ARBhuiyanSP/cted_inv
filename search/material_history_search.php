@@ -115,7 +115,7 @@ if(isset($_GET['submit'])){
 						<tr>
 							<th>Date</th>
 							<th>Ref Voucher/Issue No</th>
-							<th>Used In</th>
+							
 							<th>Unit</th>
 							<th>In QTY</th>
 							<th>Out QTY</th>
@@ -171,14 +171,14 @@ if(isset($_GET['submit'])){
 							<td><?php echo date("j M y", strtotime($rowall['mb_date']));?></td>
 							<td><?php echo $rowall['mb_ref_id']; ?></td>
 							
-							<td><?php 
+							<!-- <td><?php 
 							$issue_id = $rowall['mb_ref_id'];
 							$material_id = $rowall['mb_materialid'];
 							$sqluse	=	"SELECT * FROM `inv_issuedetail` WHERE `issue_id` = '$issue_id' AND `material_id` = '$material_id';";
 							$resultuse = mysqli_query($conn, $sqluse);
 							$rowuse=mysqli_fetch_array($resultuse);
 								echo $rowuse['use_in'];
-							?></td>
+							?></td> -->
 							<td><?php echo getDataRowByTableAndId('inv_item_unit', $rowmat['qty_unit'])->unit_name;?>
 							</td>
 							
