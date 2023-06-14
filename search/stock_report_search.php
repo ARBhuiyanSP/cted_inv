@@ -81,7 +81,6 @@ if(isset($_GET['submit'])){
 					<thead>
 						<tr>
 							<th colspan="3">Material Name</th>
-							<th>Code</th>
 							<th>Part No</th>
 							<th>Specification</th>
 							<th>Unit</th>
@@ -127,7 +126,16 @@ if(isset($_GET['submit'])){
 											$resultmat = mysqli_query($conn, $sqlmat);
 											while($rowmat=mysqli_fetch_array($resultmat))
 											{ ?>
-										<?php 
+										
+										<tr>
+											<td></td>
+											<td></td>
+											<td><?php echo $rowmat['material_description']; ?></td>
+											<td><?php echo $rowmat['part_no']; ?></td>
+											<td style=""><?php echo $rowmat['spec']; ?></td>
+											<td><?php echo getDataRowByTableAndId('inv_item_unit', $rowmat['qty_unit'])->unit_name; ?></td>
+											<td style="text-align:right;">
+												<?php 
 													$mb_materialid = $rowmat['material_id_code'];
 													
 													if($_SESSION['logged']['user_type'] !== 'whm'){
@@ -152,26 +160,8 @@ if(isset($_GET['submit'])){
 													$instock = $rowinqty->totalin -$rowoutqty->totalout;
 													
 												
-													$minStock = $rowmat['material_min_stock']; 
-													if($instock > 0 ){
-														$Pstatus = 'hidden';
-													}else if($instock == 0 )
-													{
-														$Pstatus = 'hidden';
-													}else{
-														$Pstatus = '';
-													}
-													?>
-										<tr <?php echo $Pstatus; ?>>
-											<td></td>
-											<td></td>
-											<td><?php echo $rowmat['material_description']; ?></td>
-											<td><?php echo $rowmat['material_id_code']; ?></td>
-											<td><?php echo $rowmat['part_no']; ?></td>
-											<td style=""><?php echo $rowmat['spec']; ?></td>
-											<td><?php echo getDataRowByTableAndId('inv_item_unit', $rowmat['qty_unit'])->unit_name; ?></td>
-											<td style="text-align:right;">
-												<?php 
+												
+													$minStock = $rowmat['material_min_stock'];
 													if($minStock >= $instock){
 											?>
 												<span><img src="images/alert.gif" height="15px"/></span>
