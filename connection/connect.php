@@ -6,7 +6,7 @@ global $conn;
 $servername = "localhost";
 $username   = "root";
 $password   = "";
-$dbname     = "cted_inv";
+$dbname     = "ceted_real";
 
 // Create connection
 $conn       = new mysqli($servername, $username, $password, $dbname);
