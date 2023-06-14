@@ -155,8 +155,10 @@ if(isset($_GET['submit'])){
 													$minStock = $rowmat['material_min_stock']; 
 													if($instock > 0 ){
 														$Pstatus = 'hidden';
-													}else
+													}else if($instock == 0 )
 													{
+														$Pstatus = 'hidden';
+													}else{
 														$Pstatus = '';
 													}
 													?>
