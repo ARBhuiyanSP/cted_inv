@@ -42,12 +42,7 @@ include 'header.php';
         $queryPermission = "INSERT INTO `permission_role` (`permission_id`,`role_id`) VALUES ('$permission','$lastinsertedId')";
         $resultPermission = $conn->query($queryPermission);
     }
-
-
-
 }
-
-
 ?>
 
         <div class="card-body">

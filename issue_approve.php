@@ -138,7 +138,7 @@ $issue_id=$_GET['issue']; ?>
 								<?php 
 										$dataresult =   getDataRowByTableAndId('users', $rowd['issued_by']);
 										echo (isset($dataresult) && !empty($dataresult) ? $dataresult->first_name . ' ' .$dataresult->last_name : '');
-										?></br>--------------------</br>Receiver Signature
+										?></br>--------------------</br>Issuer Signature
 							</div>
 							<div class="col-sm-4" style="text-align:center">
 								<?php $queryStatus	= "SELECT `approval_status` FROM `inv_issue` WHERE `issue_id`='$issue_id'";
