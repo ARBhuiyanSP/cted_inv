@@ -142,7 +142,7 @@ if(isset($_GET['submit'])){
 						?>
 						<tr>
 							<td><?php echo date("j M y", strtotime($rowall['mb_date']));?></td>
-							<td><?php echo $rowall['mb_ref_id']; ?></td>
+							<td><a href="receive-view.php?no=<?php echo $rowall['mb_ref_id']; ?>" target="blank"><?php echo $rowall['mb_ref_id']; ?></a></td>
 							
 							
 							<td><?php echo getDataRowByTableAndId('inv_item_unit', $rowmat['qty_unit'])->unit_name;?>
