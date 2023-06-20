@@ -140,7 +140,7 @@ if(isset($_GET['submit'])){
 						<?php } ?>
 						<tr style="text-align:right;">
 							<td colspan="6"> <b>Total:</b></td>
-							<td><b><?php echo $totalQty; ?></b></td>
+							<td></td>
 							<td></td>
 							<td><b><?php echo $totalAmount; ?></b></td>
 						</tr>

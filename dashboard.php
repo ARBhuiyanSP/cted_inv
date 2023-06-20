@@ -225,12 +225,12 @@ $(document).ready(function() {
 										$warehouse = $data['id'];
 										$to_date = date('Y-m-d');
 										$mb_materialid = $material_name;
-										$sqlinqty = "SELECT SUM(`mbin_qty`) AS totalin FROM `inv_materialbalance` WHERE `warehouse_id` = '$warehouse' AND `mb_materialid` = '$mb_materialid' AND mb_date <= '$to_date'";
+										$sqlinqty = "SELECT SUM(`mbin_qty`) AS totalin FROM `inv_materialbalance` WHERE `mb_materialid` = '$mb_materialid' AND mb_date <= '$to_date'";
 										$resultinqty = mysqli_query($conn, $sqlinqty);
 										$rowinqty = mysqli_fetch_object($resultinqty) ;
 										
 										
-										$sqloutqty = "SELECT SUM(`mbout_qty`) AS totalout FROM `inv_materialbalance` WHERE `warehouse_id` = '$warehouse' AND `mb_materialid` = '$mb_materialid' AND mb_date <= '$to_date'";
+										$sqloutqty = "SELECT SUM(`mbout_qty`) AS totalout FROM `inv_materialbalance` WHERE `mb_materialid` = '$mb_materialid' AND mb_date <= '$to_date'";
 										$resultoutqty = mysqli_query($conn, $sqloutqty);
 										$rowoutqty = mysqli_fetch_object($resultoutqty) ;
 									

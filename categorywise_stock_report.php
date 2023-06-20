@@ -7,7 +7,7 @@
     <!-- Breadcrumbs-->
     <ol class="breadcrumb">
         <li class="breadcrumb-item">
-            <a href="#">Stock management Filters</a>
+            <a href="#">Reports</a>
         </li>
         <li class="breadcrumb-item active">Categorywise Stock Report Search</li>
 		

@@ -7,9 +7,9 @@
     <!-- Breadcrumbs-->
     <ol class="breadcrumb">
         <li class="breadcrumb-item">
-            <a href="#">Material Information Filters</a>
+            <a href="#">Reports</a>
         </li>
-        <li class="breadcrumb-item active">Stock Report Search</li>
+        <li class="breadcrumb-item active"> material List Info</li>
 		
     </ol>
     <!-- receive search start here -->
