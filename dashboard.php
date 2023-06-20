@@ -377,7 +377,7 @@ if($montly_reveive_res){
 		        type: 'column'
 		    },
 		    title: {
-		        text: 'Monthly Receive'
+		        text: 'Monthly material receive amount report'
 		    },
 		    subtitle: {
 		        text: ''
@@ -426,6 +426,12 @@ if($montly_reveive_res){
       		chart_ajax_call(data,url,equipment)
       		
       	})
+		$(function(){
+			var url =  baseUrl + "function/chart_ajax.php?process_type=equipment_wise_issue";
+      		var data = {use_in:''};
+      		var equipment = '';
+      		chart_ajax_call(data,url,equipment);
+		})
 
       	 function chart_ajax_call(data,url,equipment=''){
       	 	console.log(data)
