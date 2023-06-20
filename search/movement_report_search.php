@@ -94,11 +94,16 @@ if(isset($_GET['submit'])){
 						<tr>
 							<td>
 								<?php 
-								$mb_materialid = $row['mb_materialid'];
+								if(isset($row['mb_materialid'])) {
+										$mb_materialid = $row['mb_materialid'];
 								$sqlname	=	"SELECT * FROM `inv_material` WHERE `material_id_code` = '$mb_materialid' ";
 								$resultname = mysqli_query($conn, $sqlname);
 								$rowname=mysqli_fetch_array($resultname);
 								echo $rowname['material_description'];
+								}else{
+									
+								}
+								
 								?>
 							</td>
 							<td><?php echo $row['part_no']; ?></td>
