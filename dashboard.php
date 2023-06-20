@@ -168,7 +168,39 @@ $(document).ready(function() {
               </a>
             </div>
           </div>
-          <div class="col-xl-12 col-sm-12 mb-12">
+
+        </div>
+		<div class="row">
+			<div class="com-xl-3 col-sm-6 col-md-6">
+          		<figure class="highcharts-figure">
+				    <div id="container"></div>
+				</figure>
+			</div>
+			<div class="com-xl-3 col-sm-6 col-md-6">
+				<?php 
+
+		$used_equipments= "SELECT DISTINCT use_in FROM inv_issuedetail ORDER BY use_in ASC";
+		$used_equipment_res = mysqli_query($conn, $used_equipments);
+			?>
+
+				<select class="form-control select2 equipment_name js-example-basic-single" name="equipment_name">
+					<option value="">Select Equipment</option>
+					<?php
+					while($row = mysqli_fetch_array($used_equipment_res)){ ?>
+						<option value="<?php echo $row['use_in']; ?>"><?php echo $row['use_in']; ?></option>
+					<?php } ?>
+					
+				</select>
+          		<figure class="highcharts-figure">
+				    <div id="equipmentWiseIssue"></div>
+				</figure>
+			</div>
+		</div>
+		
+
+		<div class="row">
+			<div class="col-xl-6 col-sm-6 mb-3">
+
             <div class="card bg-primary o-hidden h-100">
               <div class="card">
 							<form name="" action="" method="GET">
@@ -251,10 +283,11 @@ $(document).ready(function() {
 						</div>
             </div>
           </div>
-        </div>
-		<div class="row">
+
+        
 			
-          <div class="col-xl-6 col-sm-6 mb-6">
+          <div class="col-xl-3 col-sm-3 mb-3">
+
             <div class="card text-white bg-primary o-hidden h-100">
 				<div class="card-body">
 					<div class="card-body-icon">
@@ -280,7 +313,7 @@ $(document).ready(function() {
 				</a>
             </div>
           </div>
-          <div class="col-xl-6 col-sm-6 mb-6">
+          <div class="col-xl-3 col-sm-3 mb-3">
             <div class="card text-white bg-primary o-hidden h-100">
 				<div class="card-body">
 					<div class="card-body-icon">
@@ -308,33 +341,10 @@ $(document).ready(function() {
           </div>
        
 		</div>
+
 		<hr>
-		<div class="row">
-			<div class="com-xl-3 col-sm-6 col-md-6">
-          		<figure class="highcharts-figure">
-				    <div id="container"></div>
-				</figure>
-			</div>
-			<div class="com-xl-3 col-sm-6 col-md-6">
-				<?php 
+		
 
-		$used_equipments= "SELECT DISTINCT use_in FROM inv_issuedetail ORDER BY use_in ASC";
-		$used_equipment_res = mysqli_query($conn, $used_equipments);
-			?>
-
-				<select class="form-control js-example-basic-single equipment_name" name="equipment_name">
-					<option value="">Select Equipment</option>
-					<?php
-					while($row = mysqli_fetch_array($used_equipment_res)){ ?>
-						<option value="<?php echo $row['use_in']; ?>"><?php echo $row['use_in']; ?></option>
-					<?php } ?>
-					
-				</select>
-          		<figure class="highcharts-figure">
-				    <div id="equipmentWiseIssue"></div>
-				</figure>
-			</div>
-		</div>
 
 		<?php 
 

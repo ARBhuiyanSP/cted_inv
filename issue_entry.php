@@ -164,8 +164,8 @@
                                         </td>
                                         <td><input type="text" name="material_total_stock[]" id="material_total_stock0" class="form-control" readonly ></td>
 										<td><input type="text" name="unit_price[]" id="unit_price0" class="form-control" readonly ></td>
-                                        <td><input type="text" name="quantity[]" id="quantity0" onchange="sum(0)" onkeyup="check_stock_quantity_validation(0)" class="form-control common_issue_quantity" required></td>
-										<td><input type="text" name="totalamount[]" id="sum0" class="form-control"></td>
+                                        <td><input type="number" name="quantity[]" id="quantity0" onchange="sum(0)" onkeyup="check_stock_quantity_validation(0)" class="form-control common_issue_quantity" step="2" min="0" required></td>
+										<td><input type="text" name="totalamount[]" id="sum0" class="form-control" readonly></td>
                                         <td><button type="button" name="add" id="add" class="btn" style="background-color:#007BFF;color:#ffffff;">+</button></td>
                                     </tr>
                                 </tbody>
@@ -245,7 +245,7 @@
                                             ?><option value="<?php echo $data['id']; ?>"><?php echo $data['unit_name']; ?></option><?php
                                         }
                                     }
-                                    ?></select></td><td><input type="text" name="material_total_stock[]" id="material_total_stock' + i + '" class="form-control" readonly></td><td><input type="text" name="unit_price[]" id="unit_price' + i + '" class="form-control" readonly></td><td><input type="text" name="quantity[]" id="quantity' + i + '" onchange="sum(0)"  onkeyup="check_stock_quantity_validation(' + i + ')" class="form-control common_issue_quantity" required></td><td><input type="text" name="totalamount[]" id="sum' + i + '" class="form-control"></td><td><button type="button" name="remove" id="' + i + '" class="btn btn_remove" style="background-color:#f26522;color:#ffffff;">X</button></td></tr>');
+                                    ?></select></td><td><input type="text" name="material_total_stock[]" id="material_total_stock' + i + '" class="form-control" readonly></td><td><input type="text" name="unit_price[]" id="unit_price' + i + '" class="form-control" readonly></td><td><input type="number" name="quantity[]" id="quantity' + i + '" onchange="sum(0)"  onkeyup="check_stock_quantity_validation(' + i + ')" class="form-control common_issue_quantity" step="2" min="0" required></td><td><input type="text" name="totalamount[]" id="sum' + i + '" class="form-control" readonly></td><td><button type="button" name="remove" id="' + i + '" class="btn btn_remove" style="background-color:#f26522;color:#ffffff;">X</button></td></tr>');
             
            $(".material_select_2").select2();
 												$('#quantity' + i + ', #unit_price' + i).change(function () {
