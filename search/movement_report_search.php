@@ -70,6 +70,7 @@ if(isset($_GET['submit'])){
 							</th>
 						</tr>
 						<tr>
+							<th width="30%">Material ID</th>
 							<th width="30%">Material Name</th>
 							<th width="15%">Part No</th>
 							<th width="15%">Specification</th>
@@ -92,18 +93,16 @@ if(isset($_GET['submit'])){
 						{
 					?>
 						<tr>
+							<td><?php echo $row['mb_materialid']; ?></td>
 							<td>
 								<?php 
-								if(isset($row['mb_materialid'])) {
-										$mb_materialid = $row['mb_materialid'];
-								$sqlname	=	"SELECT * FROM `inv_material` WHERE `material_id_code` = '$mb_materialid' ";
-								$resultname = mysqli_query($conn, $sqlname);
-								$rowname=mysqli_fetch_array($resultname);
-								echo $rowname['material_description'];
-								}else{
 									
-								}
-								
+										$mb_materialid = $row['mb_materialid'];
+										$sqlname	=	"SELECT * FROM `inv_material` WHERE `material_id_code` = '$mb_materialid' ";
+										$resultname = mysqli_query($conn, $sqlname);
+										$rowname=mysqli_fetch_array($resultname);
+										echo $rowname['material_description'];
+									
 								?>
 							</td>
 							<td><?php echo $row['part_no']; ?></td>
