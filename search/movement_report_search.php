@@ -90,43 +90,35 @@ if(isset($_GET['submit'])){
 						$result = mysqli_query($conn, $sql);
 						while($row=mysqli_fetch_array($result))
 						{
-							
 					?>
 						<tr>
 							<td>
 								<?php 
-								if($row['mb_materialid']){
-									$mb_materialid = $row['mb_materialid'];
-									$sqlname	=	"SELECT * FROM `inv_material` WHERE `material_id_code` = '$mb_materialid' ";
-									$resultname = mysqli_query($conn, $sqlname);
-									$rowname=mysqli_fetch_array($resultname);
-									echo $rowname['material_description'];
-									}
-								
+								$mb_materialid = $row['mb_materialid'];
+								$sqlname	=	"SELECT * FROM `inv_material` WHERE `material_id_code` = '$mb_materialid' ";
+								$resultname = mysqli_query($conn, $sqlname);
+								$rowname=mysqli_fetch_array($resultname);
+								echo $rowname['material_description'];
 								?>
 							</td>
-							<td><?php
-							if($row['part_no']){
-							echo $row['part_no']; }?></td>
+							<td><?php echo $row['part_no']; ?></td>
 							<td>
 							<?php 
-								if($row['mb_materialid']){
 								$mb_materialid = $row['mb_materialid'];
 								$sqlspec	=	"SELECT * FROM `inv_material` WHERE `material_id_code` = '$mb_materialid' ";
 								$resultspec = mysqli_query($conn, $sqlspec);
 								$rowspec=mysqli_fetch_array($resultspec);
-								echo $rowspec['spec'];}
+								echo $rowspec['spec'];
 								?>
 							</td>
 							<td>
 								<?php 
-								if($row['mb_materialid']){
 								$qty_unit = $rowname['qty_unit'];
 								$sqlunit	=	"SELECT * FROM `inv_item_unit` WHERE `id` = '$qty_unit' ";
 								$resultunit = mysqli_query($conn, $sqlunit);
 								$rowunit=mysqli_fetch_array($resultunit);
 								echo $rowunit['unit_name'];
-								}
+								
 								?>
 								
 							</td>
