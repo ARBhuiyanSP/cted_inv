@@ -376,7 +376,7 @@ if($montly_reveive_res){
 		        type: 'column'
 		    },
 		    title: {
-		        text: 'Monthly Receive'
+		        text: 'Monthly material receive amount report'
 		    },
 		    subtitle: {
 		        text: ''
