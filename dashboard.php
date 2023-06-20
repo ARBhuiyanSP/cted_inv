@@ -168,7 +168,38 @@ $(document).ready(function() {
               </a>
             </div>
           </div>
-          <div class="col-xl-6 col-sm-6 mb-3">
+          
+        </div>
+		<div class="row">
+			<div class="com-xl-3 col-sm-6 col-md-6">
+          		<figure class="highcharts-figure">
+				    <div id="container"></div>
+				</figure>
+			</div>
+			<div class="com-xl-3 col-sm-6 col-md-6">
+				<?php 
+
+		$used_equipments= "SELECT DISTINCT use_in FROM inv_issuedetail ORDER BY use_in ASC";
+		$used_equipment_res = mysqli_query($conn, $used_equipments);
+			?>
+
+				<select class="form-control select2 equipment_name" name="equipment_name">
+					<option value="">Select Equipment</option>
+					<?php
+					while($row = mysqli_fetch_array($used_equipment_res)){ ?>
+						<option value="<?php echo $row['use_in']; ?>"><?php echo $row['use_in']; ?></option>
+					<?php } ?>
+					
+				</select>
+          		<figure class="highcharts-figure">
+				    <div id="equipmentWiseIssue"></div>
+				</figure>
+			</div>
+		</div>
+		
+
+		<div class="row">
+			<div class="col-xl-6 col-sm-6 mb-3">
             <div class="card bg-primary o-hidden h-100">
               <div class="card">
 							<form name="" action="" method="GET">
@@ -251,9 +282,6 @@ $(document).ready(function() {
 						</div>
             </div>
           </div>
-        </div>
-		<div class="row">
-			
           <div class="col-xl-3 col-sm-6 mb-3">
             <div class="card text-white bg-primary o-hidden h-100">
 				<div class="card-body">
@@ -308,33 +336,6 @@ $(document).ready(function() {
           </div>
        
 		</div>
-		<div class="row">
-			<div class="com-xl-3 col-sm-6 col-md-6">
-          		<figure class="highcharts-figure">
-				    <div id="container"></div>
-				</figure>
-			</div>
-			<div class="com-xl-3 col-sm-6 col-md-6">
-				<?php 
-
-		$used_equipments= "SELECT DISTINCT use_in FROM inv_issuedetail ORDER BY use_in ASC";
-		$used_equipment_res = mysqli_query($conn, $used_equipments);
-			?>
-
-				<select class="form-control select2 equipment_name" name="equipment_name">
-					<option value="">Select Equipment</option>
-					<?php
-					while($row = mysqli_fetch_array($used_equipment_res)){ ?>
-						<option value="<?php echo $row['use_in']; ?>"><?php echo $row['use_in']; ?></option>
-					<?php } ?>
-					
-				</select>
-          		<figure class="highcharts-figure">
-				    <div id="equipmentWiseIssue"></div>
-				</figure>
-			</div>
-		</div>
-
 		<?php 
 
 		$montly_reveive= "SELECT round(sum(t2.total_receive)) as _amount,DATE_FORMAT(t1.mrr_date, '%m') as _month,DATE_FORMAT(t1.mrr_date, '%y') as _year, MONTHNAME(t1.mrr_date) as _m_name
