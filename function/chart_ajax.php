@@ -35,16 +35,42 @@ if($use_in !=''){
 
     $data=[];
     $series_data =[];
-   // $qty_object = {'name'=>'QTY','data'=>$equipment_qtys};
-    //$amount_object={'name'=>'Amount','data'=>$equipment_amounts};
-    //array_push($series_data, $qty_object);
-   // array_push($series_data, $amount_object);
-
-
     $data['equipment_months']=$equipment_months;
     $data['equipment_amounts']=$equipment_amounts;
     $data['equipment_qtys']=$equipment_qtys;
     //$data['series_data']=$series_data;
+
+    echo json_encode($data);
+   
+}
+
+//Material wise Stock Search
+
+if (isset($_GET['process_type']) && $_GET['process_type'] == "mater_wise_stock_search") {
+    session_start();
+    date_default_timezone_set("Asia/Dhaka");
+    include '../connection/connect.php';
+    include '../helper/utilities.php';
+
+
+    $material_name=$_POST['material_name'];
+    $material_id_code = $material_name;
+    $sqlmat =   "SELECT SUM(t1.mbin_qty-t1.mbout_qty) AS total_stock ,t2.name
+FROM `inv_materialbalance` as t1
+LEFT JOIN inv_warehosueinfo AS t2 ON t1.warehouse_id=t2.id
+WHERE t1.mb_materialid = '".$material_id_code."'
+GROUP BY t1.warehouse_id";
+$sqlmatres = mysqli_query($conn, $sqlmat);
+
+$data=[];
+if($sqlmat){
+    while ($row = $sqlmatres->fetch_assoc()) {
+        $data[]=$row;
+    }
+}
+
+  
+
 
     echo json_encode($data);
    

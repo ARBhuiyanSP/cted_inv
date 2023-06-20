@@ -207,7 +207,7 @@ $(document).ready(function() {
 								<div class="col-md-12">
 									<div class="form-group">
 										<label><b>Material Stock Search</b></label>
-										<select class="form-control js-example-basic-single" id="material_name" name="material_name" required>
+										<select class="form-control js-example-basic-single stock_serach_material_name" id="material_name" name="material_name" required>
 											<?php
 											$projectsData = get_product_with_category();
 											if (isset($projectsData) && !empty($projectsData)) {
@@ -218,7 +218,9 @@ $(document).ready(function() {
 														$selected	= '';
 														}
 													?>
-													<option value="<?php echo $data['item_code']; ?>" <?php echo $selected; ?>><?php echo $data['material_name']; ?>-<?php echo $data['item_code']; ?>-<?php echo $data['part_no']; ?>-<?php echo $data['spec']; ?></option>
+													<option
+													attr_material_name="<?php echo $data['material_name']; ?>"
+													 value="<?php echo $data['item_code']; ?>" <?php echo $selected; ?>><?php echo $data['material_name']; ?>-<?php echo $data['item_code']; ?>-<?php echo $data['part_no']; ?>-<?php echo $data['spec']; ?></option>
 													<?php
 												}
 											}
@@ -232,54 +234,14 @@ $(document).ready(function() {
 									</div>
 								</div>
 							</form>
-							<?php
-							if(isset($_GET['name_submit'])){
-							$material_name=$_GET['material_name'];
-							//echo $material_name;
-								$material_id_code = $material_name;
-								$sqlmat	=	"SELECT * FROM `inv_material` WHERE `material_id_code` = '$material_id_code' ";
-								$resultmat = mysqli_query($conn, $sqlmat);
-								$rowmat=mysqli_fetch_array($resultmat);
-													
-							?>
-							<h5>Total Stock of <?php echo $rowmat['material_description']; ?></h5>
+							
+							<h5>Total Stock of <span class="_serach_m_name"></span></h5>
 							<table class="table table-bordered">
-								<tbody>
-								<?php
-									$projectsData = getwarehouseinfo('inv_warehosueinfo');
-									;
-									if (isset($projectsData) && !empty($projectsData)) {
-										foreach ($projectsData as $data) {
-											?>
-									<tr>
-										<td><?php echo $data['name']; ?></td>
-										<?php 
-										$warehouse = $data['id'];
-										$to_date = date('Y-m-d');
-										$mb_materialid = $material_name;
-										$sqlinqty = "SELECT SUM(`mbin_qty`) AS totalin FROM `inv_materialbalance` WHERE `mb_materialid` = '$mb_materialid' AND mb_date <= '$to_date'";
-										$resultinqty = mysqli_query($conn, $sqlinqty);
-										$rowinqty = mysqli_fetch_object($resultinqty) ;
-										
-										
-										$sqloutqty = "SELECT SUM(`mbout_qty`) AS totalout FROM `inv_materialbalance` WHERE `mb_materialid` = '$mb_materialid' AND mb_date <= '$to_date'";
-										$resultoutqty = mysqli_query($conn, $sqloutqty);
-										$rowoutqty = mysqli_fetch_object($resultoutqty) ;
-									
-									
-										?>
-										<td><?php echo  $rowinqty->totalin -$rowoutqty->totalout; ?></td>
-										<td><?php echo getDataRowByTableAndId('inv_item_unit', $rowmat['qty_unit'])->unit_name; ?></td>
-									</tr>
-									<?php
-										}
-									}
-									?>
+								<tbody class="port_warehouse_wise_stock">
+								
 								</tbody>
 							</table>
-							<?php
-							}
-							?>
+							
 						</div>
             </div>
           </div>
@@ -294,11 +256,7 @@ $(document).ready(function() {
 						<i class="fas fa-fw fa-truck"></i>
 					</div>
 				<?php
-				/* if($_SESSION['logged']['user_type'] == 'superAdmin') {
-					$sqlpmrr	=	"SELECT * FROM `inv_receive` WHERE `approval_status` = '0'";
-				}else{
-					$sqlpmrr	=	"SELECT * FROM `inv_receive` WHERE `warehouse_id`='$warehouse_id' AND `approval_status` = '0'";
-				} */
+				
 				$sqlpmrr	=	"SELECT * FROM `inv_receive` WHERE `approval_status` = '0'";
 				$resultpmrr = mysqli_query($conn, $sqlpmrr);
 				$totalPendingMrr = mysqli_num_rows($resultpmrr);
@@ -377,9 +335,39 @@ if($montly_reveive_res){
       </div>
 
       <script type="text/javascript">
-      	$(function(){
 
-      		var receive_months =  <?php echo json_encode($receive_months) ?>;
+
+$(".stock_serach_material_name").on('change',function(){
+	var material_name = $(this).val();
+	var attr_material_name= $('option:selected', this).attr('attr_material_name');
+	var url =  baseUrl + "function/chart_ajax.php?process_type=mater_wise_stock_search";
+	var data = {material_name}
+	$("._serach_m_name").text(attr_material_name);
+
+	$.ajax({
+	    url: url,
+	    type: "POST",
+	    data: data,
+	    dataType:'json',
+	    success: function(response) {
+	        var data = response;
+	        var table =``;
+	        if(data?.length > 0){
+	        	for(var i=0;i<data?.length; i++){
+	        	 table +=`<tr><td>${data[i]?.name}</td> <td>${data[i]?.total_stock}</td></tr>`;	
+	        	}
+	        }else{
+	        	table +=`<tr><td><b>No Data Found</b></td></tr>`;	
+	        }
+	        $(".port_warehouse_wise_stock").html(table)
+	       
+	    }
+	  });
+})
+
+     $(function(){
+
+  var receive_months =  <?php echo json_encode($receive_months) ?>;
   var receive_amounts =  <?php echo json_encode($receive_amounts) ?>;
 
       	Highcharts.chart('container', {
@@ -429,13 +417,14 @@ if($montly_reveive_res){
 
       	 $(".equipment_name").on('change', function() {
       		var use_in = $(this).val();
-      		//console.log(use_in)
+      		
       		var url =  baseUrl + "function/chart_ajax.php?process_type=equipment_wise_issue";
       		var data = {use_in};
       		var equipment = use_in;
       		chart_ajax_call(data,url,equipment)
       		
       	})
+
 		$(function(){
 			var url =  baseUrl + "function/chart_ajax.php?process_type=equipment_wise_issue";
       		var data = {use_in:''};
@@ -444,8 +433,6 @@ if($montly_reveive_res){
 		})
 
       	 function chart_ajax_call(data,url,equipment=''){
-      	 	console.log(data)
-
 			      $.ajax({
 			        url: url,
 			        type: "POST",
