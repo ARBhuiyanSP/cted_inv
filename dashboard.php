@@ -309,13 +309,29 @@ $(document).ready(function() {
        
 		</div>
 		<div class="row">
-			
-				   <div class="com-xl-3 col-sm-6 col-md-12">
-          	<figure class="highcharts-figure">
+			<div class="com-xl-3 col-sm-6 col-md-6">
+          		<figure class="highcharts-figure">
 				    <div id="container"></div>
-				   
 				</figure>
-         
+			</div>
+			<div class="com-xl-3 col-sm-6 col-md-6">
+				<?php 
+
+		$used_equipments= "SELECT DISTINCT use_in FROM inv_issuedetail ORDER BY use_in ASC";
+		$used_equipment_res = mysqli_query($conn, $used_equipments);
+			?>
+
+				<select class="form-control select2 equipment_name" name="equipment_name">
+					<option value="">Select Equipment</option>
+					<?php
+					while($row = mysqli_fetch_array($used_equipment_res)){ ?>
+						<option value="<?php echo $row['use_in']; ?>"><?php echo $row['use_in']; ?></option>
+					<?php } ?>
+					
+				</select>
+          		<figure class="highcharts-figure">
+				    <div id="equipmentWiseIssue"></div>
+				</figure>
 			</div>
 		</div>
 
@@ -356,49 +372,125 @@ if($montly_reveive_res){
   var receive_amounts =  <?php echo json_encode($receive_amounts) ?>;
 
       	Highcharts.chart('container', {
+		    chart: {
+		        type: 'column'
+		    },
+		    title: {
+		        text: 'Monthly Receive'
+		    },
+		    subtitle: {
+		        text: ''
+		    },
+		    xAxis: {
+		        categories: receive_months,
+		        crosshair: true
+		    },
+		    yAxis: {
+		        min: 0,
+		        title: {
+		            text: 'Amount Tk'
+		        }
+		    },
 
-    chart: {
-        type: 'column'
-    },
-    title: {
-        text: 'Monthly Receive'
-    },
-    subtitle: {
-        text: ''
-    },
-    xAxis: {
-        categories: receive_months,
-        crosshair: true
-    },
-    yAxis: {
-        min: 0,
-        title: {
-            text: 'Amount Tk'
-        }
-    },
+		    tooltip: {
+		        headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
+		        pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
+		            '<td style="padding:0"><b>{point.y:.2f} Tk</b></td></tr>',
+		        footerFormat: '</table>',
+		        shared: true,
+		        useHTML: true
+		    },
+		    plotOptions: {
+		        column: {
+		            pointPadding: 0.2,
+		            borderWidth: 0
+		        }
+		    },
+		    series: [{
+		        name: 'Monthly Receive Amount',
+		        data: receive_amounts
 
-    tooltip: {
-        headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
-        pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
-            '<td style="padding:0"><b>{point.y:.2f} Tk</b></td></tr>',
-        footerFormat: '</table>',
-        shared: true,
-        useHTML: true
-    },
-    plotOptions: {
-        column: {
-            pointPadding: 0.2,
-            borderWidth: 0
-        }
-    },
-    series: [{
-        name: 'Monthly Receive Amount',
-        data: receive_amounts
-
-    }]
-});
+		    }]
+		});
 
       	})
+
+
+      	 $(".equipment_name").on('change', function() {
+      		var use_in = $(this).val();
+      		//console.log(use_in)
+      		var url =  baseUrl + "function/chart_ajax.php?process_type=equipment_wise_issue";
+      		var data = {use_in};
+      		var equipment = use_in;
+      		chart_ajax_call(data,url,equipment)
+      		
+      	})
+
+      	 function chart_ajax_call(data,url,equipment=''){
+      	 	console.log(data)
+
+			      $.ajax({
+			        url: url,
+			        type: "POST",
+			        data: data,
+			        dataType:'json',
+			        success: function(response) {
+			            console.log(response);
+			            var container_id="equipmentWiseIssue";
+			            var chart_title = equipment+" Equipment Wise Material Issue";
+			            var chart_subtitle='';
+			            var am_tk ="Tk";
+			            var chart_categories = response.equipment_months;
+			            var series_data = response.series_data;
+			            var chart_series_data=[
+			            		{name:'Qty',data:response.equipment_qtys},
+			            		{name:'Amount',data:response.equipment_amounts},
+			            			];
+
+			            simple_barchart(container_id,chart_title,chart_subtitle,chart_categories,am_tk,chart_series_data)
+			        }
+			      });
+      	 }
+
+
+      	 function simple_barchart(container_id,chart_title,chart_subtitle,chart_categories,am_tk,chart_series_data){
+      	 	Highcharts.chart(container_id, {
+				    chart: {
+				        type: 'column'
+				    },
+				    title: {
+				        text: chart_title
+				    },
+				    subtitle: {
+				        text: chart_subtitle
+				    },
+				    xAxis: {
+				        categories:chart_categories ,
+				        crosshair: true
+				    },
+				    yAxis: {
+				        min: 0,
+				        title: {
+				            text: ''
+				        }
+				    },
+				    tooltip: {
+				        headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
+				        pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
+				            '<td style="padding:0"><b>{point.y:.2f} {am_tk}</b></td></tr>',
+				        footerFormat: '</table>',
+				        shared: true,
+				        useHTML: true
+				    },
+				    plotOptions: {
+				        column: {
+				            pointPadding: 0.2,
+				            borderWidth: 0
+				        }
+				    },
+				    series: chart_series_data
+				});
+      	 }
       	
       </script>
       <!-- /.container-fluid -->
