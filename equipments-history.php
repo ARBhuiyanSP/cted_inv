@@ -7,9 +7,9 @@
     <!-- Breadcrumbs-->
     <ol class="breadcrumb">
         <li class="breadcrumb-item">
-            <a href="#">Equipments Report Filters</a>
+            <a href="#">Reports</a>
         </li>
-        <li class="breadcrumb-item active">List</li>
+        <li class="breadcrumb-item active">Equipments History Report</li>
     </ol>
     <!-- receive search start here -->
     <?php include 'search/equips_history_search.php'; ?>

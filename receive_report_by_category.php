@@ -7,9 +7,9 @@
     <!-- Breadcrumbs-->
     <ol class="breadcrumb">
         <li class="breadcrumb-item">
-            <a href="#">Receive Report Filters</a>
+            <a href="#">Reports</a>
         </li>
-        <li class="breadcrumb-item active">List</li>
+        <li class="breadcrumb-item active">Categorywise Material Receive Report</li>
     </ol>
     <!-- receive search start here -->
     <?php include 'search/receive_report_by_category_search.php'; ?>

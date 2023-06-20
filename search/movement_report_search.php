@@ -63,6 +63,7 @@ if(isset($_GET['submit'])){
 							<th colspan="8">
 								<center>
 										<img src="images/Saif_Engineering_Logo_165X72.png" height="50px;"/><br>
+										<h5>CTED CHATTOGRAM</h5>
 										<span>Material Movement Report</span><br>
 										From  <span class="dtext"><?php echo date("jS F Y", strtotime($from_date));?> </span>To  <span class="dtext"><?php echo date("jS F Y", strtotime($to_date));?> </span>
 								</center>
@@ -89,35 +90,43 @@ if(isset($_GET['submit'])){
 						$result = mysqli_query($conn, $sql);
 						while($row=mysqli_fetch_array($result))
 						{
+							
 					?>
 						<tr>
 							<td>
 								<?php 
-								$mb_materialid = $row['mb_materialid'];
-								$sqlname	=	"SELECT * FROM `inv_material` WHERE `material_id_code` = '$mb_materialid' ";
-								$resultname = mysqli_query($conn, $sqlname);
-								$rowname=mysqli_fetch_array($resultname);
-								echo $rowname['material_description'];
+								if($row['mb_materialid']){
+									$mb_materialid = $row['mb_materialid'];
+									$sqlname	=	"SELECT * FROM `inv_material` WHERE `material_id_code` = '$mb_materialid' ";
+									$resultname = mysqli_query($conn, $sqlname);
+									$rowname=mysqli_fetch_array($resultname);
+									echo $rowname['material_description'];
+									}
+								
 								?>
 							</td>
-							<td><?php echo $row['part_no']; ?></td>
+							<td><?php
+							if($row['part_no']){
+							echo $row['part_no']; }?></td>
 							<td>
 							<?php 
+								if($row['mb_materialid']){
 								$mb_materialid = $row['mb_materialid'];
 								$sqlspec	=	"SELECT * FROM `inv_material` WHERE `material_id_code` = '$mb_materialid' ";
 								$resultspec = mysqli_query($conn, $sqlspec);
 								$rowspec=mysqli_fetch_array($resultspec);
-								echo $rowspec['spec'];
+								echo $rowspec['spec'];}
 								?>
 							</td>
 							<td>
 								<?php 
+								if($row['mb_materialid']){
 								$qty_unit = $rowname['qty_unit'];
 								$sqlunit	=	"SELECT * FROM `inv_item_unit` WHERE `id` = '$qty_unit' ";
 								$resultunit = mysqli_query($conn, $sqlunit);
 								$rowunit=mysqli_fetch_array($resultunit);
 								echo $rowunit['unit_name'];
-								
+								}
 								?>
 								
 							</td>

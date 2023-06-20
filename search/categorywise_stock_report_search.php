@@ -86,7 +86,8 @@ if(isset($_GET['submit'])){
 					<center>
 						<p>
 							<img src="images/Saif_Engineering_Logo_165X72.png" height="50px;"/><br>
-							<span>Material Stock Report</span><br>
+							<h5>CTED CHATTOGRAM</h5>
+							<span>Categorywise Material Stock Report</span><br>
 							Till  <span class="dtext"><?php echo date("jS F Y", strtotime($to_date));?> </span><br>
 						</p>
 					</center>
