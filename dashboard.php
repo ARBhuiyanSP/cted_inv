@@ -11,6 +11,58 @@ table tbody tr{
 	padding:2px;
 }
 
+.highcharts-figure,
+.highcharts-data-table table {
+    min-width: 310px;
+    max-width: 800px;
+    margin: 1em auto;
+}
+
+#container {
+    height: 400px;
+}
+
+.highcharts-data-table table {
+    font-family: Verdana, sans-serif;
+    border-collapse: collapse;
+    border: 1px solid #ebebeb;
+    margin: 10px auto;
+    text-align: center;
+    width: 100%;
+    max-width: 500px;
+}
+
+.highcharts-data-table caption {
+    padding: 1em 0;
+    font-size: 1.2em;
+    color: #555;
+}
+
+.highcharts-data-table th {
+    font-weight: 600;
+    padding: 0.5em;
+}
+
+.highcharts-data-table td,
+.highcharts-data-table th,
+.highcharts-data-table caption {
+    padding: 0.5em;
+}
+
+.highcharts-data-table thead tr,
+.highcharts-data-table tr:nth-child(even) {
+    background: #f8f8f8;
+}
+
+.highcharts-data-table tr:hover {
+    background: #f1f7ff;
+}
+
+.highcharts-credits{
+	display: none !important;
+}
+
+
 </style>
 <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/css/select2.min.css" rel="stylesheet" />
 <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/js/select2.min.js"></script>
@@ -19,6 +71,14 @@ $(document).ready(function() {
     $('.js-example-basic-single').select2();
 });
 </script>
+
+<script src="https://code.highcharts.com/highcharts.js"></script>
+<script src="https://code.highcharts.com/modules/exporting.js"></script>
+<script src="https://code.highcharts.com/modules/export-data.js"></script>
+<script src="https://code.highcharts.com/modules/accessibility.js"></script>
+
+
+
 <div class="container-fluid">
 <!-- Breadcrumbs-->
         <!-- Icon Cards-->
@@ -246,7 +306,40 @@ $(document).ready(function() {
 				</a>
             </div>
           </div>
+       
 		</div>
+		<div class="row">
+			
+				   <div class="com-xl-3 col-sm-6 col-md-12">
+          	<figure class="highcharts-figure">
+				    <div id="container"></div>
+				   
+				</figure>
+         
+			</div>
+		</div>
+
+		<?php 
+
+		$montly_reveive= "SELECT round(sum(t2.total_receive)) as _amount,DATE_FORMAT(t1.mrr_date, '%m') as _month,DATE_FORMAT(t1.mrr_date, '%y') as _year, MONTHNAME(t1.mrr_date) as _m_name
+FROM inv_receive as t1
+INNER JOIN inv_receivedetail AS t2 ON t1.mrr_no=t2.mrr_no
+WHERE  (t1.mrr_date > now() - INTERVAL 11 month ) 
+GROUP BY YEAR(t1.mrr_date),MONTH(t1.mrr_date) ORDER BY YEAR(t1.mrr_date),MONTH(t1.mrr_date) ASC";
+
+$receive_months=[];
+$receive_amounts=[];
+$montly_reveive_res = mysqli_query($conn, $montly_reveive);
+if($montly_reveive_res){
+	while($row = mysqli_fetch_array($montly_reveive_res)){
+		$month_and_year=$row["_m_name"]."-".$row["_year"];
+		array_push($receive_months, $month_and_year);
+		array_push($receive_amounts, round($row["_amount"], 2));
+	}
+}
+
+
+		?>
 		
 		
 <?php } ?>
@@ -255,5 +348,58 @@ $(document).ready(function() {
 		
 		
       </div>
+
+      <script type="text/javascript">
+      	$(function(){
+
+      		var receive_months =  <?php echo json_encode($receive_months) ?>;
+  var receive_amounts =  <?php echo json_encode($receive_amounts) ?>;
+
+      	Highcharts.chart('container', {
+
+    chart: {
+        type: 'column'
+    },
+    title: {
+        text: 'Monthly Receive'
+    },
+    subtitle: {
+        text: ''
+    },
+    xAxis: {
+        categories: receive_months,
+        crosshair: true
+    },
+    yAxis: {
+        min: 0,
+        title: {
+            text: 'Amount Tk'
+        }
+    },
+
+    tooltip: {
+        headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
+        pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
+            '<td style="padding:0"><b>{point.y:.2f} Tk</b></td></tr>',
+        footerFormat: '</table>',
+        shared: true,
+        useHTML: true
+    },
+    plotOptions: {
+        column: {
+            pointPadding: 0.2,
+            borderWidth: 0
+        }
+    },
+    series: [{
+        name: 'Monthly Receive Amount',
+        data: receive_amounts
+
+    }]
+});
+
+      	})
+      	
+      </script>
       <!-- /.container-fluid -->
 <?php include 'footer.php' ?>
