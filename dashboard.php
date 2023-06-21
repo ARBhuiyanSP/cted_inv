@@ -205,9 +205,10 @@ $(document).ready(function() {
               <div class="card">
 							<form name="" action="" method="GET">
 								<div class="col-md-12">
-									<div class="form-group">
+									<div class="form-group" style="background-color: #D9272C;color: #fff;">
 										<label><b>Material Stock Search</b></label>
 										<select class="form-control js-example-basic-single stock_serach_material_name" id="material_name" name="material_name" required>
+											<option value="">Select Material</option>
 											<?php
 											$projectsData = get_product_with_category();
 											if (isset($projectsData) && !empty($projectsData)) {
@@ -228,19 +229,22 @@ $(document).ready(function() {
 										</select>
 									</div>
 								</div>
-								<div class="col-md-12">
+								<!-- <div class="col-md-12">
 									<div class="form-group">
 										<input type="submit" name="name_submit" id="submit" class="btn btn-block" style="background-color:#007BFF;color:#ffffff;" value="SEARCH" />   
 									</div>
-								</div>
+								</div> --->
 							</form>
 							
+							
+							<div class="col-md-12">
 							<h5>Total Stock of <span class="_serach_m_name"></span></h5>
 							<table class="table table-bordered">
 								<tbody class="port_warehouse_wise_stock">
 								
 								</tbody>
 							</table>
+							</div>
 							
 						</div>
             </div>
