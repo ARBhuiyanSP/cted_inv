@@ -82,7 +82,7 @@ $(document).ready(function() {
 <div class="container-fluid">
 <!-- Breadcrumbs-->
         <!-- Icon Cards-->
-		<?php if($_SESSION['logged']['user_type'] !== 'whm') {?>
+		
         <div class="row">
           <div class="col-xl-3 col-sm-6 mb-3">
             <div class="card text-white bg-primary o-hidden h-100">
@@ -331,7 +331,7 @@ if($montly_reveive_res){
 		?>
 		
 		
-<?php } ?>
+
 
 		
 		
