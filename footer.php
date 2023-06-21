@@ -50,8 +50,8 @@
 <!-- Custom scripts for all pages-->
 <script src="js/sb-admin.min.js"></script>
 
-<script type="text/javascript" src="js/site_url.js"></script>
-<script type="text/javascript" src="js/site_js.js?v=1"></script>
+<script type="text/javascript" src="js/site_url.js?v=2"></script>
+<script type="text/javascript" src="js/site_js.js?v=2"></script>
 <script src="js/demo/chart-area-demo.js"></script>
 <script type="text/javascript" type="text/javascript">
   jQuery(document).ready(function($) {
