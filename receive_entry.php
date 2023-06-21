@@ -100,7 +100,7 @@
                         <div class="col-xs-2">
                             <div class="form-group">
                                 <label for="id">Supplier ID</label>
-                                <input type="text" name="supplier_id" id="supplier_id" class="form-control" required>
+                                <input type="text" name="supplier_id" id="supplier_id" class="form-control" readonly required>
                             </div>
                         </div>
 						<div class="col-xs-2">
