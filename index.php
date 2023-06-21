@@ -1,6 +1,13 @@
 <?php session_start(); 
 include 'connection/connect.php';
 include 'includes/login_process.php';
+
+if($_SESSION['logged']['status']		=   true){
+	 header("location: dashboard.php");
+}
+
+
+               
 ?>
 <style>
 body {
