@@ -38,15 +38,7 @@ include 'header.php';
 						</form>
 					</div>
 				</div>
-				<div class="col-md-6">
-					<div class="p-5">
-						<form class="form-inline" id="get_issue_details_form">
-							<label for="end_date">Issue No</label>
-							<input type="text" class="form-control" placeholder="Enter Issue No" id="issue_no" name="issue_no" value="">
-							<button type="button" class="btn btn-primary" onclick="getIssueDetails()">Get Data</button>
-						</form>
-					</div>
-				</div>
+				
 			</div>
 		
 
