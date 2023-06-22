@@ -26,7 +26,7 @@ include 'header.php';
 		<div class="card-body">
 
 			<div class="row">
-				<div class="col-md-6">
+				<div class="col-md-12">
 					<div class="p-5">
 						<form class="form-inline" id="get_issue_filter_form">
 							<label for="start_date">From Date:</label>
