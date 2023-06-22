@@ -415,7 +415,7 @@ function get_lot_price_by_material_id($code)
 	$dataContainer ="<option value=''>-Select-</option>";
 	 if ($result->num_rows > 0) {
         while ($row = $result->fetch_assoc()) {
-                $dataContainer .="<option value='".$row["id"]."'>".$row["material_id"]."|".$row["qty"]."|".$row["price"]."</option>";
+                $dataContainer .="<option value='".$row["id"]."'>".$row["mrr_no"]."|".$row["qty"]."|".$row["price"]."</option>";
             }
     }
     return $dataContainer;

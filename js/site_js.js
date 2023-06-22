@@ -683,7 +683,7 @@ function getItemCodeByParam(id, table, field, selector, qty_unit = '',this_row_t
             success: function(response) {
                 
 
-				console.log('after row');
+				console.log(response);
                 $('#' + selector).val(response.data);
 				$('#' + product_price_id).html(response.priceDetails);
 				

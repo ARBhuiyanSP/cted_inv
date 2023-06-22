@@ -160,7 +160,7 @@ $issue_id=$_GET['no']; ?>
 						</b>
 						<div class="row" style="text-align:center">
 							<div class="col-sm-5"></br><?php 
-										if($rowd['approved_by']){
+										if($rowd['issued_by']){
 										$dataresult =   getDataRowByTableAndId('users', $rowd['issued_by']);
 										echo (isset($dataresult) && !empty($dataresult) ? $dataresult->first_name . ' ' .$dataresult->last_name : '');}
 										?></br>--------------------</br>Issuer Signature</div>			
