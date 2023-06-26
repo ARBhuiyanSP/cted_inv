@@ -128,21 +128,15 @@ if (isset($_GET['edit_id']) && !empty($_GET['edit_id'])) {
 						<div class="col-xs-2">
                             <div class="form-group">
                                 <label>Warehouse</label>
-                                <select class="form-control" id="warehouse_id" name="warehouse_id" readonly>
-									<?php
-									$projectsData = getTableDataByTableName('inv_warehosueinfo');
-									;
-									if (isset($projectsData) && !empty($projectsData)) {
-										foreach ($projectsData as $data) {
-											?>
-											<option value="<?php echo $data['id']; ?>" <?php if (isset($receiveData->warehouse_id) && $receiveData->warehouse_id == $data['id']) {
-                                        echo 'selected';
-                                    } ?>><?php echo $data['name']; ?></option>
-											<?php
-										}
-									}
-									?>
-								</select>
+								
+								<?php  
+									$warehouse_id = $receiveData->warehouse_id;								
+									$dataresult =   getDataRowByTableAndId('inv_warehosueinfo', $warehouse_id);
+								?>
+								<input type="text" class="form-control" readonly="readonly" value="<?php echo (isset($dataresult) && !empty($dataresult) ? $dataresult->name : ''); ?>">
+								
+								<input type="hidden" name="warehouse_id" id="warehouse_id" class="form-control" value="<?php echo (isset($receiveData->warehouse_id) && !empty($receiveData->warehouse_id) ? $receiveData->warehouse_id : ''); ?>">
+								
                             </div>
                         </div>
                     </div>
