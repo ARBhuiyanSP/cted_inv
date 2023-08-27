@@ -113,6 +113,7 @@ if(isset($_GET['submit'])){
 				<table id="" class="table table-bordered">
 					<thead>
 						<tr>
+							<th>SL</th>
 							<th>Date</th>
 							<th>Ref Voucher/Issue No</th>
 							
@@ -126,7 +127,7 @@ if(isset($_GET['submit'])){
 					</thead>
 					<tbody>
 						<tr>
-							<th colspan="3" style="text-align:right;">Opening Quantity</th>
+							<th colspan="4" style="text-align:right;">Opening Quantity</th>
 							<th></th>
 							<th style="text-align:right;">
 									<?php 
@@ -152,12 +153,14 @@ if(isset($_GET['submit'])){
 							<th colspan="3"></th>
 						</tr>
 						<?php
+							$sl = 0;
 							$totalin = 0;
 							$totalout = 0;
 							$sqlall	=	"SELECT * FROM `inv_materialbalance` WHERE `mb_materialid` = '$material_name' AND `mb_date` BETWEEN '$from_date' AND '$to_date';";
 							$resultall = mysqli_query($conn, $sqlall);
 							while($rowall=mysqli_fetch_array($resultall))
 							{	
+								$sl++;
 						
 								$inQty = $rowall['mbin_qty'];
 								$totalin += $rowall['mbin_qty'];
@@ -168,6 +171,7 @@ if(isset($_GET['submit'])){
 								$balance = $totalin - $totalout;
 						?>
 						<tr>
+							<td><?php echo $sl;?></td>
 							<td><?php echo date("j M y", strtotime($rowall['mb_date']));?></td>
 							<td><?php echo $rowall['mb_ref_id']; ?></td>
 							
@@ -191,7 +195,7 @@ if(isset($_GET['submit'])){
 						</tr>
 						<?php } ?>
 						<tr style="text-align:right;font-weight:bold;">
-							<td colspan="3">Total:</td>
+							<td colspan="4">Total:</td>
 							<td>
 								<?php 
 									$sqlin = "SELECT sum(mbin_qty) FROM `inv_materialbalance` WHERE `mb_materialid` = '$material_name' AND `mb_date` BETWEEN '$from_date' AND '$to_date'";

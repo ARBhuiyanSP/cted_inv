@@ -68,9 +68,7 @@
              <?php    } ?>
 
 
-            <?php
-            
-                if(check_permission('category-list')){ ?>
+            <?php if(check_permission('category-list')){ ?>
                     <a class="dropdown-item" href="category_setup.php">
                 <i class="fa fa-bullseye" aria-hidden="true" style="color: #007BFF;"></i>
                 <span class="sub_menu_text_design"> Material Category</span>
