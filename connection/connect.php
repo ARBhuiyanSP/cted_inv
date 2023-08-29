@@ -6,7 +6,7 @@ global $conn;
 $servername = "localhost";
 $username   = "root";
 $password   = "";
-$dbname     = "cted_backup_28_8";
+$dbname     = "cted_inv";
 
 // Create connection
 $conn       = new mysqli($servername, $username, $password, $dbname);
