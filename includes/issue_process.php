@@ -66,6 +66,11 @@ if (isset($_POST['issue_submit']) && !empty($_POST['issue_submit'])) {
 
 					$oldQty = $rowGetPrice['qty'];
 					$newQty = $oldQty - $quantity;
+					
+					if($newQty > 1){
+						$status = 0;
+					}
+					
 
 					$queryUpdateQty    = "UPDATE `inv_product_price` SET `qty`='$newQty' WHERE `id`='$product_price_id'";
 	    			$conn->query($queryUpdateQty);

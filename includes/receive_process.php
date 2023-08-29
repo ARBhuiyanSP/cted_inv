@@ -111,8 +111,8 @@ if (isset($_POST['receive_submit']) && !empty($_POST['receive_submit'])) {
         $conn->query($query_inmb);
 		
 		
-		 $queryPro = "INSERT INTO `inv_product_price`(`mrr_no`,`material_id`, `receive_details_id`, `qty`, `price`,`part_no`, `status`) VALUES ('$mb_ref_id','$mb_materialid','$lastinsertedId','$mbin_qty','$mbprice','$part_no','1')";
-         $conn->query($queryPro);
+		$queryPro = "INSERT INTO `inv_product_price`(`mrr_no`,`material_id`, `receive_details_id`, `qty`, `price`,`part_no`, `status`) VALUES ('$mb_ref_id','$mb_materialid','$lastinsertedId','$mbin_qty','$mbprice','$part_no','1')";
+         $conn->query($queryPro); 
 		
 		
 	
@@ -122,7 +122,7 @@ if (isset($_POST['receive_submit']) && !empty($_POST['receive_submit'])) {
 		*  update inv_material current_balance:
 		*/
 		$queryBal = "UPDATE `inv_material` SET `current_balance`=current_balance + $mbin_qty WHERE `material_id_code` = '$mb_materialid'";
-		$conn->query($queryBal);
+		$conn->query($queryBal); 
 		}
     /*
     *  Insert Data Into inv_receive Table:
@@ -132,7 +132,7 @@ if (isset($_POST['receive_submit']) && !empty($_POST['receive_submit'])) {
     /*
     *  Insert Data Into inv_supplierbalance Table:
     */
-    $query3 = "INSERT INTO `inv_supplierbalance` (`sb_ref_id`,`warehouse_id`,`sb_date`,`sb_supplier_id`,`sb_dr_amount`,`sb_cr_amount`,`sb_remark`,`sb_partac_id`,`approval_status`) VALUES ('$mrr_no','$warehouse_id','$mrr_date','$supplier_id','0','$receive_total','$remarks','$mrr_no','$approval_status')";
+   $query3 = "INSERT INTO `inv_supplierbalance` (`sb_ref_id`,`warehouse_id`,`sb_date`,`sb_supplier_id`,`sb_dr_amount`,`sb_cr_amount`,`sb_remark`,`sb_partac_id`,`approval_status`) VALUES ('$mrr_no','$warehouse_id','$mrr_date','$supplier_id','0','$receive_total','$remarks','$mrr_no','$approval_status')";
     $result2 = $conn->query($query3);
 	
 	
