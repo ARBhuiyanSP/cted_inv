@@ -153,6 +153,20 @@ $issue_id=$_GET['no']; ?>
 										?>
 									</td>
 								</tr>
+								<tr>
+									<td colspan="6" class="grand_total">Remarks:</td>
+									<td>
+									</td>
+									<td></td>
+									<td>
+										<?php 
+										
+										
+										echo $rowd['remarks'] ;
+										
+										?>
+									</td>
+								</tr>
 							</tbody>
 						</table>
 						<b>Total Amount in words: 
