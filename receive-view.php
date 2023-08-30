@@ -159,10 +159,8 @@ $mrr_no=$_GET['no']; ?>
 									</td>
 								</tr>
 								<tr>
-									<td colspan="4" class="grand_total">Remarks:</td>
-									<td></td>
-									<td></td>
-									<td>
+									<td colspan="2" class="grand_total">Remarks:</td>
+									<td colspan="5">
 									<?php echo $rowd['remarks'];
 										?>
 									</td>

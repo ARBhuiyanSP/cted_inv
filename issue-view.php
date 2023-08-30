@@ -154,11 +154,8 @@ $issue_id=$_GET['no']; ?>
 									</td>
 								</tr>
 								<tr>
-									<td colspan="6" class="grand_total">Remarks:</td>
-									<td>
-									</td>
-									<td></td>
-									<td>
+									<td colspan="2" class="grand_total">Remarks:</td>
+									<td colspan="7">
 										<?php 
 										
 										
