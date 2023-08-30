@@ -156,8 +156,8 @@ if(isset($_GET['submit'])){
 							$sl = 0;
 							$totalin = 0;
 							$totalout = 0;
-							//$sqlall	=	"SELECT * FROM `inv_materialbalance` WHERE `mb_materialid` = '$material_name' AND `mb_date` BETWEEN '$from_date' AND '$to_date';";
-							$sqlall	=	"SELECT * FROM `inv_materialbalance` WHERE `mb_materialid` = '$material_name';";
+							$sqlall	=	"SELECT * FROM `inv_materialbalance` WHERE `mb_materialid` = '$material_name' AND `mb_date` BETWEEN '$from_date' AND '$to_date';";
+							//$sqlall	=	"SELECT * FROM `inv_materialbalance` WHERE `mb_materialid` = '$material_name';";
 							$resultall = mysqli_query($conn, $sqlall);
 							while($rowall=mysqli_fetch_array($resultall))
 							{	
@@ -199,8 +199,8 @@ if(isset($_GET['submit'])){
 							<td colspan="4">Total:</td>
 							<td>
 								<?php 
-									//$sqlin = "SELECT sum(mbin_qty) FROM `inv_materialbalance` WHERE `mb_materialid` = '$material_name' AND `mb_date` BETWEEN '$from_date' AND '$to_date'";
-									$sqlin = "SELECT sum(mbin_qty) FROM `inv_materialbalance` WHERE `mb_materialid` = '$material_name'";
+									$sqlin = "SELECT sum(mbin_qty) FROM `inv_materialbalance` WHERE `mb_materialid` = '$material_name' AND `mb_date` BETWEEN '$from_date' AND '$to_date'";
+									//$sqlin = "SELECT sum(mbin_qty) FROM `inv_materialbalance` WHERE `mb_materialid` = '$material_name'";
 									$resultin = mysqli_query($conn, $sqlin);
 									for($i=0; $rowin = mysqli_fetch_array($resultin); $i++){
 									$totalIn=number_format((float)$rowin['sum(mbin_qty)'], 2, '.', '');
@@ -211,8 +211,8 @@ if(isset($_GET['submit'])){
 							</td>
 							<td>
 								<?php 
-									//$sqlout = "SELECT sum(mbout_qty) FROM `inv_materialbalance` WHERE `mb_materialid` = '$material_name' AND `mb_date` BETWEEN '$from_date' AND '$to_date'";
-									$sqlout = "SELECT sum(mbout_qty) FROM `inv_materialbalance` WHERE `mb_materialid` = '$material_name'";
+									$sqlout = "SELECT sum(mbout_qty) FROM `inv_materialbalance` WHERE `mb_materialid` = '$material_name' AND `mb_date` BETWEEN '$from_date' AND '$to_date'";
+									//$sqlout = "SELECT sum(mbout_qty) FROM `inv_materialbalance` WHERE `mb_materialid` = '$material_name'";
 									$resultout = mysqli_query($conn, $sqlout);
 									for($i=0; $rowout = mysqli_fetch_array($resultout); $i++){
 									$totalOut=number_format((float)$rowout['sum(mbout_qty)'], 2, '.', '');
