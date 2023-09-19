@@ -105,7 +105,7 @@
 					<tbody>
 						<?php
 							$i=0;
-							$sql	=	"SELECT * FROM inv_material WHERE material_id = $parent_item_id AND material_sub_id = $sub_item_id ORDER BY `material_description` ASC";
+							$sql	=	"SELECT * FROM inv_material WHERE status='1' AND material_id = $parent_item_id AND material_sub_id = $sub_item_id ORDER BY `material_description` ASC";
 							$result = mysqli_query($conn, $sql);
 							while($row=mysqli_fetch_array($result))
 							{

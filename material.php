@@ -57,8 +57,12 @@ if(!check_permission('material-list')){
                                                 //echo "</pre>";
                                                 ?>
                                                 <tr>
-                                                 
-                                                    <td>
+                                                    <?php if($item['status'] !='1'){
+                                                        $color='background-color: #D9272C;color:#fff;';
+                                                    }else{
+                                                        $color='';
+                                                    } ?>
+                                                    <td style="<?php echo $color; ?>">
                                                         <?php echo $item['id']; ?>
                                                     </td>
                                                         <td>

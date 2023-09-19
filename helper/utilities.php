@@ -310,7 +310,7 @@ function get_product_with_category($graterThanZero=0)
                 while ($scat = $sresult->fetch_object()) {
                     $sub_item_id    = $scat->id;
                     $sub_item_name  = $scat->material_sub_description;
-                    $msql           = " SELECT * FROM inv_material where 1=1 AND material_id=$parent_id and material_sub_id=$sub_item_id ";
+                    $msql           = " SELECT * FROM inv_material where 1=1 AND status='1' AND material_id=$parent_id and material_sub_id=$sub_item_id ";
 					
 					if($graterThanZero > 0){
 						$msql           .=" AND current_balance > 0 ";

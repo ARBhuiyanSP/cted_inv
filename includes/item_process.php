@@ -168,6 +168,7 @@ if(isset($_GET['process_type']) && $_GET['process_type'] == 'item'){
     $part_no			=   mysqli_real_escape_string($conn, $_POST['part_no']);
     $spec				=   mysqli_real_escape_string($conn, $_POST['spec']);
     $qty_unit           =   mysqli_real_escape_string($conn, $_POST['qty_unit']);
+    $status           =   mysqli_real_escape_string($conn, $_POST['status']);
     $material_min_stock =   mysqli_real_escape_string($conn, $_POST['material_min_stock']);
     // check duplicate:
     $table = 'inv_material';
@@ -185,7 +186,7 @@ if(isset($_GET['process_type']) && $_GET['process_type'] == 'item'){
         if(isset($_POST['material_update_id']) && !empty($_POST['material_update_id'])){
             $edit_id     =   $_POST['material_update_id'];
             /* $sql         = "UPDATE inv_material SET material_id_code='$item_code',material_id='$parent_id',material_sub_id='$sub_item_id',material_level3_id='$material_level3_id',material_level4_id='$material_level4_id',material_description='$name',spec='$spec',material_min_stock='$material_min_stock',qty_unit='$qty_unit',part_no='$part_no' WHERE id=$edit_id"; */
-			 $sql         = "UPDATE inv_material SET material_description='$name',spec='$spec',material_min_stock='$material_min_stock',qty_unit='$qty_unit',part_no='$part_no' WHERE id=$edit_id";
+			 $sql         = "UPDATE inv_material SET material_description='$name',spec='$spec',material_min_stock='$material_min_stock',qty_unit='$qty_unit',part_no='$part_no',status='$status' WHERE id=$edit_id";
             $status      = 'success';
             $message     = 'Data have been successfully updated!';            
         }else{
@@ -695,6 +696,17 @@ if(isset($_GET['process_type']) && $_GET['process_type'] == 'material_edit'){
                 <label class="control-label col-sm-5" for="name" style="color:red;">Reorder Lebel:</label>
                 <div class="col-sm-7">
                     <input type="text" class="form-control" id="material_min_stock" placeholder="Reorder Lebel" name="material_min_stock" value="<?php if(isset($editData->material_min_stock)){ echo $editData->material_min_stock; } ?>">
+                </div>
+            </div></br>
+            <div class="form-group">
+                <label class="control-label col-sm-5" for="parent_code">Status:</label>
+                <div class="col-sm-7">
+                    <select class="form-control" id="status" name="status">
+                        <option value="">Select</option>
+                        <option value="1" <?php if(isset($editData->status) && $editData->status == '1'){ echo 'selected'; } ?>> Active</option>
+                        <option value="0" <?php if(isset($editData->status) && $editData->status == '0'){ echo 'selected'; } ?>> Disable</option>
+                        
+                    </select>
                 </div>
             </div>
         </div>

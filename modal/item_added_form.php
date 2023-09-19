@@ -113,6 +113,7 @@
                                 </select>
                             </div>
                         </div> </br>
+                        <input type="text" name="status" value="1" />
                         <div class="form-group">
                             <label class="control-label col-sm-5" for="name" style="color:red;">Reorder Lebel:</label>
                             <div class="col-sm-7">
